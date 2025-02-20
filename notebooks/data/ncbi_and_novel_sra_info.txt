@@ -1,0 +1,218 @@
+DRR336006	Bombyx mori
+DRR452111	bovine gut metagenome
+ERR10188009	milk metagenome
+ERR10188083	milk metagenome
+ERR10188112	milk metagenome
+ERR10188114	milk metagenome
+ERR10188115	milk metagenome
+ERR10188211	milk metagenome
+ERR10188212	milk metagenome
+ERR10447056	Vulpes lagopus
+ERR10447066	Vulpes lagopus
+ERR10942642	Perodicticus potto ibeanus
+ERR10972965	Tarsius dentatus
+ERR11203034	Canis lupus familiaris
+ERR11203045	Canis lupus familiaris
+ERR11203069	Canis lupus familiaris
+ERR11213956	Canis lupus familiaris
+ERR11223860	Canis lupus familiaris
+ERR11271768	Canis lupus familiaris
+ERR11284567	Canis lupus familiaris
+ERR11284570	Canis lupus familiaris
+ERR11403158	Canis lupus familiaris
+ERR11785766	Syncerus caffer
+ERR11785783	Syncerus caffer
+ERR1301447	viral metagenome
+ERR1301474	viral metagenome
+ERR1301521	viral metagenome
+ERR1301530	viral metagenome
+ERR1301851	viral metagenome
+ERR164659	Chlamydia trachomatis
+ERR1659874	Gadus morhua
+ERR2756792	Desmodus rotundus
+ERR2985417	Bos taurus
+ERR3209766	metagenome
+ERR3209929	metagenome
+ERR3281568	Capra hircus
+ERR3298753	Marmota marmota marmota
+ERR3674534	metagenome
+ERR5084170	metagenome
+ERR7256387	Mustela putorius
+SRR10902309	Ceratotherium simum simum
+SRR11059661	Drosophila melanogaster
+SRR11304755	human skin metagenome
+SRR11569199	skin metagenome
+SRR11657643	Ovis aries
+SRR11743604	Malapterurus electricus
+SRR11842090	Bubalus bubalis
+SRR11913441	skin metagenome
+SRR11951209	Bufo gargarizans
+SRR12232778	bat metagenome
+SRR12532606	Carassius gibelio
+SRR12566196	Thamnophilus doliatus
+SRR12596806	Prunus mira
+SRR12604243	Takydromus septentrionalis
+SRR12694846	Homo sapiens
+SRR12851781	Gadus morhua
+SRR13233212	Canis lupus familiaris
+SRR13233423	Canis lupus familiaris
+SRR13234696	Canis lupus familiaris
+SRR13235192	Canis lupus familiaris
+SRR13235220	Canis lupus familiaris
+SRR13235485	Canis lupus familiaris
+SRR13318616	Peromyscus maniculatus
+SRR13376362	Canis lupus familiaris
+SRR13725757	metagenome
+SRR13725758	metagenome
+SRR13726042	metagenome
+SRR13726052	metagenome
+SRR13765808	Sarcophilus harrisii
+SRR13783792	Mustela nivalis
+SRR13789197	metagenome
+SRR13789207	metagenome
+SRR13789819	metagenome
+SRR13789839	metagenome
+SRR13789912	metagenome
+SRR13790114	metagenome
+SRR13790117	metagenome
+SRR14611555	food metagenome
+SRR14731645	Ptychadena neumanni
+SRR14739427	Spilogale pygmaea
+SRR14825066	human skin metagenome
+SRR14825199	human skin metagenome
+SRR14860617	gut metagenome
+SRR14864762	Phrynocephalus versicolor
+SRR14864799	Phrynocephalus versicolor
+SRR14864829	Phrynocephalus versicolor
+SRR15046105	Danio rerio
+SRR15442792	viral metagenome
+SRR15899493	human skin metagenome
+SRR16268598	Hypophthalmichthys nobilis
+SRR16611435	Peromyscus maniculatus
+SRR16937311	Bos taurus
+SRR17035102	gut metagenome
+SRR17035106	gut metagenome
+SRR17035119	gut metagenome
+SRR17481190	whole organism metagenome
+SRR17548765	human skin metagenome
+SRR18312696	Giraffa reticulata
+SRR18363241	Phyllomedusa bahiana
+SRR18400216	Canis lupus familiaris
+SRR18400698	Canis lupus familiaris
+SRR18442637	Canis lupus familiaris
+SRR18767723	Accipiter nisus
+SRR19115560	bat metagenome
+SRR19117908	Budorcas taxicolor
+SRR19145070	human gut metagenome
+SRR19174516	Phacochoerus africanus
+SRR19174522	Phacochoerus africanus
+SRR19174523	Phacochoerus africanus
+SRR19174525	Phacochoerus africanus
+SRR19174533	Phacochoerus africanus
+SRR19430196	Ptychadena beka
+SRR19431669	Dendrortyx leucophrys hypospodius
+SRR19505656	tick metagenome
+SRR19545148	Rangifer tarandus caribou
+SRR19545153	Rangifer tarandus caribou
+SRR19742209	air metagenome
+SRR20028133	metagenome
+SRR2005651	human skin metagenome
+SRR20078264	Oncorhynchus mykiss
+SRR2063938	bat metagenome
+SRR20701368	
+SRR20730026	Peromyscus maniculatus
+SRR20730051	Peromyscus maniculatus
+SRR20985014	Ursus americanus
+SRR21231055	Paralichthys olivaceus
+SRR21770678	Canis lupus familiaris
+SRR21974026	human skin metagenome
+SRR22028468	Dibamus deharvengi
+SRR22071722	viral metagenome
+SRR22071730	viral metagenome
+SRR22103697	milk metagenome
+SRR22213301	Chionodraco hamatus
+SRR22462927	metagenome
+SRR22679053	Bubalus bubalis
+SRR22691042	Oophaga sylvatica
+SRR22765759	Homo sapiens
+SRR23881938	milk metagenome
+SRR24111646	Zhangixalus dugritei
+SRR24184640	Zhangixalus hui
+SRR24465286	Urocyon cinereoargenteus
+SRR24719138	Ptychadena erlangeri
+SRR24719200	Ptychadena cooperi
+SRR24724941	Desmognathus kanawha
+SRR24725051	Desmognathus mavrokoilius
+SRR24955661	bovine metagenome
+SRR24956127	bovine metagenome
+SRR24956270	bovine metagenome
+SRR24963189	bovine metagenome
+SRR24963196	bovine metagenome
+SRR24963268	bovine metagenome
+SRR24963419	bovine metagenome
+SRR24963462	bovine metagenome
+SRR24963500	bovine metagenome
+SRR25256522	Manidae sp.
+SRR25256528	Manidae sp.
+SRR25256529	Manidae sp.
+SRR25256535	Manidae sp.
+SRR25256542	Manidae sp.
+SRR25256569	Manidae sp.
+SRR25256604	Manidae sp.
+SRR25256617	Manidae sp.
+SRR25288481	bat metagenome
+SRR25288489	bat metagenome
+SRR25288506	bat metagenome
+SRR25288535	bat metagenome
+SRR25288600	bat metagenome
+SRR25288616	bat metagenome
+SRR25288680	bat metagenome
+SRR25288688	bat metagenome
+SRR25288726	bat metagenome
+SRR25288749	bat metagenome
+SRR25288757	bat metagenome
+SRR25288764	bat metagenome
+SRR25288767	bat metagenome
+SRR25288772	bat metagenome
+SRR25288807	bat metagenome
+SRR25288812	bat metagenome
+SRR25288825	bat metagenome
+SRR25288841	bat metagenome
+SRR25318379	Ixodes ovatus
+SRR25648973	Falco sparverius
+SRR25737668	Podarcis muralis
+SRR25936516	human skin metagenome
+SRR26070879	Myodes glareolus
+SRR26208200	skin metagenome
+SRR26349144	Cyclopterus lumpus
+SRR26395417	Potamochoerus larvatus
+SRR26395441	Potamochoerus larvatus
+SRR26848396	metagenome
+SRR27078527	metagenome
+SRR3672741	Mycobacterium lepromatosis
+SRR4075526	food fermentation metagenome
+SRR4201715	viral metagenome
+SRR4201718	viral metagenome
+SRR4332828	Rana jiemuxiensis
+SRR5042766	Ambystoma mexicanum
+SRR5384553	rodent metagenome
+SRR5447145	rodent metagenome
+SRR5450932	Tachysurus fulvidraco x Tachysurus vachelli
+SRR6216855	human skin metagenome
+SRR7122329	viral metagenome
+SRR7408270	Ursus arctos
+SRR7530174	Nipponia nippon
+SRR7687706	human skin metagenome
+SRR7687707	human skin metagenome
+SRR7734125	metagenome
+SRR7802309	skin metagenome
+SRR7802337	skin metagenome
+SRR7802447	skin metagenome
+SRR8066612	Canis lupus
+SRR8104729	Limnonectes kadarsani
+SRR8379619	Triturus ivanbureschi
+SRR8434718	Cyamopsis tetragonoloba
+SRR8437782	Capra ibex
+SRR8631965	Sus scrofa
+SRR9703484	Monophyllus redmani
+SRR9897644	Astyanax mexicanus
