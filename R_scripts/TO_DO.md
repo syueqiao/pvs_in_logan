@@ -6,13 +6,13 @@ Use this checklist to track manual fixes needed before publication.
 
 ## Critical Bugs to Fix
 
-- [ ] **04_geographic_analysis/vert_counts.R:2** - Fix typo: `gbnstall.packages("ggpmisc")` → `install.packages("ggpmisc")`
+- [ ] **04_geographic_analysis/vert_counts.R:2** - Fix typo: `gbnstall.packages("ggpmisc")` should be `install.packages("ggpmisc")`
 
-- [ ] **02_sequence_characterization/pv_cluster_investigation.R** - Fix undefined variable `askansgag_2` (appears on lines 36, 45, 77, 88). Either define this variable or update references to the correct data frame name.
+- [ ] **04_geographic_analysis/vert_counts.R:114** - Syntax error: two statements on same line. Split into separate lines.
 
-- [ ] **02_sequence_characterization/reclass_viz.R:98** - Fix typo: `el_ratio` → `le_ratio`
+- [ ] **02_sequence_characterization/reclass_viz.R:98** - Fix typo: `el_ratio` should be `le_ratio`
 
-- [ ] **03_phylogenetics/more_trees.R:16,40** - Fix tab separator: `sep = "/t"` → `sep = "\t"`
+- [ ] **03_phylogenetics/more_trees.R:16,40** - Fix tab separator: `sep = "/t"` should be `sep = "\t"`
 
 - [ ] **05_case_studies/genome_graphs.R:62-68** - Wrong data frame used: `manidae` should be `rat` for the rat genome plot
 
@@ -22,63 +22,51 @@ Use this checklist to track manual fixes needed before publication.
 
 - [ ] **01_database_construction/pro_file_parsing.R** - Remove `browser()` debugging calls
 
-- [ ] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections (lines referencing petase project) if not relevant to PV publication
+- [ ] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections if not relevant to PV publication
 
 ---
 
-## Scripts to Consider Consolidating
+## Script Dependencies (Geographic Analysis)
 
-These script groups have significant overlap. Consider merging if you want a cleaner repository:
+The geographic analysis scripts have specific dependencies. Run in this order:
 
-### Logan Analysis Scripts
-- `01_database_construction/logan_2.R`
-- `01_database_construction/logan_2_v2.R`
-- `01_database_construction/logan_3.R`
+1. **poolygons.R** (run first)
+   - Creates: `grid_sf`, `world`, `data_wide`, `giant_geo_table_grid_id_geometry`
+   - Outputs: `my_sf_data.gpkg`
+   - **Note**: Line 17 and 22 reference `all_pvs_mapping_binned` and `all_pvs_mapping` - these need to be loaded first (check if these come from another script or external source)
 
-**Recommendation**: Keep `logan_3.R` as most complete, or merge into single `logan_analysis.R`
+2. **geo_analysis.R** (depends on poolygons.R)
+   - Requires: `giant_geo_table_grid_id_geometry`, `grid_sf`, `world`, `data_wide`
 
-### Pathracer Scripts
-- `02_sequence_characterization/pathracer_fullness_hmm.R`
-- `02_sequence_characterization/ermmmm_fullness.R`
+3. **biomes.R** (depends on poolygons.R)
+   - Reads: `my_sf_data.gpkg` (output from poolygons.R)
+   - Requires: `data_wide`, `grid_sf`, `world`
 
-**Recommendation**: Keep `pathracer_fullness_hmm.R`, remove `ermmmm_fullness.R`
-
-### E6/E7 Scripts
-- `02_sequence_characterization/e6_e7.R`
-- `02_sequence_characterization/E6_andE7_synthesis.R`
-- `02_sequence_characterization/pv_cluster_investigation.R`
-
-**Recommendation**: Review for complementary vs duplicate analyses
+4. **vert_counts.R** (standalone - no dependencies on other scripts)
 
 ---
 
 ## Update Source Statements
 
-After fixing bugs, add this line to scripts that use `hmmsearch_clean()`:
+Add this line to scripts that use `hmmsearch_clean()`:
 
 ```r
 source("00_utilities/hmmsearch_utils.R")
 ```
 
 Scripts that need this update:
-- [ ] `01_database_construction/logan_2.R`
-- [ ] `01_database_construction/logan_2_v2.R`
 - [ ] `01_database_construction/logan_3.R`
 - [ ] `02_sequence_characterization/ncbi_L1_character.R`
 - [ ] `02_sequence_characterization/pathracer_fullness_hmm.R`
-- [ ] `02_sequence_characterization/ermmmm_fullness.R`
 - [ ] `02_sequence_characterization/hmmer_results.R`
-- [ ] `02_sequence_characterization/E6_andE7_synthesis.R`
 
 ---
 
 ## Input Files to Document/Provide
 
-Before publication, ensure these key input files are available or documented:
-
 ### HMMER Output Files
-- [ ] `pv2_fasta_star_sto.domtbl`
-- [ ] `feb_7_pv_orf.domtbl`
+- [ ] `feb_7_pv_fil_form.aa.domtbl` (logan_3.R)
+- [ ] `feb_7_pv_fil_form_L1_BI.domtbl` (logan_3.R)
 - [ ] Various `.domtbl` files referenced in scripts
 
 ### Tree Files
@@ -89,16 +77,17 @@ Before publication, ensure these key input files are available or documented:
 - [ ] `all_SRA_md.csv`
 - [ ] `tree_meta.csv`
 - [ ] `ncbi_info.txt`
+- [ ] `lib_source_big.txt` (logan_3.R)
 
 ### Geographic Data
-- [ ] `wwf_terr_ecos.shp` (WWF ecoregions shapefile)
-- [ ] Geolocation metadata files
+- [ ] `Ecoregions2017.shp` (biomes.R)
+- [ ] `geo_data_annotation_for_all_biosamps.txt` (poolygons.R)
+- [ ] `cluster_number_key_for_geo.tsv` (poolygons.R)
+- [ ] `who_puts_vlookup_man.list` (poolygons.R)
 
 ---
 
 ## Optional Improvements
 
-- [ ] Add README.md files to each subdirectory explaining the scripts
-- [ ] Add consistent file headers with author/date/description
-- [ ] Standardize variable naming conventions across scripts
-- [ ] Add input/output documentation to each script header
+- [ ] Add README.md to each subdirectory explaining the scripts
+- [ ] Add file headers with author/date/description
