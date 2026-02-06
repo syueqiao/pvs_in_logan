@@ -1,0 +1,1 @@
+This script is purely for generating gene maps for the "case study" portion of the results. ORFs were manually formatted to `gggenes` compliant style, and jellyroll regions were also manually annotated.

@@ -303,7 +303,7 @@ color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7C
 
 ggplot(zard_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
-  geom_gene_arrow(aes(xmin = 3509+69, xmax = 3509+800, y = "SRR22028468_199653"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
+  geom_gene_arrow(aes(xmin = 5441+69, xmax = 5441+1302, y = "SRR22028468_199653"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_text(aes(x = end - ((end-start)/2), y = 1.2, label = gene, fontface = 'bold', family = "Noto Sans"))  +  scale_fill_manual(values = color_match_genes) +
   ylab("Contig") +

@@ -1,0 +1,1 @@
+`logan_3.R` does most of the heavy lifting for the analysis of raw Logan outputs. Inputs are located in the files/ directory. Only some outputs generated in the outputs/ directory, but should be reproducible if run locally.
