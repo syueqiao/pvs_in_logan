@@ -3,18 +3,7 @@
 library(tidyverse)
 library(ggplot2)
 #function to parse the domtbl output
-hmmsearch_clean <- function(input_domtbl) {
-  input_domtbl_scan <- read.table(input_domtbl, sep = "", header = FALSE, fill = TRUE) %>% na.omit() %>% .[, 1:22]  
-  colnames(input_domtbl_scan) <- c(
-    "query_acc", "misc", "qlen", "pfam", "pfam_acc", "tlen", "eval_full",
-    "score_full", "bias_full", "#", "of", "c_eval", "i_eval", "score_one",
-    "bias_one", "hmmcoord_from", "hmmcoord_to", "alicoord_from", "alicoord_to",
-    "envcoord_from", "envcoord_to", "acc"
-  )
-  input_domtbl_scan$query_acc_clean <- sub("_[^_]+$", "", input_domtbl_scan$query_acc)
-  input_domtbl_scan <- type.convert(input_domtbl_scan, as.is = TRUE)
-  return(input_domtbl_scan)
-}
+source("00_utilities/hmmsearch_utils.R")
 
 #import from hmmer
 feb_7_pv <- hmmsearch_clean("files/feb_7_pv_fil_form.aa.domtbl")
