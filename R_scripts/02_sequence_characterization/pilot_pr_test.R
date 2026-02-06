@@ -1,5 +1,5 @@
 ##for novelty search
-feb_7_L1_nuc_hmmer_env <- read.table("feb7_all_pr_pilot_outputs_sort_centroids_huh.tsv.csv", sep = ",", header = F, quote="", comment.char = "")
+feb_7_L1_nuc_hmmer_env <- read.table("files/feb7_all_pr_pilot_outputs_sort_centroids_huh.tsv.csv", sep = ",", header = F, quote="", comment.char = "")
 # feb_7_L1_nuc_hmmer_env$V1 <- gsub("OriginScaffoldPath=.*", "", feb_7_L1_nuc_hmmer_env$V1)
 length(unique(feb_7_L1_nuc_hmmer_env_less_90_nt))
 #calculate qcov

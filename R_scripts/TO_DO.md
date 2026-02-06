@@ -6,21 +6,21 @@ Use this checklist to track manual fixes needed before publication.
 
 ## Critical Bugs to Fix
 
-- [ ] **04_geographic_analysis/vert_counts.R:2** - Fix typo: `gbnstall.packages("ggpmisc")` should be `install.packages("ggpmisc")`
+- [x] **04_geographic_analysis/vert_counts.R:2** - Fix typo: `gbnstall.packages("ggpmisc")` should be `install.packages("ggpmisc")`
 
-- [ ] **04_geographic_analysis/vert_counts.R:114** - Syntax error: two statements on same line. Split into separate lines.
+- [x] **04_geographic_analysis/vert_counts.R:114** - Syntax error: two statements on same line. Split into separate lines.
 
-- [ ] **02_sequence_characterization/reclass_viz.R:98** - Fix typo: `el_ratio` should be `le_ratio`
+- [x] **02_sequence_characterization/reclass_viz.R:98** - Fix typo: `el_ratio` should be `le_ratio`
 
-- [ ] **03_phylogenetics/more_trees.R:16,40** - Fix tab separator: `sep = "/t"` should be `sep = "\t"`
+- [x] **03_phylogenetics/more_trees.R:16,40** - Fix tab separator: `sep = "/t"` should be `sep = "\t"`
 
-- [ ] **05_case_studies/genome_graphs.R:62-68** - Wrong data frame used: `manidae` should be `rat` for the rat genome plot
+- [x] **05_case_studies/genome_graphs.R:62-68** - Wrong data frame used: `manidae` should be `rat` for the rat genome plot
 
 ---
 
 ## Code Cleanup
 
-- [ ] **01_database_construction/pro_file_parsing.R** - Remove `browser()` debugging calls
+- [x] **01_database_construction/pro_file_parsing.R** - Remove `browser()` debugging calls
 
 - [ ] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections if not relevant to PV publication
 
@@ -34,6 +34,8 @@ The geographic analysis scripts have specific dependencies. Run in this order:
    - Creates: `grid_sf`, `world`, `data_wide`, `giant_geo_table_grid_id_geometry`
    - Outputs: `my_sf_data.gpkg`
    - **Note**: Line 17 and 22 reference `all_pvs_mapping_binned` and `all_pvs_mapping` - these need to be loaded first (check if these come from another script or external source)
+
+   #comes from map_gen_for_pub.R
 
 2. **geo_analysis.R** (depends on poolygons.R)
    - Requires: `giant_geo_table_grid_id_geometry`, `grid_sf`, `world`, `data_wide`
@@ -65,8 +67,8 @@ Scripts that need this update:
 ## Input Files to Document/Provide
 
 ### HMMER Output Files
-- [ ] `feb_7_pv_fil_form.aa.domtbl` (logan_3.R)
-- [ ] `feb_7_pv_fil_form_L1_BI.domtbl` (logan_3.R)
+- [x] `feb_7_pv_fil_form.aa.domtbl` (logan_3.R)
+- [x] `feb_7_pv_fil_form_L1_BI.domtbl` (logan_3.R)
 - [ ] Various `.domtbl` files referenced in scripts
 
 ### Tree Files
@@ -77,13 +79,13 @@ Scripts that need this update:
 - [ ] `all_SRA_md.csv`
 - [ ] `tree_meta.csv`
 - [ ] `ncbi_info.txt`
-- [ ] `lib_source_big.txt` (logan_3.R)
+- [x] `lib_source_big.txt` (logan_3.R)
 
 ### Geographic Data
-- [ ] `Ecoregions2017.shp` (biomes.R)
-- [ ] `geo_data_annotation_for_all_biosamps.txt` (poolygons.R)
-- [ ] `cluster_number_key_for_geo.tsv` (poolygons.R)
-- [ ] `who_puts_vlookup_man.list` (poolygons.R)
+- [x] `Ecoregions2017.shp` (biomes.R)
+- [x] `geo_data_annotation_for_all_biosamps.txt` (poolygons.R)
+- [x] `cluster_number_key_for_geo.tsv` (poolygons.R)
+- [x] `who_puts_vlookup_man.list` (poolygons.R)
 
 ---
 

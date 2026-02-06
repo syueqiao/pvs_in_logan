@@ -25,7 +25,7 @@ all_ncbi_pv_sto_sto_order_end_fw <- reshape(all_ncbi_pv_sto_sto_order_end_fw, id
 
 #look for regions that are/not in the right order
 #this is from known false positives, Ignoring the "split" L1s by putting them into a blacklist and filtering out, there are surprisingly (or maybe not?) 0 reordering of the domains
-blacklist <- read.table("blacklist.txt", header = F)
+blacklist <- read.table("files/blacklist.txt", header = F)
 all_ncbi_pv_sto_sto_order_start_fw_clean <- filter(all_ncbi_pv_sto_sto_order_start_fw, !contig %in% blacklist$V1)
 all_ncbi_pv_sto_sto_order_CD_B <- filter(all_ncbi_pv_sto_sto_order_start_fw_clean, envcoord_from.L1_B_super5 > envcoord_from.L1_CD_super5)
 all_ncbi_pv_sto_sto_order_E_CD <- filter(all_ncbi_pv_sto_sto_order_start_fw_clean, envcoord_from.L1_CD_super5 > envcoord_from.L1_E_super5)
@@ -228,7 +228,7 @@ write.table(select(updated_ncbi_all_L1_envcoords_envaa, query_acc, nuc_from, nuc
 
 #bonus code
 ##characterize the nt diversity in L1 for the accessions to get an updated view of the known diversity of PVs
-L1_cluster_nt_accs <- read.table("ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
+L1_cluster_nt_accs <- read.table("files/ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
 L1_cluster_nt_accs$V1 <- sub(">","",L1_cluster_nt_accs$V1)
 L1_cluster_nt_accs$V1 <- sub("\\..*","",L1_cluster_nt_accs$V1)
 
@@ -242,7 +242,7 @@ L1_cluster_nt_accs_annot_NAs <- L1_cluster_nt_accs_annot[rowSums(is.na(L1_cluste
 write.table(L1_cluster_nt_accs_annot_NAs$V1, "OUT_L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 #add species from ncbi manually, where they're not available
-L1_cluster_nt_accs_NAs_key <- read.table("IN_L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
+L1_cluster_nt_accs_NAs_key <- read.table("files/IN_L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
 
 L1_cluster_nt_accs_NAs_key$V1 <- sub("\\..*","",L1_cluster_nt_accs_NAs_key$V1)
 
@@ -255,7 +255,7 @@ L1_cluster_nt_accs_annot_all_graph_table <- as.data.frame(table(L1_cluster_nt_ac
 sum(L1_cluster_nt_accs_annot_all_graph_table$Freq) - 485
 
 #add species manually
-ncbi_tax_counts <- read.table("host_table_ncbi.txt", sep ="\t", header = T)
+ncbi_tax_counts <- read.table("files/host_table_ncbi.txt", sep ="\t", header = T)
 ncbi_tax_counts <- ncbi_tax_counts[1:57,]
 agg_tax_counts <-aggregate(ncbi_tax_counts$Recorded.PVs, by=list(Category=ncbi_tax_counts$X), FUN=sum)
 sum(ncbi_tax_counts$Recorded.PVs) - 485

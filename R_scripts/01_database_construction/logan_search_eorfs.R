@@ -5,8 +5,8 @@ library(ggrepel)
 library(ggmosaic)
 
 
-map_date_df <- function(file_name, coloor){
-  output_df <- read.table(file_name, sep = "\t", header = T, fill = T, quote = "\"")
+map_date_df <- function(file_name, coloor) {
+  output_df <- read.table(file_name, sep = "\t", header = TRUE, fill = TRUE, quote = "\"")
   
   output_df$collection_date_sam_parsed <- parse_datetime(gsub("\\[|\\]|'", "", output_df$collection_date_sam))
   
@@ -25,10 +25,10 @@ map_date_df <- function(file_name, coloor){
   
   dates <- output_df %>%
     ggplot() +
-    geom_histogram(aes(x=collection_date_sam_parsed), binwidth = 10) +
+    geom_histogram(aes(x =collection_date_sam_parsed), binwidth = 10) +
     scale_x_date(breaks="2 years") +
     ggtitle(paste0(file_name)) +
-    theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+    theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust =1))
   
   png_name <-  sub('\\..*$', '', basename(file_name))
 
@@ -43,7 +43,7 @@ map_date_df <- function(file_name, coloor){
 
 nsp7 <- map_datemap_datemap_date_df("../e6_e7/NSP7_SARSCOV2.tsv", "magenta")
 nsp7_pre2020 <- filter(nsp7[[3]], collection_date_sam_parsed < '2019-01-01')
-write.table(nsp7_pre2020, "../nsp7_pre2020.tsv", sep = "\t", quote = F, row.names = F)
+write.table(nsp7_pre2020, "../nsp7_pre2020.tsv", sep = "\t", quote = FALSE, row.names = F)
 
 nsp7 <- map_date_df("../e6_e7/NSP7_SARSCOV2.tsv", "magenta")
 nsp7[[1]]
@@ -65,7 +65,7 @@ datalist = list()
 
 for (j in tsvs_list) {
   
-  dat <- read.table(j, sep = "\t", header = T, fill = T, quote = "\"")
+  dat <- read.table(j, sep = "\t", header = TRUE, fill = TRUE, quote = "\"")
   datalist[[j]] <- dat # add it to your list
 }
 
@@ -86,7 +86,7 @@ all <- ggplot(big_data) +
            scale_fill_brewer(palette = "Set3") +
            facet_grid(~ type, scales = "free_x") + 
            theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust =1))
 
 ggplot2::ggsave(filename = "all_librarysource.png",all, width = 40, height = 20, units = "cm")
 
@@ -101,7 +101,7 @@ no_covid <- ggplot(big_data_no_covid) +
   scale_fill_brewer(palette = "Set3") +
   facet_grid(~ type, scales = "free_x") + 
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust =1))
 
 ggplot2::ggsave(filename = "all_librarysource_nocovid.png",no_covid, width = 40, height = 20, units = "cm")
 
@@ -137,7 +137,7 @@ plot2 <- ggplot(org_freq, aes(x = source, fill = Var1, y = Freq)) +
                   position=position_stack(vjust = 0.5), hjust = -1, vjust = -1,
                   direction="y", na.rm=TRUE, size = 5) +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),legend.position = 'bottom') + theme(legend.key.size = unit(0.05, "cm"))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust =1),legend.position = 'bottom') + theme(legend.key.size = unit(0.05, "cm"))
     
 
 ggplot2::ggsave(filename = "../e6_e7/tissue_plot_covid.png",plot2, width = 80, height = 40, units = "cm")
@@ -151,7 +151,7 @@ plot3 <- ggplot(org_freq_nocovid, aes(x = source, fill = Var1, y = Freq)) +
                   position=position_stack(vjust = 0), hjust = 0, vjust = 0,
                   direction="y", na.rm=TRUE, size = 2) +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),legend.position = 'bottom') + theme(legend.key.size = unit(0.05, "cm"))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust =1),legend.position = 'bottom') + theme(legend.key.size = unit(0.05, "cm"))
 
 
 ggplot2::ggsave(filename = "../e6_e7/tissue_plot_nocovid.png", plot3, width = 80, height = 40, units = "cm")
@@ -160,11 +160,11 @@ ggplot2::ggsave(filename = "../e6_e7/tissue_plot_nocovid.png", plot3, width = 80
 cell_lines <- big_data |> 
   filter(if_any(.cols = everything(), ~ grepl("cell line|cultured|vitro|HEK293|HeLa|Sf9|CHO|MCF-7|HL 60|Vero", .)))
 
-write.table(big_data, "../all_logan_search_outputs.tsv", sep = "\t", quote = F, row.names = F)
+write.table(big_data, "../all_logan_search_outputs.tsv", sep = "\t", quote = FALSE, row.names = F)
 
 ####
-map_date_df_deposit <- function(file_name, coloor){
-  output_df <- read.table(file_name, sep = "\t", header = T, fill = T, quote = "\"")
+map_date_df_deposit <- function(file_name, coloor) {
+  output_df <- read.table(file_name, sep = "\t", header = TRUE, fill = TRUE, quote = "\"")
   
   output_df$release_date_sam_parsed <- parse_datetime(gsub("\\[|\\]|'", "", output_df$releasedate))
   
@@ -183,10 +183,10 @@ map_date_df_deposit <- function(file_name, coloor){
   
   dates <- output_df %>%
     ggplot() +
-    geom_histogram(aes(x=release_date_sam_parsed), binwidth = 10) +
+    geom_histogram(aes(x =release_date_sam_parsed), binwidth = 10) +
     scale_x_date(breaks="2 years") +
     ggtitle(paste0(file_name)) +
-    theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+    theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust =1))
   
   png_name <-  sub('\\..*$', '', basename(file_name))
   
@@ -205,7 +205,7 @@ p2
 df_release <- nsp7_release[[3]]
 
 #import sprql query output
-doid_cell_prolif <- read.table("../e6_e7/do_sparql_results.csv", sep = ",", header = T)
+doid_cell_prolif <- read.table("files/do_sparql_results.csv", sep = ",", header = TRUE)
 #parse ID to be in the same format of logan search output
 doid_cell_prolif$id_parse <- gsub(":", "_", doid_cell_prolif$id)
 #see which are cancer related
@@ -227,7 +227,7 @@ df_6922_cancer_ratio <- (length(df_6922$ID)-length(df_6922_cancer$ID))/length(df
 
 #conduct chi squared between two input dataframes
 
-compare_cancer_no_cancer <- function(df1, df2){
+compare_cancer_no_cancer <- function(df1, df2) {
   
   oncogenic_df_cancer <- filter(df1, do_id %in% doid_cell_prolif$id_parse)
   oncogenic_df_notcancer <- filter(df1, !do_id %in% doid_cell_prolif$id_parse)
@@ -275,7 +275,7 @@ df_4697 <- list_4697[[3]]
 test_chi <- compare_cancer_no_cancer(big_data_no_covid, big_non_onco)
 test_chi[[1]]
 
-full_compare_func <- function(file1, file2){
+full_compare_func <- function(file1, file2) {
   file1_name <-  sub('\\..*$', '', basename(file1))
   file2_name <-  sub('\\..*$', '', basename(file2))
   
@@ -323,7 +323,7 @@ datalist_rand = list()
 
 for (j in tsvs_list_rand) {
   
-  dat <- read.table(j, sep = "\t", header = T, fill = T, quote = "\"")
+  dat <- read.table(j, sep = "\t", header = TRUE, fill = TRUE, quote = "\"")
   datalist_rand[[j]] <- dat # add it to your list
 }
 
@@ -388,7 +388,7 @@ a_coolor <- ifelse(grepl("non_onc", all_df$sel),"#FA8072","#00C5CD")
 p <- ggplot(x, aes(x = source, y = `unlist(rand_counts_orfs)`, fill = sel)) +
       geom_bar(stat="identity") +
       theme_bw() +
-      theme(axis.text.x=element_text(angle=45, hjust=1, colour=coolors))
+      theme(axis.text.x=element_text(angle=45, hjust =1, colour=coolors))
 p
 
 #calculate odds ratio for each compared to full set of do_ids, and then the set of do_ids covered by the +onco_orfs set
@@ -463,7 +463,7 @@ dflist_counts_df$name <- gsub("\\.tsv.*", "", dflist_counts_df$name)
 
 dflist_counts_df$type <- ifelse(grepl("^[0-9]", dflist_counts_df$name), "rand", "onco")
 
-ggplot(dflist_counts_df, aes(y=reorder(name, as.numeric(estimate)), x=log10(as.numeric(estimate)), label=name, color = type)) +
+ggplot(dflist_counts_df, aes(y =reorder(name, as.numeric(estimate)), x=log10(as.numeric(estimate)), label=name, color = type)) +
   geom_point(size=3, shape=19) +
   geom_errorbarh(aes(xmin=log10(as.numeric(dflist_counts_df$`1`)), xmax=log10(as.numeric(dflist_counts_df$`2`))), height=.3) +
   coord_fixed(ratio=.3) +
@@ -502,5 +502,5 @@ tabb <- as.data.frame(table(source_big_data$V2))
 bar(tabb$Freq, breaks = 25)
 tabb[order(tabb$Var1, tabb$Freq),]
 
-ggplot(data=tabb, aes(x=reorder(Var1, -Freq), y=Freq)) +
-  geom_bar(stat="identity") + theme_bw() + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
+ggplot(data=tabb, aes(x =reorder(Var1, -Freq), y=Freq)) +
+  geom_bar(stat="identity") + theme_bw() + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust =1)) 

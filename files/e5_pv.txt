@@ -1,0 +1,97 @@
+HPV71REF|lcl|Human Papillomavirus 71 (HPV71), complete genome
+HPV160REF|lcl|Human Papillomavirus 160 (HPV160), complete genome
+HPV85REF|lcl|Human Papillomavirus 85 (HPV85), complete genome
+HPV83REF|lcl|Human Papillomavirus 83 (HPV83), complete genome
+HPV84REF|lcl|Human Papillomavirus 84 (HPV84), complete genome
+HPV86REF|lcl|Human Papillomavirus 86 (HPV86), complete genome
+HPV91REF|lcl|Human Papillomavirus 91 (HPV91), complete genome
+HPV89REF|lcl|Human Papillomavirus 89 (HPV89), complete genome
+HPV74REF|lcl|Human Papillomavirus 74 (HPV74), complete genome
+RtPV1REF|lcl|Rangifer tarandus papillomavirus 1 (RtPV1), complete genome
+HPV87REF|lcl|Human Papillomavirus 87 (HPV87), complete genome
+HPV43REF|lcl|Human Papillomavirus 43 (HPV43), complete genome
+HPV81REF|lcl|Human Papillomavirus 81 (HPV81), complete genome
+HPV94REF|lcl|Human Papillomavirus 94 (HPV94), complete genome
+HPV90REF|lcl|Human Papillomavirus 90 (HPV90), complete genome
+HPV62REF|lcl|Human Papillomavirus 62 (HPV62), complete genome
+HPV67REF|lcl|Human Papillomavirus 67 (HPV67), complete genome
+HPV58REF|lcl|Human Papillomavirus 58 (HPV58), complete genome
+HPV68REF|lcl|Human Papillomavirus 68 (HPV68), complete genome
+HPV97REF|lcl|Human Papillomavirus 97 (HPV97), complete genome
+HPV106REF|lcl|Human Papillomavirus 106 (HPV106), complete genome
+HPV102REF|lcl|Human Papillomavirus 102 (HPV102), complete genome
+MfPV7REF|lcl|Macaca fascicularis papillomavirus 7 (MfPV7), complete genome
+MfPV3REF|lcl|Macaca fascicularis papillomavirus 3 (MfPV3), complete genome
+MfPV6REF|lcl|Macaca fascicularis papillomavirus 6 (MfPV6), complete genome
+MfPV4REF|lcl|Macaca fascicularis papillomavirus 4 (MfPV4), complete genome
+MfPV8REF|lcl|Macaca fascicularis papillomavirus 8 (MfPV8), complete genome
+MfPV5REF|lcl|Macaca fascicularis papillomavirus 5 (MfPV5), complete genome
+MfPV10REF|lcl|Macaca fascicularis papillomavirus 10 (MfPV10), complete genome
+HPV125REF|lcl|Human Papillomavirus 125 (HPV125), complete genome
+MfPV11REF|lcl|Macaca fascicularis papillomavirus 11 (MfPV11), complete genome
+HPV114REF|lcl|Human Papillomavirus 114 (HPV114), complete genome
+HPV117REF|lcl|Human Papillomavirus 117 (HPV117), complete genome
+CgPV1REF|lcl|Colobus guereza papillomavirus 1 (CgPV1), complete genome
+HPV31REF|lcl|Human Papillomavirus 31 (HPV31), complete genome
+BPV13REF|lcl|Bos taurus papillomavirus 13 (BPV13), complete genome
+BgPV1REF|lcl|Bos grunniens papillomavirus 1 (BgPV1), complete genome
+HPV16REF|lcl|Human Papillomavirus 16 (HPV16), complete genome
+HPV78REF|lcl|Human Papillomavirus 78 (HPV78), complete genome
+BPV14REF|lcl|Bos taurus papillomavirus 14 (BPV14), complete genome
+HPV177REF|lcl|Human Papillomavirus 177 (HPV177), complete genome
+RalPV1REF|lcl|Rusa alfredi papillomavirus 1 (RalPV1), complete genome
+MfuPV1REF|lcl|Macaca fuscata papillomavirus 1 (MfuPV1), complete genome
+OaPV4REF|lcl|Ovis aries papillomavirus 4 (OaPV4), complete genome
+GcPV1REF|lcl|Giraffa camelopardalis papillomavirus 1 (GcPV1), complete genome
+HPV33REF|lcl|Human Papillomavirus 33 (HPV33), complete genome
+HPV11REF|lcl|Human Papillomavirus 11 (HPV11), complete genome
+BPV2REF|lcl|Bos taurus papillomavirus 2 (BPV2), complete genome
+HPV39REF|lcl|Human Papillomavirus 39 (HPV39), complete genome
+HPV-mEV06c12bnr|lcl|Human Papillomavirus isolate EV06c12b (HPV-mEV06c12b), complete genome
+MmPV2REF|lcl|Macaca mulata papillomavirus 2 (MmPV2), complete genome
+OjohPV1REF|lcl|Okapia johnstoni papillomavirus 1 (OjohPV1), complete genome
+MmPV6REF|lcl|Macaca mulata papillomavirus 6 (MmPV6), complete genome
+BPV32REF|lcl|Bos Taurus papillomavirus 32 (BPV32), complete genome
+BPV40REF|lcl|Bos taurus papillomavirus 40 (BPV40), complete genome
+OvPV1REF|lcl|Odocoileus virginianus papillomavirus 1 (OvPV1), complete genome
+AaPV1REF|lcl|Alces alces papillomavirus 1 (AaPV1), complete genome
+SfPV1REF|lcl|Sylvilagus floridanus papillomavirus 1 (SfPV1), complete genome
+MmPV1REF|lcl|Macaca mulata papillomavirus 1 (MmPV1), complete genome
+OaPV1REF|lcl|Ovis aries papillomavirus 1 (OaPV1), complete genome
+OcPV1REF|lcl|Oryctolagus cuniculus papillomavirus 1 (OcPV1), complete genome
+CcaPV1REF|lcl|Capreolus capreolus papillomavirus 1 (CcaPV1), complete genome
+MfPV9REF|lcl|Macaca fascicularis papillomavirus 9 (MfPV9), complete genome
+PhPV1REF|lcl|Papio hamadryas papillomavirus 1 (PhPV1), complete genome
+EbonPV2REF|lcl|Eumops bonariensis papillomavirus 2 (EbonPV2), complete genome
+PtroPV1REF|lcl|Pan troglodytes papillomavirus 1 (PtroPV1), complete genome
+NasiPV1REF|lcl|Neophocaena asiaeorientalis papillomavirus 1 (NasiPV1), complete genome
+NasiPV3REF|lcl|Neophocaena asiaeorientalis papillomavirus 3 (NasiPV3), complete genome
+TrobPV3REF|lcl|Tylonycteris robustula papillomavirus 3 (TrobPV3), complete genome
+HPV70REF|lcl|Human Papillomavirus 70 (HPV70), complete genome
+HPV28REF|lcl|Human Papillomavirus 28 (HPV28), complete genome
+HPV29REF|lcl|Human Papillomavirus 29 (HPV29), complete genome
+HPV44REF|lcl|Human Papillomavirus 44 (HPV44), complete genome
+HPV61REF|lcl|Human Papillomavirus 61 (HPV61), complete genome
+HPV54REF|lcl|Human Papillomavirus 54 (HPV54), complete genome
+OaPV2REF|lcl|Ovis aries papillomavirus 2 (OaPV2), complete genome
+HPV6REF|lcl|Human Papillomavirus 6 (HPV6), complete genome
+BPV1REF|lcl|Bos taurus papillomavirus 1 (BPV1), complete genome
+HPV18REF|lcl|Human Papillomavirus 18 (HPV18), complete genome
+HPV2REF|lcl|Human Papillomavirus 2 (HPV2), complete genome
+HPV57REF|lcl|Human Papillomavirus 57 (HPV57), complete genome
+HPV13REF|lcl|Human Papillomavirus 13 (HPV13), complete genome
+PpPV1REF|lcl|Pan paniscus papillomavirus 1 (PpPV1), complete genome
+HPV3REF|lcl|Human Papillomavirus 3 (HPV3), complete genome
+HPV7REF|lcl|Human Papillomavirus 7 (HPV7), complete genome
+HPV10REF|lcl|Human Papillomavirus 10 (HPV10), complete genome
+HPV27REF|lcl|Human Papillomavirus 27 (HPV27), complete genome
+HPV32REF|lcl|Human Papillomavirus 32 (HPV32), complete genome
+HPV34REF|lcl|Human Papillomavirus 34 (HPV34), complete genome
+HPV35REF|lcl|Human Papillomavirus 35 (HPV35), complete genome
+HPV40REF|lcl|Human Papillomavirus 40 (HPV40), complete genome
+HPV45REF|lcl|Human Papillomavirus 45 (HPV45), complete genome
+HPV52REF|lcl|Human Papillomavirus 52 (HPV52), complete genome
+HPV59REF|lcl|Human Papillomavirus 59 (HPV59), complete genome
+HPV72REF|lcl|Human Papillomavirus 72 (HPV72), complete genome
+HPV73REF|lcl|Human Papillomavirus 73 (HPV73), complete genome
+HPV77REF|lcl|Human Papillomavirus 77 (HPV77), complete genome

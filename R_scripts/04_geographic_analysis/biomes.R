@@ -16,6 +16,7 @@ fw_polygons_2 <- st_as_sf(ne_download(scale = 50, type = 'lakes', category = 'ph
 water <- bind_rows(dplyr::select(ocean_polygons, geometry, featurecla_ocean), dplyr::select(fw_polygons, geometry, featurecla_fw), dplyr::select(fw_polygons_2, geometry, featurecla_fw_2))
 
 # my_shapefile <- read_sf("Global_200_Terrestrial.shp")
+#2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
 my_shapefile_2 <- read_sf("Ecoregions2017.shp")
 # my_shapefile_fw <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 # my_shapefile_fw_2 <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")

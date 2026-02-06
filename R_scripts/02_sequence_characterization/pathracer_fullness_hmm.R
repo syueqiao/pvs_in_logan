@@ -3,7 +3,7 @@ library(tidyverse)
 library(ggplot2)
 library(data.table)
 
-vert3 <- read.table("vert3_sum.txt", sep = "\t", header = F, fill = T, col.names = c(1:25))
+vert3 <- read.table("files/vert3_sum.txt", sep = "\t", header = F, fill = T, col.names = c(1:25))
 vert3$index <- seq.int(nrow(vert3))
 vert3[-1] <- t(apply(vert3[-1], 1,
                           function(x) replace(x, duplicated(x), NA)))

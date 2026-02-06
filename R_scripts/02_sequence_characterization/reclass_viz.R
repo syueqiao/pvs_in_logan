@@ -1,11 +1,11 @@
-all_pave <- read.table("all_pv.txt", sep = "\t", header = F)
-e4 <- read.table("e4_pv.txt", sep = "\t", header = F)
-e5 <- read.table("e5_pv.txt", sep = "\t", header = F)
-e6 <- read.table("e6_pv.txt", sep = "\t", header = F)
-e7 <- read.table("e7_pv.txt", sep = "\t", header = F)
-e8 <- read.table("e8_pv.txt", sep = "\t", header = F)
-e9 <- read.table("e9_pv.txt", sep = "\t", header = F)
-e10 <- read.table("e10_pv.txt", sep = "\t", header = F)
+all_pave <- read.table("files/all_pv.txt", sep = "\t", header = F)
+e4 <- read.table("files/e4_pv.txt", sep = "\t", header = F)
+e5 <- read.table("files/e5_pv.txt", sep = "\t", header = F)
+e6 <- read.table("files/e6_pv.txt", sep = "\t", header = F)
+e7 <- read.table("files/e7_pv.txt", sep = "\t", header = F)
+e8 <- read.table("files/e8_pv.txt", sep = "\t", header = F)
+e9 <- read.table("files/e9_pv.txt", sep = "\t", header = F)
+e10 <- read.table("files/e10_pv.txt", sep = "\t", header = F)
 
 all_pave$e4<- with(all_pave, ifelse(V1 %in% e4$V1, "1", "0"))
 all_pave$e5<- with(all_pave, ifelse(V1 %in% e5$V1, "1", "0"))
@@ -95,7 +95,7 @@ ggplot(feb7_abundances_ratio_agg_res, aes(x=le_ratio_var_nz)) +
 feb7_abundances_ratio_agg_res_qq <- filter(feb7_abundances_ratio_agg_res, !le_ratio == Inf)
 qqnorm(feb7_abundances_ratio_agg_res_qq$le_ratio, pch = 1, frame = FALSE)
 
-feb7_abundances_ratio_agg_res <- subset(feb7_abundances_ratio_agg_res, !grepl("0", el_ratio))
+feb7_abundances_ratio_agg_res <- subset(feb7_abundances_ratio_agg_res, !grepl("0", le_ratio))
 
 
 
@@ -315,7 +315,7 @@ library_type_ratios(feb7_abundances, gen, "#80350E", "#C0C0C0")
 
 length(feb7_abundances$library[grepl("^METATRANSCRIPTOMIC$", feb7_abundances$V2)])
 
-risks <- read.table("risks.txt", sep = "\t", header = T)
+risks <- read.table("files/risks.txt", sep = "\t", header = T)
 risks <- risks[-21,]
 
 risks$risk <- factor(c("high", "med", "low"))

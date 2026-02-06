@@ -13,7 +13,7 @@ SRA_ncbi_and_novel$ncbi_and_novel_SRA_info <- SRA_ncbi_and_novel$ncbi_and_novel_
 SRA_ncbi_and_novel <- SRA_ncbi_and_novel %>% separate(ncbi_and_novel_SRA, into = c("library", "info"), sep="_")
 SRA_ncbi_and_novel$library <- gsub("Score.*", "", SRA_ncbi_and_novel$library)
 
-write.table(SRA_ncbi_and_novel$library, "2025.03.27.ncbi_and_novel_SRA.txt", sep = "/t", col.names = F, row.names = F, quote = T)
+write.table(SRA_ncbi_and_novel$library, "2025.03.27.ncbi_and_novel_SRA.txt", sep = "\t", col.names = F, row.names = F, quote = T)
 #do some stuff with entrez
 SRA_entrez_nn <- read.table("sra_metadata_all_sra.txt", sep = "\t", header = F)
 colnames(SRA_entrez_nn) <- c("library", "species")

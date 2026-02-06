@@ -1,5 +1,5 @@
 #use output from pro_file_parsing output
-july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = T)
+july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = TRUE)
 eval_fil_july_3400_test <- filter(july_3400_test, V11 < 0.000000001 )
 jul1_test <- eval_fil_july_3400_test
 
@@ -76,15 +76,15 @@ pv2_test_sliced %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 pv2_test_sliced_AB331651 <- filter(pv2_test_sliced, V6 == "papilloma.PPV_E1_C.Bos_taurus_papillomavirus_10:AB331651")
-write.table(pv2_test_sliced_AB331651$V1, "pv2_test_sliced_AB331651.txt", row.names = F, col.names = F)
+write.table(pv2_test_sliced_AB331651$V1, "pv2_test_sliced_AB331651.txt", row.names = FALSE, col.names = FALSE)
 
 pv2_test_sliced_MZ189241 <- filter(pv2_test_sliced, V6 == "papilloma.PPV_E1_DBD.Human_papillomavirus_type_18:MZ189241")
-write.table(pv2_test_sliced_MZ189241$V1, "pv2_test_sliced_MZ189241", row.names = F, col.names = F)
+write.table(pv2_test_sliced_MZ189241$V1, "pv2_test_sliced_MZ189241", row.names = FALSE, col.names = FALSE)
 
-write.table(paste0(pv2_test_sliced$V14, collapse = ","), "pv2_test_sliced_SRA.txt", row.names = F, col.names = F, quote = F, sep = ",")
+write.table(paste0(pv2_test_sliced$V14, collapse = ","), "pv2_test_sliced_SRA.txt", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = ",")
 names(pv2_test_sliced)[names(pv2_test_sliced) == 'V14'] <- 'Run'
 
-sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = T, header = T)
+sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = TRUE, header = TRUE)
 pv2_test_sliced_metadata <- left_join(pv2_test_sliced, sra_metadata, by = c("V14" = "Run"))
 pv2_test_sliced_metadata <- pv2_test_sliced_metadata[,1:33]
 
@@ -102,7 +102,7 @@ ggplot(pv2_test_sliced_metadata, aes(fill=type, x = LibrarySource)) +
   theme_bw()
 
 ############SEPARATE FOR ANELLO###################
-july_3400_test_anello <- read.table("july1_3400_run.pro", sep = "\t", fill = T)
+july_3400_test_anello <- read.table("july1_3400_run.pro", sep = "\t", fill = TRUE)
 anello1_test <- filter(july_3400_test_anello, grepl("anello", V6))
 anello1_test <- filter(anello1_test, V11 < 0.0001 )
 
@@ -179,17 +179,17 @@ anello1_test_sliced %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 anello1_test_sliced_AB331651 <- filter(anello1_test_sliced, V6 == "papilloma.PPV_E1_C.Bos_taurus_papillomavirus_10:AB331651")
-# write.table(anello1_test_sliced_AB331651$V1, "anello1_test_sliced_AB331651.txt", row.names = F, col.names = F)
+# write.table(anello1_test_sliced_AB331651$V1, "anello1_test_sliced_AB331651.txt", row.names = FALSE, col.names = FALSE)
 
 anello1_test_sliced_MZ189241 <- filter(anello1_test_sliced, V6 == "papilloma.PPV_E1_DBD.Human_papillomavirus_type_18:MZ189241")
-# write.table(anello1_test_sliced_MZ189241$V1, "anello1_test_sliced_MZ189241", row.names = F, col.names = F)
+# write.table(anello1_test_sliced_MZ189241$V1, "anello1_test_sliced_MZ189241", row.names = FALSE, col.names = FALSE)
 
 names(anello1_test_sliced)[names(anello1_test_sliced) == 'V14'] <- 'Run'
 
-write.table(paste0(anello1_test_sliced$Run, collapse = ","), "anello1_test_sliced_SRA.txt", row.names = F, col.names = F, quote = F, sep = ",")
+write.table(paste0(anello1_test_sliced$Run, collapse = ","), "anello1_test_sliced_SRA.txt", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = ",")
 
 
-b3400 <- read.table("3400_sra_metadata.txt", sep = ",", fill = T, header = T)
+b3400 <- read.table("3400_sra_metadata.txt", sep = ",", fill = TRUE, header = TRUE)
 anello1_test_sliced_metadata <- left_join(anello1_test_sliced, sra_metadata, by = "Run")
 anello1_test_sliced_metadata <- anello1_test_sliced_metadata[,1:33]
 
@@ -210,10 +210,10 @@ ggplot(anello1_test_sliced_metadata, aes(fill=type_grouped, x=LibrarySource)) +
 anello1_test_sliced_noplasmo <- filter(anello1_test_sliced, V14 != "SRR1567977")
 anello1_test_sliced_noplasmo_samp <- anello1_test_sliced_noplasmo[sample(nrow(anello1_test_sliced_noplasmo), 30), ]
 
-write.table(anello1_test_sliced_noplasmo_samp$V1, "anello1_test_sliced_noplasmo.txt", row.names = F, col.names = F)
+write.table(anello1_test_sliced_noplasmo_samp$V1, "anello1_test_sliced_noplasmo.txt", row.names = FALSE, col.names = FALSE)
 
 ##########JUL 5 run##################################################################################################################################
-july5_3400_test <- read.table("july5_3400_run.pro", sep = "\t", fill = T)
+july5_3400_test <- read.table("july5_3400_run.pro", sep = "\t", fill = TRUE)
 eval_fil_july5_3400_test <- filter(july5_3400_test, V11 < 0.000000001 )
 eval_fil_july5_3400_test$V14 <- sub("_.*", "", eval_fil_july5_3400_test$V1)
 
@@ -289,15 +289,15 @@ pv3_test_sliced %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 pv3_test_sliced_AB331651 <- filter(pv3_test_sliced, V6 == "papilloma.PPV_E1_C.Bos_taurus_papillomavirus_10:AB331651")
-write.table(pv3_test_sliced_AB331651$V1, "pv3_test_sliced_AB331651.txt", row.names = F, col.names = F)
+write.table(pv3_test_sliced_AB331651$V1, "pv3_test_sliced_AB331651.txt", row.names = FALSE, col.names = FALSE)
 
 pv3_test_sliced_MZ189241 <- filter(pv3_test_sliced, V6 == "papilloma.PPV_E1_DBD.Human_papillomavirus_type_18:MZ189241")
-write.table(pv3_test_sliced_MZ189241$V1, "pv3_test_sliced_MZ189241", row.names = F, col.names = F)
+write.table(pv3_test_sliced_MZ189241$V1, "pv3_test_sliced_MZ189241", row.names = FALSE, col.names = FALSE)
 
-write.table(paste0(pv3_test_sliced$V14, collapse = ","), "pv3_test_sliced_SRA.txt", row.names = F, col.names = F, quote = F, sep = ",")
+write.table(paste0(pv3_test_sliced$V14, collapse = ","), "pv3_test_sliced_SRA.txt", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = ",")
 names(pv3_test_sliced)[names(pv3_test_sliced) == 'V14'] <- 'Run'
 
-sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = T, header = T)
+sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = TRUE, header = TRUE)
 pv3_test_sliced_metadata <- left_join(pv3_test_sliced, sra_metadata, by = "Run")
 pv3_test_sliced_metadata <- pv3_test_sliced_metadata[,1:33]
 
@@ -315,7 +315,7 @@ ggplot(pv3_test_sliced_metadata, aes(fill=type_grouped, x=LibrarySource)) +
   theme_bw()
 
 ############SEPARATE FOR ANELLO###################
-july5_3400_test_anello <- read.table("july5_3400_run.pro", sep = "\t", fill = T)
+july5_3400_test_anello <- read.table("july5_3400_run.pro", sep = "\t", fill = TRUE)
 anello2_test <- filter(july5_3400_test_anello, grepl("anello", V6))
 anello2_test <- filter(anello2_test, V11 < 0.000000001 )
 
@@ -392,17 +392,17 @@ anello2_test_sliced %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 anello2_test_sliced_AB331651 <- filter(anello2_test_sliced, V6 == "papilloma.PPV_E1_C.Bos_taurus_papillomavirus_10:AB331651")
-# write.table(anello2_test_sliced_AB331651$V1, "anello2_test_sliced_AB331651.txt", row.names = F, col.names = F)
+# write.table(anello2_test_sliced_AB331651$V1, "anello2_test_sliced_AB331651.txt", row.names = FALSE, col.names = FALSE)
 
 anello2_test_sliced_MZ189241 <- filter(anello2_test_sliced, V6 == "papilloma.PPV_E1_DBD.Human_papillomavirus_type_18:MZ189241")
-# write.table(anello2_test_sliced_MZ189241$V1, "anello2_test_sliced_MZ189241", row.names = F, col.names = F)
+# write.table(anello2_test_sliced_MZ189241$V1, "anello2_test_sliced_MZ189241", row.names = FALSE, col.names = FALSE)
 
 names(anello2_test_sliced)[names(anello2_test_sliced) == 'V14'] <- 'Run'
 
-write.table(paste0(anello2_test_sliced$Run, collapse = ","), "anello2_test_sliced_SRA.txt", row.names = F, col.names = F, quote = F, sep = ",")
+write.table(paste0(anello2_test_sliced$Run, collapse = ","), "anello2_test_sliced_SRA.txt", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = ",")
 
 
-sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = T, header = T)
+sra_metadata <- read.table("3400_sra_metadata.txt", sep = ",", fill = TRUE, header = TRUE)
 anello2_test_sliced_metadata <- left_join(anello2_test_sliced, sra_metadata, by = "Run")
 anello2_test_sliced_metadata <- anello2_test_sliced_metadata[,1:33]
 
@@ -423,10 +423,10 @@ ggplot(anello2_test_sliced_metadata, aes(fill=type_grouped, x=LibrarySource)) +
 anello2_test_sliced_noplasmo <- filter(anello2_test_sliced, V14 != "SRR1567977")
 anello2_test_sliced_noplasmo_samp <- anello2_test_sliced_noplasmo[sample(nrow(anello2_test_sliced_noplasmo), 30), ]
 
-write.table(anello2_test_sliced_noplasmo_samp$V1, "anello2_test_sliced_noplasmo.txt", row.names = F, col.names = F)
+write.table(anello2_test_sliced_noplasmo_samp$V1, "anello2_test_sliced_noplasmo.txt", row.names = FALSE, col.names = FALSE)
 
 ####################for logan run##############################
-concat_pv2_fil_pv <- read.table("pv_only_evail_fil.pro", sep = "\t", fill = T, header = F)
+concat_pv2_fil_pv <- read.table("pv_only_evail_fil.pro", sep = "\t", fill = TRUE, header = FALSE)
 
 #another FP that wasnt caught
 concat_pv2_fil_pv_FP <- filter(concat_pv2_fil_pv, V6 != "papilloma.Late_protein_L2.Human_papillomavirus:LQ465342")
@@ -434,7 +434,7 @@ colnames(concat_pv2_fil_pv_FP) <- c("contig", "start", "end", "length", "strand"
 length(unique(concat_pv2_fil_pv_FP$contig))
 concat_pv2_fil_pv_FP$library <- sub("_.*", "", concat_pv2_fil_pv_FP$contig)
 length(unique(concat_pv2_fil_pv_FP$library))
-write.table(concat_pv2_fil_pv_FP$library, "all_library_sources.txt", row.names = F, col.names = F, quote = T)
+write.table(concat_pv2_fil_pv_FP$library, "all_library_sources.txt", row.names = FALSE, col.names = FALSE, quote = TRUE)
 
 a1 <- mean(concat_pv2_fil_pv_FP$length)
 b1 <- median(concat_pv2_fil_pv_FP$length)
@@ -505,7 +505,7 @@ pv2_fasta <- as.data.frame(matrix(rbind(concat_pv2_fil_pv_FP$contig,concat_pv2_f
 
 pv2_fasta <- pv2_fasta %>%
   mutate(V1 = if_else(row_number() %% 2 == 1, paste0(">", V1), V1))
-write.table(pv2_fasta, "pv2_fasta.fa", row.names = F, col.names = F, quote = F)
+write.table(pv2_fasta, "pv2_fasta.fa", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 
 pv2_test_sliced$m_cov <- abs(pv2_test_sliced$V7 - pv2_test_sliced$V8)/pv2_test_sliced$V9
@@ -550,10 +550,10 @@ orf_stats <- read.table("pv_only_sto_sto_lengths.txt")
 ##################################
 library(tidyverse)
 #visualize and look for summary stats
-july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = T)
+july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = TRUE)
 eval_fil_july_3400_test <- filter(july_3400_test, V11 < 0.000000001 )
 jul1_test <- eval_fil_july_3400_test
-july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = T)
+july_3400_test <- read.table("july1_3400_run.pro", sep = "\t", fill = TRUE)
 
 #filter for pv only
 pv2_test <- filter(jul1_test, grepl("papilloma", V6))
@@ -586,7 +586,7 @@ pv2_test_sliced %>%
 
 ##these look slihglty problematic
 pv2_test_sliced_AB331651 <- filter(pv2_test_sliced, V6 == "papilloma.PPV_E1_C.Bos_taurus_papillomavirus_10:AB331651")
-# write.table(pv2_test_sliced_AB331651$V1, "pv2_test_sliced_AB331651.txt", row.names = F, col.names = F)
+# write.table(pv2_test_sliced_AB331651$V1, "pv2_test_sliced_AB331651.txt", row.names = FALSE, col.names = FALSE)
 
 pv2_test_sliced_MZ189241 <- filter(pv2_test_sliced, V6 == "papilloma.PPV_E1_DBD.Human_papillomavirus_type_18:MZ189241")
-# write.table(pv2_test_sliced_MZ189241$V1, "pv2_test_sliced_MZ189241", row.names = F, col.names = F)
+# write.table(pv2_test_sliced_MZ189241$V1, "pv2_test_sliced_MZ189241", row.names = FALSE, col.names = FALSE)
