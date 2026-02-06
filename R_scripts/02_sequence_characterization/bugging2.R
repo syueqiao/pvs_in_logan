@@ -85,7 +85,7 @@ l <- all_ncbi_pv_sto_sto_bare_long %>%
   theme_bw() +
   theme(axis.ticks.y.left = element_blank())
 
-ggsave("domains_BI_all_dendro.pdf", width = 10, height = 2000, limitsize = FALSE)
+ggsave("outputs/domains_BI_all_dendro.pdf", width = 10, height = 2000, limitsize = FALSE)
 
 #look at if B and I are missing using length based calculation
 #first look at things with CD hits, and a possible B based on how much room there is in the orf/contig
@@ -100,7 +100,7 @@ ggsave("domains_BI_all_dendro.pdf", width = 10, height = 2000, limitsize = FALSE
 # then filtered for contigs that had no B model hit (removing the known splice/error list)
 
 all_ncbi_pv_sto_sto_30len_CD <- filter(all_ncbi_pv_sto_sto, qlen > 30 & envcoord_from > 15 & pfam == "L1_CD_super5" & !contig %in% all_ncbi_pv_sto_sto_split$L1_B_super5$contig & !contig %in% blacklist$V1)
-write.table( all_ncbi_pv_sto_sto_30len_CD$contig, "ncbi_B_misses.txt.test", quote = F, col.names = F, row.names = F)
+write.table( all_ncbi_pv_sto_sto_30len_CD$contig, "outputs/ncbi_B_misses.txt.test", quote = F, col.names = F, row.names = F)
 
 ggplot(all_ncbi_pv_sto_sto_30len_CD, aes(xmin = 1, xmax = qlen, y = query_acc_clean)) +
   geom_gene_arrow(aes(alpha = 0.5)) +
@@ -112,7 +112,7 @@ ggplot(all_ncbi_pv_sto_sto_30len_CD, aes(xmin = 1, xmax = qlen, y = query_acc_cl
   scale_fill_brewer(palette = "Set1") +
   theme_genes()
 
-ggsave("TESTdomains_B_fail.pdf", width = 10, height = 20, limitsize = FALSE)
+ggsave("outputs/TESTdomains_B_fail.pdf", width = 10, height = 20, limitsize = FALSE)
 
 #now look at GH domains for "space" after the hit
 all_ncbi_pv_sto_sto_30len_GH <- all_ncbi_pv_sto_sto
@@ -129,7 +129,7 @@ ggplot(all_ncbi_pv_sto_sto_30len_GH, aes(xmin = 1, xmax = qlen, y = query_acc_cl
   scale_fill_brewer(palette = "PRGn") +
   theme_genes()
 
-ggsave("TESTdomains_I_fail.pdf.test", width = 10, height = 30, limitsize = FALSE)
+ggsave("outputs/TESTdomains_I_fail.pdf.test", width = 10, height = 30, limitsize = FALSE)
 
 #so i can assume the ones that are really short = fragments, and manually add the curated ones to the msa that are missing
 # accession	note	missing
@@ -170,12 +170,12 @@ all_ncbi_pv_sto_sto_L1_envcoords_envaa <- select(all_ncbi_pv_sto_sto_L1_envcoord
 
 all_ncbi_pv_sto_sto_L1_envcoords_envaa$nuc_from <- all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_from*2 + (all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_from - 3)
 all_ncbi_pv_sto_sto_L1_envcoords_envaa$nuc_to <- all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(all_ncbi_pv_sto_sto_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "all_ncbi_pv_sto_sto_L1_envcoords_p1.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(all_ncbi_pv_sto_sto_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/all_ncbi_pv_sto_sto_L1_envcoords_p1.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 %%R
 #essentially redo this for the new output
 #im sorry its SO ugly
-updated_ncbi_all <- hmmsearch_clean("updated_ncbi_all.domtbl")
+updated_ncbi_all <- hmmsearch_clean("files/updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting
 updated_ncbi_all$contig_orf <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", updated_ncbi_all$query_acc)
 updated_ncbi_all$contig <- sub("_[^_]+$", "", updated_ncbi_all$contig_orf)
@@ -224,7 +224,7 @@ updated_ncbi_all_L1_envcoords_envaa <- select(updated_ncbi_all_L1_envcoords, que
 
 updated_ncbi_all_L1_envcoords_envaa$nuc_from <- updated_ncbi_all_L1_envcoords_envaa$envcoord_from*2 + (updated_ncbi_all_L1_envcoords_envaa$envcoord_from - 3)
 updated_ncbi_all_L1_envcoords_envaa$nuc_to <- updated_ncbi_all_L1_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(updated_ncbi_all_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "TESTupdated_ncbi_all_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(updated_ncbi_all_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/TESTupdated_ncbi_all_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 #bonus code
 ##characterize the nt diversity in L1 for the accessions to get an updated view of the known diversity of PVs
@@ -239,7 +239,7 @@ ncbi_tags_manual_nt$Newick_label <- sub("-.*","", ncbi_tags_manual_nt$Newick_lab
 L1_cluster_nt_accs_annot <- left_join(L1_cluster_nt_accs, ncbi_tags_manual_nt, by = c("V1" = "Newick_label"))
 L1_cluster_nt_accs_annot <- L1_cluster_nt_accs_annot[!duplicated(L1_cluster_nt_accs_annot), ]
 L1_cluster_nt_accs_annot_NAs <- L1_cluster_nt_accs_annot[rowSums(is.na(L1_cluster_nt_accs_annot)) > 0,]
-write.table(L1_cluster_nt_accs_annot_NAs$V1, "OUT_L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(L1_cluster_nt_accs_annot_NAs$V1, "outputs/OUT_L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 #add species from ncbi manually, where they're not available
 L1_cluster_nt_accs_NAs_key <- read.table("files/IN_L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
@@ -261,4 +261,4 @@ agg_tax_counts <-aggregate(ncbi_tax_counts$Recorded.PVs, by=list(Category=ncbi_t
 sum(ncbi_tax_counts$Recorded.PVs) - 485
 
 #rough approximation of host distribution
-write.table(agg_tax_counts, "host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(agg_tax_counts, "outputs/host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")

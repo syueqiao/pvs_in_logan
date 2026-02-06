@@ -5,13 +5,13 @@ library(viridis)
 library(ggpubr)
 
 #read in the table file, and then do summary statistics compared to the input accession list - for every "main genome (e.g., untranslated)" one columns plus 2nd column that describes the frame translation
-comp_acc <- read.table("pv_accession.acc", sep = "",  header = F, fill = T)
-herp_acc <- read.table("herp_acc.acc", sep = "",  header = F, fill = T)
-poly_acc <- read.table("poly_acc.acc", sep = "", header = F, fill = T)
-SRR_acc <- read.table("SRR_clean_acc", sep = "", header = F, fill = T)
+comp_acc <- read.table("files/pv_accession.acc", sep = "",  header = F, fill = T)
+herp_acc <- read.table("files/herp_acc.acc", sep = "",  header = F, fill = T)
+poly_acc <- read.table("files/poly_acc.acc", sep = "", header = F, fill = T)
+SRR_acc <- read.table("files/SRR_clean_acc", sep = "", header = F, fill = T)
 
 ##testing with tbl-out output
-PVfam2_scan <- read.table("PVfam2_scan_tbl.out", sep = "",  header = F, fill = T) %>% na.omit() %>% .[,1:18]
+PVfam2_scan <- read.table("files/PVfam2_scan_tbl.out", sep = "",  header = F, fill = T) %>% na.omit() %>% .[,1:18]
 colnames(PVfam2_scan) <- c("pfam", "pfam_acc", "query_acc", "misc", "eval_full", "score_full", "bias_full", "eval_one", "score_one", "bias_one", "exp_dom", "reg_dom", "clu_dom", "ov_dom", "env_dom", "rep_dom", "inc_dom")
 PVfam2_scan$query_acc_clean <- str_split(PVfam2_scan$query_acc, "\\_", simplify=T)[,1]
 in_comp_not_hit_PVfam2_scan <- data.frame(setdiff(comp_acc$V1 ,PVfam2_scan$query_acc_clean))

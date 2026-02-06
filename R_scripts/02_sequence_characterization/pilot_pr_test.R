@@ -18,7 +18,7 @@ feb_7_L1_nuc_hmmer_env_sliced_90 = feb_7_L1_nuc_hmmer_env_sliced_90[!duplicated(
 feb_7_L1_nuc_hmmer_env_less_90_nt <- unique(feb_7_L1_nuc_hmmer_env_sliced_90$V1)
 # feb_7_L1_nuc_hmmer_env_qcov_less50 <- filter(feb_7_L1_nuc_hmmer_env_qcov_less40, !V1 %in% feb_7_L1_nuc_hmmer_env_less_90_nt)
 
-write.table(feb_7_L1_nuc_hmmer_env_less_90_nt, "feb_7_L1_nuc_hmmer_env_less_90_nt.txt", quote = F, col.names = F, row.names = F)
+write.table(feb_7_L1_nuc_hmmer_env_less_90_nt, "outputs/feb_7_L1_nuc_hmmer_env_less_90_nt.txt", quote = F, col.names = F, row.names = F)
 
 ##some are not here!
 #length(unique(feb_7_L1_nuc_hmmer_env_sliced$V1))
@@ -26,7 +26,7 @@ write.table(feb_7_L1_nuc_hmmer_env_less_90_nt, "feb_7_L1_nuc_hmmer_env_less_90_n
 
 #create list of the ones that were hit, in general
 hit_list <- unique(feb_7_L1_nuc_hmmer_env_sliced$V1)
-write.table(hit_list, "hit_list_pr.txt", quote = F, col.names = F, row.names = F)
+write.table(hit_list, "outputs/hit_list_pr.txt", quote = F, col.names = F, row.names = F)
 
 #look for low conf hits that were not represented in either novel already, or other filter set
 feb_7_L1_nuc_hmmer_env_fil_low_conf_hits <- filter(feb_7_L1_nuc_hmmer_env_fil_low_conf, !V1 %in% feb_7_L1_nuc_hmmer_env_less_90_nt)
@@ -34,4 +34,4 @@ feb_7_L1_nuc_hmmer_env_fil_low_conf_hits <- filter(feb_7_L1_nuc_hmmer_env_fil_lo
 
 feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list <- unique(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits$V1)
 
-write.table(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list, "feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list_pr.txt", quote = F, col.names = F, row.names = F)
+write.table(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list, "outputs/feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list_pr.txt", quote = F, col.names = F, row.names = F)

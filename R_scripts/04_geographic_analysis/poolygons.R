@@ -130,63 +130,63 @@ all_pvs_mapping_clean$grid_group <- int
 # try to find density
 #oh loooooord
   
-#THIS SECTION DOES NOT NEED TO BE RUN. SIMPLY READ IN AT L171
-giant_geo_table <- head(read.table("table_1_js.csv", sep = "\t", header = F))
-head(giant_geo_table)
-readlines <- read.table("table_1_js.csv", nrows = 1000, header = F, sep = "\t")
+#THIS SECTION DOES NOT NEED TO BE RUN. SIMPLY READ IN AT L191
+# giant_geo_table <- head(read.table("table_1_js.csv", sep = "\t", header = F))
+# head(giant_geo_table)
+# readlines <- read.table("table_1_js.csv", nrows = 1000, header = F, sep = "\t")
 
-giant_geo_table <- readlines[!is.na(readlines$V3),]
-giant_wkb = structure((giant_geo_table$V3), class = "WKB")
-giant_wkb$geometry <- st_as_sfc(giant_wkb, EWKB = TRUE) %>% st_transform("ESRI:54009")
+# giant_geo_table <- readlines[!is.na(readlines$V3),]
+# giant_wkb = structure((giant_geo_table$V3), class = "WKB")
+# giant_wkb$geometry <- st_as_sfc(giant_wkb, EWKB = TRUE) %>% st_transform("ESRI:54009")
 
-giant_dsf <- sf::st_as_sf(giant_wkb$geometry, crs="ESRI:54009")
-
-
-int_all <- sf::st_intersects(giant_dsf, grid_sf)
-asdasfasf <- int_all[lapply(int_all,length)>0]
-asdasfasf <- as.data.frame(unlist(int_all))
-asdasfasf$row.id <- as.numeric(row.names(asdasfasf))
+# giant_dsf <- sf::st_as_sf(giant_wkb$geometry, crs="ESRI:54009")
 
 
-giant_geo_table$row.id <- as.numeric(row.names(giant_geo_table))
-giant_geo_table_grid_id <- left_join(giant_geo_table, asdasfasf, by = "row.id")
-
-giant_geo_table_grid_id_table <- as.data.frame(table(giant_geo_table_grid_id$`unlist(int_all)`))
-
-
-
-giant_geo_table <- giant_geo_table[!is.na(giant_geo_table$V3),]
-giant_wkb = structure((giant_geo_table$V3), class = "WKB")
-giant_wkb$geometry <- st_as_sfc(giant_wkb, EWKB = TRUE) %>% st_transform("ESRI:54009")
-
-giant_dsf <- sf::st_as_sf(giant_wkb$geometry, crs="ESRI:54009")
+# int_all <- sf::st_intersects(giant_dsf, grid_sf)
+# asdasfasf <- int_all[lapply(int_all,length)>0]
+# asdasfasf <- as.data.frame(unlist(int_all))
+# asdasfasf$row.id <- as.numeric(row.names(asdasfasf))
 
 
-int_all <- sf::st_intersects(giant_dsf, grid_sf)
-asdasfasf <- int_all[lapply(int_all,length)>0]
-asdasfasf <- as.data.frame(unlist(int_all))
-asdasfasf$row.id <- as.numeric(row.names(asdasfasf))
+# giant_geo_table$row.id <- as.numeric(row.names(giant_geo_table))
+# giant_geo_table_grid_id <- left_join(giant_geo_table, asdasfasf, by = "row.id")
+
+# giant_geo_table_grid_id_table <- as.data.frame(table(giant_geo_table_grid_id$`unlist(int_all)`))
 
 
-giant_geo_table$row.id <- as.numeric(row.names(giant_geo_table))
-giant_geo_table_grid_id <- left_join(giant_geo_table, asdasfasf, by = "row.id")
 
-giant_geo_table_grid_id_table <- as.data.frame(table(giant_geo_table_grid_id$`unlist(int_all)`))
+# giant_geo_table <- giant_geo_table[!is.na(giant_geo_table$V3),]
+# giant_wkb = structure((giant_geo_table$V3), class = "WKB")
+# giant_wkb$geometry <- st_as_sfc(giant_wkb, EWKB = TRUE) %>% st_transform("ESRI:54009")
 
-
-aa <- as.data.frame(grid_sf)
-aa$Var1 <- rownames(aa)
-
-giant_geo_table_grid_id_geometry <- left_join(giant_geo_table_grid_id_table, aa, by = c("Var1"))
-write.table(giant_geo_table_grid_id_geometry, "all_geo_grids_table_50km_by_50km_new_proj.tsv", sep = "\t", row.names = F, col.names = T)
+# giant_dsf <- sf::st_as_sf(giant_wkb$geometry, crs="ESRI:54009")
 
 
-all_geo_grids_table <- as.data.frame(table(unlist(int_all)))
-all_geo_grids_table$Var1 <- as.numeric(paste(all_geo_grids_table$Var1))
+# int_all <- sf::st_intersects(giant_dsf, grid_sf)
+# asdasfasf <- int_all[lapply(int_all,length)>0]
+# asdasfasf <- as.data.frame(unlist(int_all))
+# asdasfasf$row.id <- as.numeric(row.names(asdasfasf))
 
-write.table(all_geo_grids_table, "all_geo_grids_table_50km_by_50km_addtl.tsv", sep = "\t", row.names = F, col.names = T)
-giant_geo_table_grid_id_geometry <- st_read("all_geo_grids_table_50km_by_50km_new_proj.tsv")
-st_write(obj = giant_geo_table_grid_id_geometry, dsn = "my_sf_data.gpkg", driver = "GPKG", append=FALSE)
+
+# giant_geo_table$row.id <- as.numeric(row.names(giant_geo_table))
+# giant_geo_table_grid_id <- left_join(giant_geo_table, asdasfasf, by = "row.id")
+
+# giant_geo_table_grid_id_table <- as.data.frame(table(giant_geo_table_grid_id$`unlist(int_all)`))
+
+
+# aa <- as.data.frame(grid_sf)
+# aa$Var1 <- rownames(aa)
+
+# giant_geo_table_grid_id_geometry <- left_join(giant_geo_table_grid_id_table, aa, by = c("Var1"))
+# write.table(giant_geo_table_grid_id_geometry, "all_geo_grids_table_50km_by_50km_new_proj.tsv", sep = "\t", row.names = F, col.names = T)
+
+
+# all_geo_grids_table <- as.data.frame(table(unlist(int_all)))
+# all_geo_grids_table$Var1 <- as.numeric(paste(all_geo_grids_table$Var1))
+
+# write.table(all_geo_grids_table, "all_geo_grids_table_50km_by_50km_addtl.tsv", sep = "\t", row.names = F, col.names = T)
+# giant_geo_table_grid_id_geometry <- st_read("all_geo_grids_table_50km_by_50km_new_proj.tsv")
+# st_write(obj = giant_geo_table_grid_id_geometry, dsn = "my_sf_data.gpkg", driver = "GPKG", append=FALSE)
 
 giant_geo_table_grid_id_geometry <- st_read("my_sf_data.gpkg")
 

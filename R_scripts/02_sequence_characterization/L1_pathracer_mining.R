@@ -15,7 +15,7 @@ hmmsearch_clean <- function(input_domtbl){
 }
 
 #script to help "choose" a set of 10 contigs for testing various graph-based contig retrieval methods
-pv2_L1_sto_sto <- hmmsearch_clean("pv_all_L1.domtbl")
+pv2_L1_sto_sto <- hmmsearch_clean("files/pv_all_L1.domtbl")
 pv2_L1_sto_sto$contig <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", pv2_L1_sto_sto$query_acc)
 
  
@@ -66,7 +66,7 @@ hmmsearch_clean <- function(input_domtbl){
   return(input_domtbl_scan)
 }
 
-mega_results <- hmmsearch_clean("mega_results.domtbl")
+mega_results <- hmmsearch_clean("files/mega_results.domtbl")
 # mega_results <- separate(mega_results,query_acc,into = c("method","query_acc"),sep = "\\.",remove = FALSE,extra = "merge")
 mega_results <- unique(mega_results)
 mega_results_eval <- filter(mega_results, mega_results$i_eval < 0.00001)
@@ -188,9 +188,9 @@ logical_df_3_pa_whole_smaller_sample10 <- logical_df_3_pa_whole_smaller %>%
   group_by(overall_hits) %>%
   sample_n(1, replace = TRUE)
 
-write.table(pr_sample$library, "pr_sample4.txt", quote = FALSE, col.names = FALSE, row.names = F)
-write.table(logical_df_3_pa_whole_smaller_sample10$library, "logical_df_3_pa_whole_smaller_sample10.txt", quote = FALSE, col.names = FALSE, row.names = F)
-write.table(logical_df_3_pa_whole_smaller$library, "15k_library_for_pathracer_cutoff_9.txt", quote = FALSE, col.names = FALSE, row.names = F)
+write.table(pr_sample$library, "outputs/pr_sample4.txt", quote = FALSE, col.names = FALSE, row.names = F)
+write.table(logical_df_3_pa_whole_smaller_sample10$library, "outputs/logical_df_3_pa_whole_smaller_sample10.txt", quote = FALSE, col.names = FALSE, row.names = F)
+write.table(logical_df_3_pa_whole_smaller$library, "outputs/15k_library_for_pathracer_cutoff_9.txt", quote = FALSE, col.names = FALSE, row.names = F)
 
 #look to see if there is pattern re:those that fail
 failed <- read.table("files/acc_fail.txt", fill = TRUE, sep = "\t", quote = "")
@@ -212,7 +212,7 @@ pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_ge <- left_join(pv2_L1_sto_sto_un
 
 write_file_func <- function(lib){
   library_filtered <- filter(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_ge, library == lib)
-  write.table(library_filtered$query_acc, paste("subgraph/", lib, "_list.txt", sep = ""), quote = FALSE, col.names = FALSE, row.names = F)
+  write.table(library_filtered$query_acc, paste("outputs/subgraph/", lib, "_list.txt", sep = ""), quote = FALSE, col.names = FALSE, row.names = F)
 }
 
 write_file_func("SRR25663671")
@@ -223,13 +223,13 @@ for (i in graph_ex_sample){
   write_file_func(i)
 }
 
-write.table(graph_ex_sample, "graph_ex_sample.txt", quote = FALSE, col.names = FALSE, row.names = F)
+write.table(graph_ex_sample, "outputs/graph_ex_sample.txt", quote = FALSE, col.names = FALSE, row.names = F)
 
 graph_18k <- pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num_30_0$library
 for (i in graph_18k){
   write_file_func(i)
 }
 
-write.table(graph_18k, "graph_18k.txt", quote = FALSE, col.names = FALSE, row.names = F)
+write.table(graph_18k, "outputs/graph_18k.txt", quote = FALSE, col.names = FALSE, row.names = F)
 
 #empty this out 

@@ -1,0 +1,22 @@
+hpv	risk	median
+hpv 56	high	3.35
+hpv 18	high	3.2
+hpv 58	high	3.19
+hpv 52	high	3.19
+hpv 39	high	2.83
+hpv 33	high	2.72
+hpv 51	high	2.7
+hpv 16	high	2.03
+hpv 31	high	1.63
+hpv 35	high	1.38
+hpv 68	high	0.01
+hpv 59	high	0
+hpv 45	high	0
+hpv 53	med	2.99
+hpv 6	low	2.72
+hpv 11	low	2.09
+hpv 66	med	0.18
+hpv 44	low	0
+hpv 43	low	0
+hpv 42	low	0
+		

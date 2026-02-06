@@ -4,7 +4,7 @@ library(ggtree)
 library(Polychrome)
 library(colorspace)
 
-L1_tree <- read.tree("w_bs.treefile")
+L1_tree <- read.tree("files/w_bs.treefile")
 #bootstrap value is saved as "label" in the tree 
 ggtree(L1_tree) + geom_tiplab() + geom_text(aes(label=label), hjust=-.3)
 
@@ -21,7 +21,7 @@ pave_L1$L1_pave <- pave_L1$L1_pave_name
 pave_L1 <- pave_L1 %>% separate(L1_pave, into = c("L1_pave_key", "L1_pave_end"), sep="(?=-)")
 
 
-L1_info <- read.table("animal_reference_clones.txt", sep = "\t", header = F, na.strings = "")
+L1_info <- read.table("files/animal_reference_clones.txt", sep = "\t", header = F, na.strings = "")
 names(L1_info)[names(L1_info) == 'V1'] <- 'L1_pave_key'
 L1_merge <- left_join(pave_L1, L1_info, by = "L1_pave_key")
 L1_merge <- L1_merge %>%
@@ -33,8 +33,8 @@ colnames(SRA_L1) <- c('L1_SRA')
 SRA_L1$L1_SRA_info <- SRA_L1$L1_SRA
 SRA_L1 <- SRA_L1 %>% separate(L1_SRA, into = c("library", "info"), sep="_")
 #do some stuff with entrez
-write.table(SRA_L1$library, "SRA_L1_library.txt", quote = F, row.names = F, col.names = F)
-SRA_entrez <- read.table("SRA_info.csv", sep = ",", header = T)
+write.table(SRA_L1$library, "outputs/SRA_L1_library.txt", quote = F, row.names = F, col.names = F)
+SRA_entrez <- read.table("files/SRA_info.csv", sep = ",", header = T)
 
 SRA_merge <- left_join(SRA_L1, SRA_entrez, by = "library")
 
@@ -66,9 +66,9 @@ p + geom_tippoint() +
   geom_nodelab(label = L1_tree$node.label, geom = 'text', size = 1.5) +
   scale_color_manual(values = P50)
 
-ggsave("test.pdf", width = 40, height = 135, units = "cm", limitsize = F)
+ggsave("outputs/test.pdf", width = 40, height = 135, units = "cm", limitsize = F)
 
-ncbi_and_novel_tree <- read.tree("FastTree_output_tree (3).nhx")
+ncbi_and_novel_tree <- read.tree("files/FastTree_output_tree (3).nhx")
 #bootstrap value is saved as "label" in the tree 
 ggtree(ncbi_and_novel_tree) + geom_tiplab() + geom_text(aes(label=label), hjust=-.3)
 
@@ -83,7 +83,7 @@ SRA_ncbi_and_novel$ncbi_and_novel_SRA_info <- SRA_ncbi_and_novel$ncbi_and_novel_
 SRA_ncbi_and_novel <- SRA_ncbi_and_novel %>% separate(ncbi_and_novel_SRA, into = c("library", "info"), sep="_")
 # write.table(SRA_ncbi_and_novel$library, "2025.02.18.ncbi_and_novel_SRA.txt", sep = "/t", col.names = F, row.names = F, quote = T)
 #do some stuff with entrez
-SRA_entrez_nn <- read.table("ncbi_and_novel_sra_info.txt", sep = "\t", header = F)
+SRA_entrez_nn <- read.table("files/ncbi_and_novel_sra_info.txt", sep = "\t", header = F)
 colnames(SRA_entrez_nn) <- c("library", "species")
 SRA_entrez_nn <- SRA_entrez_nn[!duplicated(SRA_entrez_nn), ]
 
@@ -94,7 +94,7 @@ ncbi_tips <- filter(tip_labs_ncbi_novel, !ncbi_and_novel_tip %in% SRA_ncbi_and_n
 ncbi_tips$ncbi_acc <- sub("-.*", "", ncbi_tips$ncbi_and_novel_tip)
 ncbi_tips$ncbi_acc <- as.character(ncbi_tips$ncbi_acc)
 
-ncbi_nn <- read.table("ncbi_info.txt", sep = "\t", header = F)
+ncbi_nn <- read.table("files/ncbi_info.txt", sep = "\t", header = F)
 colnames(ncbi_nn) <- c('ncbi_acc', 'host') 
 ncbi_nn$host <- as.character(ncbi_nn$host)
 ncbi_nn$ncbi_acc <- as.character(ncbi_nn$ncbi_acc)
@@ -107,7 +107,7 @@ ncbi_nohost <- subset(ncbi_merge, trimws(host) == "")
 # write.table(ncbi_nohost$ncbi_acc, "ncbi_nh.txt", sep = "/t", col.names = F, row.names = F, quote = F)
 
 #fill with next best thing, species
-ncbi_nh <- read.table("ncbi_info_fill_redo.txt", sep = "\t", header = F)
+ncbi_nh <- read.table("files/ncbi_info_fill_redo.txt", sep = "\t", header = F)
 colnames(ncbi_nh) <- c('ncbi_acc', 'host') 
 ncbi_nh$ncbi_acc <- stringr::str_trim(ncbi_nh$ncbi_acc)
 
@@ -131,7 +131,7 @@ ncbi_novel_rbind_info_merge <- ncbi_novel_rbind_info
 colnames(ncbi_novel_rbind_info_merge) <- c('Newick_label', 'status') 
 
 
-ncbi_tags_manual <- read.table("ncbi_tags_manual.txt", sep = "\t", header = T)
+ncbi_tags_manual <- read.table("files/ncbi_tags_manual.txt", sep = "\t", header = T)
 colnames(ncbi_tags_manual) <- c('Newick_label', 'status') 
 ncbi_tags_manual_and_sra <- rbind(SRA_merge_info_merge3, ncbi_tags_manual)
 colnames(ncbi_tags_manual) <- c('Newick_label', 'uhhh') 
@@ -169,21 +169,21 @@ ppppp <- pppp %<+% ncbi_tags_manual
 pppppp <- ppppp + geom_tippoint() + geom_text(aes(label = uhhh), size = 4, hjust = -0.05, color = "black") + geom_tiplab(size = 2, hjust = -2, color = "black")
 # 
 
-ggsave("2025.02.18.ncbi_and_novel_new.pdf", width = 150, height = 350, units = "cm", limitsize = F)
+ggsave("outputs/2025.02.18.ncbi_and_novel_new.pdf", width = 150, height = 350, units = "cm", limitsize = F)
 
-ncbi_and_novel_tree_pyuu <- read.tree("fasttree_ncbi_novel.nhx")
+ncbi_and_novel_tree_pyuu <- read.tree("files/fasttree_ncbi_novel.nhx")
 
 
 tr = rtree(15)
 d=fortify(ncbi_and_novel_tree_pyuu)
 dd = subset(d, isTip)
 beep <- as.data.frame(d$label[order(dd$y, decreasing=TRUE)])
-write.table(beep, "order.tsv", sep = "\t", quote = F, col.names = F, row.names = F)
+write.table(beep, "outputs/order.tsv", sep = "\t", quote = F, col.names = F, row.names = F)
 
-ggsave("ncbi_and_novel_uhhh.pdf", width = 150, height = 350, units = "cm", limitsize = F)
+ggsave("outputs/ncbi_and_novel_uhhh.pdf", width = 150, height = 350, units = "cm", limitsize = F)
 
 #to make host comparisons
-write.table(ncbi_novel_rbind_info, "ncbi_tags.txt", col.names = F, row.names = F, quote = F, sep = "\t")
+write.table(ncbi_novel_rbind_info, "outputs/ncbi_tags.txt", col.names = F, row.names = F, quote = F, sep = "\t")
 #goes up but used this cleaned up version with correct scientific names to create the annotated species tree
 ggplot(ncbi_tags_manual, aes(x=species)) + geom_histogram(stat="count")
 ncbi_tags_manual_human <- filter(ncbi_tags_manual, species == "Homo sapiens")
@@ -215,7 +215,7 @@ ppppp_round + geom_tippoint() + geom_text(aes(label = species), size = 4, hjust 
 
 
 
-ggsave("ncbi_and_novel_daylight.pdf", width = 150, height = 350, units = "cm", limitsize = F)
+ggsave("outputs/ncbi_and_novel_daylight.pdf", width = 150, height = 350, units = "cm", limitsize = F)
 pp_round + guides(fill="none")
 
 p_round_manual <- ggtree(ncbi_and_novel_tree, aes(color = species), layout='circular') %<+% ncbi_tags_manual_and_sra
@@ -231,11 +231,11 @@ ppp_round_manual <- pp_round_manual %<+% SRA_merge_info
 
 
 pp_round_manual
-ggsave("ncbi_and_novel_round_manual_legend.png", width = 150, height = 200, units = "cm", limitsize = F)
+ggsave("outputs/ncbi_and_novel_round_manual_legend.png", width = 150, height = 200, units = "cm", limitsize = F)
 
 #new tree for 40% aa identity
 
-aa_40_tree <- read.tree("ncbi_and_novel_for_tree_40.aln.treefile")
+aa_40_tree <- read.tree("files/ncbi_and_novel_for_tree_40.aln.treefile")
 g <- ggtree(aa_40_tree, aes(color = status))
 #bootstrap value is saved as "label" in the tree 
 ncbi_tags_manual_and_sra_cust <- ncbi_tags_manual_and_sra
@@ -252,14 +252,14 @@ pp <- gg + geom_tiplab() + geom_text(aes(label=status, size = 20), vjust = 1.5) 
   scale_color_manual(values = P50)
 pp
 
-ggsave("aa_40_tree.pdf", width = 80, height = 25, units = "cm", limitsize = F)
+ggsave("outputs/aa_40_tree.pdf", width = 80, height = 25, units = "cm", limitsize = F)
 
-aa_40_tree_pyuu <- read.tree("ncbi_and_novel_for_tree_40.aln.treefile")
+aa_40_tree_pyuu <- read.tree("files/ncbi_and_novel_for_tree_40.aln.treefile")
 
 d=fortify(aa_40_tree_pyuu)
 dd = subset(d, isTip)
 beep <- as.data.frame(d$label[order(dd$y, decreasing=TRUE)])
-write.table(beep, "order.tsv", sep = "\t", quote = F, col.names = F, row.names = F)
+write.table(beep, "outputs/order.tsv", sep = "\t", quote = F, col.names = F, row.names = F)
 
 
 
@@ -294,7 +294,7 @@ pppp <- ppp + geom_tippoint() + geom_text(aes(label = host), size = 4, hjust = -
 
 ppppp <- pppp %<+% ncbi_tags_manual
 # 
-ncbi_and_novel_tree_pyuu <- read.tree("fasttree_ncbi_novel.nhx")
+ncbi_and_novel_tree_pyuu <- read.tree("files/fasttree_ncbi_novel.nhx")
 
 pyup <- ppppp + geom_tippoint() + geom_text(aes(label = uhhh), size = 4, hjust = -0.05, color = "black") + geom_tiplab(size = 2, hjust = -2, color = "black") 
 

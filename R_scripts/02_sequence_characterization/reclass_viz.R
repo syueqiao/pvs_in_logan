@@ -99,7 +99,7 @@ feb7_abundances_ratio_agg_res <- subset(feb7_abundances_ratio_agg_res, !grepl("0
 
 
 
-ncbi_counts <- hmmsearch_clean("ncbi_input.domtbl")
+ncbi_counts <- hmmsearch_clean("files/ncbi_input.domtbl")
 ncbi_counts <- ncbi_counts[,c(1, 4)]
 as.data.frame(table(ncbi_counts$pfam))
 
@@ -291,7 +291,7 @@ library_type_ratios <- function(df, list, color1, color2){
   
   p_full_zoom_print <- p_zoom + p_zoom_annot
   
-  ggplot2::ggsave(filename = paste0("plot_zoom",list,".png"),p_full_zoom_print, width = 10, height = 10, units = "cm")
+  ggplot2::ggsave(filename = paste0("outputs/plot_zoom",list,".png"),p_full_zoom_print, width = 10, height = 10, units = "cm")
 
 }
 
@@ -467,8 +467,8 @@ get_upset <- function(df, strategies){
   
 d <- combinations_df_fil_ratio_agg_res|> within(x <- sapply(combination, paste, collapse = "_"))
    
-p <-  d %>% ggplot(aes(x = combination)) + 
-  geom_bar(stat='count', fill = c("#FF5050", "#8f5cb0", "#3366FF"), alpha = 0.8) + 
+p <-  d %>% ggplot(aes(x = combination)) +
+  geom_bar(stat='count', fill = c("#FF5050", "#8f5cb0", "#3366FF"), alpha = 0.8) +
   geom_text(stat='count', aes(label=after_stat(count)), vjust=-0.7) +
   scale_x_upset() +
   axis_combmatrix(sep = "_", levels = c("Late", "Early")) +
@@ -477,7 +477,7 @@ p <-  d %>% ggplot(aes(x = combination)) +
   xlab("Combination") +
   ylab("Library count")
 
- ggplot2::ggsave(filename = paste0("plot_",strategies,".png"),p, width = 20, height = 20, units = "cm")
+ ggplot2::ggsave(filename = paste0("outputs/plot_",strategies,".png"),p, width = 20, height = 20, units = "cm")
  return(p)
 
 }
@@ -576,7 +576,7 @@ get_scatter2 <- function(df, strategies){
   df_fil_ratio_agg_mean <- filter(df_fil_ratio_agg_mean, !library == "SRR15013819")
   
   
-  df_fil_ratio_agg_mean %>% ggplot(aes(x = log10(cov.early), y = log10(cov.late), color = V2)) + 
+  df_fil_ratio_agg_mean %>% ggplot(aes(x = log10(cov.early), y = log10(cov.late), color = V2)) +
     geom_point(size=0.5, alpha = 0.4)  +
     geom_smooth(method = "lm", fill = NA, linewidth = 0.5) +
     theme_bw(base_size = 15) +
@@ -584,8 +584,8 @@ get_scatter2 <- function(df, strategies){
     xlab("ka.f of early genes") +
     ylab("ka.f of late genes") +
     scale_color_brewer(palette = "Set3") + expand_limits(x = 0, y = 0)
-  
-  ggplot2::ggsave(filename = paste0("plot_",strategies,".png"),p, width = 20, height = 20, units = "cm")
+
+  ggplot2::ggsave(filename = paste0("outputs/plot_",strategies,".png"),p, width = 20, height = 20, units = "cm")
   return(p)
   
 }

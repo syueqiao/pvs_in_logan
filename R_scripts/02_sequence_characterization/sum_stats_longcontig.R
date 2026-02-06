@@ -23,7 +23,7 @@ hmmsearch_clean <- function(input_domtbl){
 # workflow_test <- subset(workflow_test, eval_full < 0.0000000001)
 
 #input is the 90% iden clustered ORFs, after running thru HMMER
-cent_test <- hmmsearch_clean("centroid_hits.domtblout")
+cent_test <- hmmsearch_clean("files/centroid_hits.domtblout")
 cent_test$library_acc <- sub("_[^_]+$", "", cent_test$query_acc_clean)
 cent_test$pfam_clean <- gsub("^.*E1.*$", "E1", gsub("^.*E2.*$", "E2", cent_test$pfam))
 #clean for easier parsing
@@ -114,7 +114,7 @@ ggplot(genome_length, aes(x=contig_length)) +
 
 
 #########################redo for the big table, hope it dont crash
-curl_test <- hmmsearch_clean("curl_large_contigs_hmmer.domtblout")
+curl_test <- hmmsearch_clean("files/curl_large_contigs_hmmer.domtblout")
 curl_test$library_acc <- sub("_[^_]+$", "", curl_test$query_acc_clean)
 curl_test$pfam_clean <- gsub("^.*E1.*$", "E1", gsub("^.*E2.*$", "E2", curl_test$pfam))
 #clean for easier parsing

@@ -1,7 +1,7 @@
 %%R
 %%R
 #read in NCBI host file
-ncbi_nn <- read.table("ncbi_info.txt", sep = "\t", header = F)
+ncbi_nn <- read.table("files/ncbi_info.txt", sep = "\t", header = F)
 colnames(ncbi_nn) <- c('ncbi_acc', 'host') 
 ncbi_nn$host <- as.character(ncbi_nn$host)
 ncbi_nn$ncbi_acc <- as.character(ncbi_nn$ncbi_acc)
@@ -12,11 +12,11 @@ ncbi_merge <- left_join(ncbi_tips, ncbi_nn, by = "ncbi_acc")
 ncbi_host <- subset(ncbi_merge, trimws(host) !="")
 ncbi_nohost <- subset(ncbi_merge, trimws(host) == "")
 #get ones that didnt have host annotation
-write.table(ncbi_nohost$ncbi_acc, "ncbi_nh.txt", sep = "/t", col.names = F, row.names = F, quote = F)
+write.table(ncbi_nohost$ncbi_acc, "outputs/ncbi_nh.txt", sep = "/t", col.names = F, row.names = F, quote = F)
 #using sra metadata file, grep two columns that are the sra library, and associated host id
 #what this means is, get the list of novel libraries from above, input into https://www.ncbi.nlm.nih.gov/sites/batchentrez and download metadata from webportal
 #save as tab delim file
-SRA_entrez_nn <- read.table("ncbi_and_novel_sra_info.txt", sep = "\t", header = F)
+SRA_entrez_nn <- read.table("files/ncbi_and_novel_sra_info.txt", sep = "\t", header = F)
 #clean up a little
 colnames(SRA_entrez_nn) <- c("library", "species")
 SRA_entrez_nn <- SRA_entrez_nn[!duplicated(SRA_entrez_nn), ]
@@ -29,12 +29,12 @@ SRA_merge <- select(SRA_merge, ncbi_and_novel_SRA_info, species)
 ncbi_tips <- filter(tip_labs_ncbi_novel, !ncbi_and_novel_tip %in% SRA_ncbi_and_novel$ncbi_and_novel_SRA_info)
 ncbi_tips$ncbi_acc <- sub("-.*", "", ncbi_tips$ncbi_and_novel_tip)
 ncbi_tips$ncbi_acc <- as.character(ncbi_tips$ncbi_acc)
-write.table(ncbi_tips$ncbi_acc, "TESTncbi_tips.txt", sep = "/t", col.names = F, row.names = F, quote = F)
+write.table(ncbi_tips$ncbi_acc, "outputs/TESTncbi_tips.txt", sep = "/t", col.names = F, row.names = F, quote = F)
 
 ncbi_nohost <- subset(ncbi_merge, trimws(host) == "")
 
 #fill with next best thing, species
-ncbi_nh <- read.table("ncbi_info_fill.txt", sep = "\t", header = F)
+ncbi_nh <- read.table("files/ncbi_info_fill.txt", sep = "\t", header = F)
 colnames(ncbi_nh) <- c('ncbi_acc', 'host') 
 ncbi_nh$ncbi_acc <- stringr::str_trim(ncbi_nh$ncbi_acc)
 
@@ -57,7 +57,7 @@ colnames(ncbi_novel_rbind_info) <- c('Newick_label', 'species')
 ncbi_novel_rbind_info_merge <- ncbi_novel_rbind_info
 colnames(ncbi_novel_rbind_info_merge) <- c('Newick_label', 'status') 
 
-write.table(ncbi_novel_rbind_info_merge, "TESTncbi_tags_manual.txt", sep = "/t", col.names = F, row.names = F, quote = F)
+write.table(ncbi_novel_rbind_info_merge, "outputs/TESTncbi_tags_manual.txt", sep = "/t", col.names = F, row.names = F, quote = F)
 #for those that are species, go back and manually annotate by searching up the PV species (if the name is non informative, eg. alphapapillomavirus 49)
 
 #read back in for complete ncbi stuff
@@ -97,4 +97,4 @@ ppppp <- pppp %<+% ncbi_tags_manual
 pppppp <- ppppp + geom_tippoint() + geom_text(aes(label = uhhh), size = 4, hjust = -0.05, color = "black") + geom_tiplab(size = 2, hjust = -2, color = "black")
 # 
 
-ggsave("2025.02.18.ncbi_and_novel_new.pdf", width = 150, height = 350, units = "cm", limitsize = F)
+ggsave("outputs/2025.02.18.ncbi_and_novel_new.pdf", width = 150, height = 350, units = "cm", limitsize = F)
