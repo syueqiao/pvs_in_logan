@@ -6,16 +6,7 @@ library(ggplot2)
 #maybe shouldve clustered at 90% nucleotide identity before moving foward?
 
 #function for parsing hmmsearch outputs
-hmmsearch_clean <- function(input_domtbl){
-  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = F, fill = T) %>% na.omit() %>% .[,1:22]
-  input_domtbl_scan <- input_domtbl_scan[!(is.na(input_domtbl_scan$V21) | input_domtbl_scan$V21=="" | !(input_domtbl_scan$V2 == "-")), ]
-  
-  colnames(input_domtbl_scan) <- c("query_acc", "misc", "qlen", "pfam", "pfam_acc", "tlen", "eval_full", "score_full", "bias_full", "#", "of", 
-                                   "c_eval", "i_eval", "score_one", "bias_one", "hmmcoord_from", "hmmcoord_to", "alicoord_from", "alicoord_to", "envcoord_from", "envcoord_to", "acc")
-  input_domtbl_scan$query_acc_clean <- sub("_[^_]+$", "", input_domtbl_scan$query_acc)
-  input_domtbl_scan <- type.convert(input_domtbl_scan, as.is = TRUE)
-  return(input_domtbl_scan)
-}
+source("00_utilities/hmmsearch_utils.R")
 
 all_ncbi_pv_sto_sto <- hmmsearch_clean("updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting

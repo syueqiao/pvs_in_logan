@@ -13,5 +13,8 @@
         "logpvs",
         "logticks",
         "tidyverse"
-    ]
+    ],
+    "r.rpath.windows": "C:\\Program Files\\R\\R-4.4.2\\bin\\R.exe"
+
 }
+

@@ -21,27 +21,8 @@ in_comp_not_hit_PVfam2_scan <- data.frame(setdiff(comp_acc$V1 ,PVfam2_scan$query
 #function to make summstats table
 
 ##############################################TO CREATE WORKING DF FROM HMMER OUTPUT######################################################
-hmmer_clean <- function(input_domtbl){
-  PVfam_full_scan <- read.table(input_domtbl, sep = "",  header = F, fill = T) %>% na.omit() %>% .[,1:22]
-  colnames(PVfam_full_scan) <- c("pfam", "pfam_acc", "tlen", "query_acc", "misc", "qlen", "eval_full", "score_full", "bias_full", "#", "of", 
-                                 "c_eval", "i_eval", "score_one", "bias_one", "hmmcoord_from", "hmmcoord_to", "alicoord_from", "alicoord_to", "envcoord_from", "envcoord_to", "acc")
-  PVfam_full_scan$query_acc_clean <- sub("_[^_]+$", "", PVfam_full_scan$query_acc)
-  
-  in_comp_not_hit_PVfam_full <- data.frame(setdiff(comp_acc$V1 ,PVfam_full_scan$query_acc_clean))
-  
-  #about 80% hit rate for all nucleotide sequences on ncbi
-  
-  # write.table(in_comp_not_hit_PVfam_full, "in_comp_not_hit_PVfam_full.csv", sep=",",  col.names=FALSE, row.names = F)
-  # #all ones without hit are long control regions, eg, those without protein sequences associated with them
-  # 
-  # #smallest qlen that gave a good eval is 10 amino acids, with 10-4 eval (decent?)
-  # PVfam_full_scan_list <- split(PVfam_full_scan, PVfam_full_scan$query_acc_clean)
-  # # PVfam_full_scan_ceval_min <- lapply(PVfam_full_scan_list, function(x) slice_min(x, c_eval))
-  # # names(PVfam_full_scan_ceval_min) <- NULL
-  # df_PVfam_full_scan_ceval_min <- do.call(rbind.data.frame, PVfam_full_scan_ceval_min)
-  
-  return(PVfam_full_scan)
-}
+source("00_utilities/hmmsearch_utils.R")
+
 # length(unique(df_PVfam_full_scan_ceval_min$query_acc_clean))
 #there is one best domain for each input sequence
 

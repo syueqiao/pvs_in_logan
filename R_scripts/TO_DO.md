@@ -22,7 +22,7 @@ Use this checklist to track manual fixes needed before publication.
 
 - [x] **01_database_construction/pro_file_parsing.R** - Remove `browser()` debugging calls
 
-- [ ] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections if not relevant to PV publication
+- [x] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections if not relevant to PV publication
 
 ---
 
@@ -35,7 +35,7 @@ The geographic analysis scripts have specific dependencies. Run in this order:
    - Outputs: `my_sf_data.gpkg`
    - **Note**: Line 17 and 22 reference `all_pvs_mapping_binned` and `all_pvs_mapping` - these need to be loaded first (check if these come from another script or external source)
 
-   #comes from map_gen_for_pub.R
+   #comes from map_gen_for_pub.R!
 
 2. **geo_analysis.R** (depends on poolygons.R)
    - Requires: `giant_geo_table_grid_id_geometry`, `grid_sf`, `world`, `data_wide`
@@ -57,10 +57,10 @@ source("00_utilities/hmmsearch_utils.R")
 ```
 
 Scripts that need this update:
-- [ ] `01_database_construction/logan_3.R`
-- [ ] `02_sequence_characterization/ncbi_L1_character.R`
-- [ ] `02_sequence_characterization/pathracer_fullness_hmm.R`
-- [ ] `02_sequence_characterization/hmmer_results.R`
+- [x] `01_database_construction/logan_3.R`
+- [x] `02_sequence_characterization/ncbi_L1_character.R`
+- [x] `02_sequence_characterization/pathracer_fullness_hmm.R`
+- [x] `02_sequence_characterization/hmmer_results.R`
 
 ---
 
@@ -69,16 +69,16 @@ Scripts that need this update:
 ### HMMER Output Files
 - [x] `feb_7_pv_fil_form.aa.domtbl` (logan_3.R)
 - [x] `feb_7_pv_fil_form_L1_BI.domtbl` (logan_3.R)
-- [ ] Various `.domtbl` files referenced in scripts
-
+- [x] Various `.domtbl` files referenced in scripts
+should be done, had to use GH LFS for some of these larger ones
 ### Tree Files
 - [ ] `*.treefile` (IQtree outputs)
 - [ ] `*.nhx` files
-
+Can you let me know which ones in particular?
 ### Metadata Files
 - [ ] `all_SRA_md.csv`
 - [ ] `tree_meta.csv`
-- [ ] `ncbi_info.txt`
+- [x] `ncbi_info.txt`
 - [x] `lib_source_big.txt` (logan_3.R)
 
 ### Geographic Data

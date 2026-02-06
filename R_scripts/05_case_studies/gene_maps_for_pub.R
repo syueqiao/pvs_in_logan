@@ -294,7 +294,7 @@ ggplot() +
 
 ##################################################ZARD################################
 
-zard_contig <- read.table("SRR22028468_199653_zard_genome.txt", sep ="\t", header = T)
+zard_contig <- read.table("files/SRR22028468_199653_zard_genome.txt", sep ="\t", header = TRUE)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -303,15 +303,14 @@ color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7C
 
 ggplot(zard_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
-  geom_gene_arrow(aes(xmin = 5441+69, xmax = 5441+1301, y = "SRR22028468_199653"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
-  # geom_gene_arrow(aes(xmin = 3617, xmax = 2675, y = "SRR25256522_663139"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
+  geom_gene_arrow(aes(xmin = 3509+69, xmax = 3509+800, y = "SRR22028468_199653"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_text(aes(x = end - ((end-start)/2), y = 1.2, label = gene, fontface = 'bold', family = "Noto Sans"))  +  scale_fill_manual(values = color_match_genes) +
   ylab("Contig") +
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10))
 
-ggsave("zard_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/zard_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 zard_subset <- tree_subset(final_tree, "SRR22028468_199653_ka_f_18.451_L_19965", levels_back = 1)
 zard_tree <- ggtree(zard_subset)

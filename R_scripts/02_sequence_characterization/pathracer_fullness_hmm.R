@@ -3,6 +3,9 @@ library(tidyverse)
 library(ggplot2)
 library(data.table)
 
+source("00_utilities/hmmsearch_utils.R")
+
+
 vert3 <- read.table("files/vert3_sum.txt", sep = "\t", header = F, fill = T, col.names = c(1:25))
 vert3$index <- seq.int(nrow(vert3))
 vert3[-1] <- t(apply(vert3[-1], 1,
@@ -43,18 +46,6 @@ ggplot(vert3_nums_info, aes(x=X2)) +
 vert3_nums_info_50k <- filter(vert3_nums_info, X3 < 50000)
 vert3_nums_info_50k_list[,2] <- str_match(vert3_nums_info_50k$other, "/\\s*(.*?)\\s*_")
 write.table(vert3_nums_info_50k_list[,2], "50k_under.txt", sep = "\t", col.names = F, row.names = F, quote = F)
-
-# look at fullness
-hmmsearch_clean <- function(input_domtbl){
-  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = F, fill = T) %>% na.omit() %>% .[,1:22]
-  # input_domtbl_scan <- input_domtbl_scan[!(is.na(input_domtbl_scan$V21) | input_domtbl_scan$V21=="" | !(input_domtbl_scan$V2 == "-")), ]
-  
-  colnames(input_domtbl_scan) <- c("query_acc", "misc", "qlen", "pfam", "pfam_acc", "tlen", "eval_full", "score_full", "bias_full", "#", "of", 
-                                   "c_eval", "i_eval", "score_one", "bias_one", "hmmcoord_from", "hmmcoord_to", "alicoord_from", "alicoord_to", "envcoord_from", "envcoord_to", "acc")
-  input_domtbl_scan$query_acc_clean <- sub("_[^_]+$", "", input_domtbl_scan$query_acc)
-  input_domtbl_scan <- type.convert(input_domtbl_scan, as.is = TRUE)
-  return(input_domtbl_scan)
-}
 
 pr_run1 <- hmmsearch_clean("all_pr_outputs.domtbl")
 pr_run1$library <- word(pr_run1$query_acc, 2, sep="newfolder\\/")
