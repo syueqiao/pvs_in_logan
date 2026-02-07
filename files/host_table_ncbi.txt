@@ -1,0 +1,67 @@
+Host	Recorded PVs	
+Homo sapiens	485	Mammalia
+Bos taurus	48	Mammalia
+Canis lupus familiaris	32	Mammalia
+Ambystoma mexicanum	1	Amphibia
+Anas platyrhynchos	2	Aves
+Anatidae	1	Galloanserae
+Scotophilus kuhlii	22	Mammalia
+Rhinolophus ferrumequinum	16	Mammalia
+Archaeolacerta bedriagae	1	Squamata
+Felis catus	12	Mammalia
+Rhinolophus sinicus	12	Mammalia
+Astyanax mexicanus	1	Actinopteri   
+Macaca fascicularis	11	Mammalia
+Betta splendens	1	Actinopteri   
+Rhinolophus affinis	11	Mammalia
+Boa imperator	1	Squamata
+Tylonycteris robustula	11	Mammalia
+All Else	324	Mammalia
+Candidatus Ichthyocystis sparus	1	Misc.
+Carassius auratus x Cyprinus carpio	1	Actinopteri   
+Caretta caretta	1	Cryptodira
+Centropristis striata	3	Actinopteri   
+Chelonia mydas	1	Cryptodira
+Chondrichthyes	2	Chondrichthyes
+Columba livia	1	Aves
+Coryphaenoides rupestris	1	Actinopteri   
+Cynoglossus semilaevis	1	Actinopteri   
+Fish-associated papillomavirus 1	1	Actinopteri   
+Francolinus leucoscepus	1	Aves
+Fratercula arctica	1	Aves
+Fringilla coelebs	1	Aves
+Fulmarus glacialis	1	Aves
+Gadus morhua	3	Actinopteri   
+Hemidactylus frenatus	2	Squamata
+Larus smithsonianus	3	Aves
+Leptobrachium leishanense	2	Amphibia
+Luscinia svecica	1	Aves
+Lutjanus campechanus	1	Actinopteri   
+Melanogrammus aeglefinus	5	Actinopteri   
+Morelia spilota spilota	1	Squamata
+Numida meleagris	1	Galloanserae
+Oncorhynchus mykiss	1	Actinopteri   
+Papillomavirus sparus5623	1	Actinopteri   
+Podarcis guadarramae	1	Squamata
+Psittacus erithacus	1	Aves
+Pygoscelis adeliae	2	Aves
+Rana jiemuxiensis	3	Amphibia
+Rhinella marina	1	Amphibia
+Rissa tridactyla	6	Aves
+Serinus canaria	1	Aves
+Silurus glanis	1	Actinopteri   
+Sparus aurata	1	Actinopteri   
+Tick-associated papillomavirus lsx	1	Misc.
+Trematomus bernacchii	1	Actinopteri   
+Urolophus aurantiacus	1	Chondrichthyes
+Wesgulfec papillomavirus	1	Aves
+Xiphophorus birchmanni	1	Actinopteri   
+		
+		
+		
+		
+		
+		
+		
+		
+		0.48891129

@@ -1,0 +1,205 @@
+1	Accipiter nisus
+1	Acetobacter pasteurianus
+1	Arvicanthis niloticus
+1	Aspergillus flavus
+1	bird metagenome
+1	bovine gut metagenome
+1	bovine metagenome
+1	Broussonetia papyrifera
+1	Bufo gargarizans
+1	Burchellia circumcincta
+1	Cales noacki
+1	Cambarus tenebrosus
+1	Candida albicans
+1	Canis latrans
+1	Cavia porcellus
+1	Cryptosporidium hominis
+1	Danio rerio
+1	Dendrortyx leucophrys hypospodius
+1	Desmognathus kanawha
+1	Desmognathus mavrokoilius
+1	Dicentrarchus labrax
+1	Dorylogaster longipes
+1	Entamoeba histolytica
+1	Enterobacter cloacae
+1	Erythranthe guttata
+1	Escherichia coli
+1	food fermentation metagenome
+1	fossil metagenome
+1	Gallus gallus
+1	Gorilla gorilla gorilla
+1	Helianthus annuus
+1	Helicoverpa assulta
+1	Heteroplexis vernonioides
+1	human feces metagenome
+1	human oral metagenome
+1	Human papillomavirus 5
+1	Human papillomavirus type 32
+1	Human respiratory syncytial virus B
+1	human saliva metagenome
+1	Hydra vulgaris
+1	Hypophthalmichthys nobilis
+1	Lasius niger
+1	Lepeophtheirus salmonis
+1	Limnonectes kadarsani
+1	Lithobates catesbeianus
+2	Macaca mulatta
+1	Manis pentadactyla
+1	Marmota marmota marmota
+1	Metamycoplasma phocicerebrale
+1	Micromonas polaris
+1	mouse gut metagenome
+1	Mustela nivalis
+1	Mycobacterium lepromatosis
+1	Nipponia nippon
+1	Oreolalax rhodostigmatus
+1	Oryza sativa Japonica Group
+1	Paramecium sexaurelia
+1	Pegoscapus gemellus
+1	Pegoscapus grandii
+1	Perilla frutescens
+1	Peromyscus leucopus
+1	Podarcis guadarramae
+1	Ptychadena beka
+1	Ptychadena erlangeri
+1	respiratory tract metagenome
+1	Saimiri sciureus
+1	Severe acute respiratory syndrome coronavirus 2
+1	Sousa chinensis
+1	Spilogale pygmaea
+1	Spirodela polyrhiza
+1	Staphylococcus
+1	Stenostomum leucops
+1	Synchytrium endobioticum
+1	Syringa oblata
+1	Tachysurus fulvidraco x Tachysurus vachelli
+1	Taxillus chinensis
+1	Thamnophilus doliatus
+1	Theobroma cacao
+1	Trichoplax adhaerens
+1	Triplophysa dalaica
+1	Triplophysa scleroptera
+1	Triticum dicoccoides
+1	Vigna radiata var. sublobata
+2	Amolops mantzorum
+2	Anopheles coluzzii
+2	Aquilaria agallochum
+2	Arctocephalus gazella
+2	Bemisia tabaci
+2	Budorcas taxicolor
+2	Cebus imitator
+2	Chlamydomonas reinhardtii
+2	Citrus reticulata
+2	Colpophyllia natans
+2	Cyamopsis tetragonoloba
+2	Cydia pomonella
+2	Cylindrospermum alatosporum CCALA 988
+2	Daphnia magna
+2	Dibamus deharvengi
+2	Dracunculus medinensis
+2	Echovirus E30
+2	Fraxinus excelsior
+2	Homo sapiens
+2	Liriomyza sp. 'mattyi'
+2	Liriomyza veluta
+2	Nasonia vitripennis
+2	Oncorhynchus mykiss
+2	Ovis aries
+2	Panicum virgatum
+2	Panthera tigris tigris
+2	Phacochoerus africanus
+2	Phyllomedusa bahiana
+2	Prunus mira
+2	Ptychadena cooperi
+2	Rapana venosa
+2	rat gut metagenome
+2	Rattus
+2	Ricinus communis
+2	riverine metagenome
+2	Schistosoma haematobium
+2	sediment metagenome
+2	Staphylococcus aureus
+2	Streptococcus agalactiae
+2	Takydromus septentrionalis
+2	tick metagenome
+2	Treponema pallidum
+2	Zea
+2	Zhangixalus dugritei
+2	Zhangixalus hui
+3	Anser anser
+3	Arabidopsis
+3	Arceuthobium sichuanense
+3	Bombyx mori
+3	Bos indicus x Bos taurus
+3	Brassica napus
+3	Bubalus bubalis
+3	Desmodus rotundus
+3	food metagenome
+3	Glycine max
+3	Hordeum vulgare
+3	human urinary tract metagenome
+3	Manis javanica
+3	marine metagenome
+3	Medicago truncatula
+3	Nuclearia pattersoni
+3	Paralichthys olivaceus
+3	Pinus
+3	Ptychadena neumanni
+3	Rangifer tarandus caribou
+3	Rattus norvegicus
+3	Sarcophilus harrisii
+3	Schizosaccharomyces pombe
+3	Solanum commersonii
+4	Ambystoma mexicanum
+4	Antechinus flavipes
+4	canine metagenome
+4	Chlamydia sp.
+4	Cryptosporidium canis
+4	Cucumis melo var. cantalupo
+4	Deltapapillomavirus 1
+4	human viral metagenome
+4	Juglans regia
+4	Klebsiella pneumoniae
+4	Leptobrachium leishanense
+4	Methanococcus maripaludis S2
+4	mixed sample
+4	Papilionidae
+4	Pseudomonas aeruginosa
+5	Capra hircus
+5	Coilia nasus
+5	Cryptosporidium parvum
+5	Echinococcus granulosus
+5	marine sediment metagenome
+5	Mesocricetus auratus
+5	Microbacterium sediminis
+5	urban metagenome
+6	aquatic metagenome
+6	Cynoglossus semilaevis
+6	Gulo gulo
+6	Oryza sativa
+7	Ambystoma velasci
+7	Cercospora beticola
+7	Drosophila melanogaster
+8	Bos taurus
+8	Firmicutes
+8	Oryctolagus cuniculus
+8	Treponema pallidum subsp. pallidum
+8	Triticum aestivum
+11	Vulpes lagopus
+12	Plasmodium knowlesi
+12	rodent metagenome
+15	Equus caballus
+13	Sus scrofa
+14	Phrynocephalus versicolor
+19	Schistosoma mansoni
+20	Gadus morhua
+20	Peromyscus maniculatus
+21	Saccharomyces cerevisiae
+27	Felis catus
+29	Plasmodium falciparum
+38	Gossypium hirsutum
+47	Anopheles gambiae
+55	Bos taurus
+157	Canis lupus familiaris
+163	Mus musculus
+1443	Homo sapiens

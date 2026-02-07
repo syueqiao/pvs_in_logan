@@ -1,0 +1,284 @@
+AmPV1	Ailuropoda melanoleuca papillomavirus 1	Omegapapillomavirus	AmPV1REF	Giant panda	Ailuropoda melanoleuca	MF327535
+AmPV2	Ailuropoda melanoleuca papillomavirus 2	Omegapapillomavirus	AmPV2REF	Giant panda	Ailuropoda melanoleuca	MF327536
+AmPV3	Ailuropoda melanoleuca papillomavirus 3	Dyonupapillomavirus	AmPV3REF	Giant panda	Ailuropoda melanoleuca	MF327537
+AmPV4	Ailuropoda melanoleuca papillomavirus 4	Lambdapapillomavirus	AmPV4REF	Giant panda	Ailuropoda melanoleuca	MF327538
+AmPV5	Ailuropoda melanoleuca papillomavirus type 5	Unclassified	AmPV5REF	Giant panda	Ailuropoda melanoleuca	MZ357114
+AplaPV1	Anas platyrhynchos Papillomavirus 1	Unclassified	AplaPV1REF	Mallard	Anas platyrhynchos	MK620303
+AplaPV2	Anas platyrhynchos papillomavirus type 2	Unclassified	AplaPV2REF	Mallard	Anas platyrhynchos	MW888448
+AsPV1	Apodemus sylvaticus Papillomavirus 1	Pipapillomavirus 2	AsPV1REF	Long tailed field mouse	Apodemus sylvaticus	HQ625440
+BPV1	Bos taurus Papillomavirus 1	Deltapapillomavirus 4	BPV1REF	Domestic Cow	Bos Taurus	X02346
+BPV2	Bos taurus Papillomavirus 2	Deltapapillomavirus 4	BPV2REF	Domestic cow	Bos taurus	M20219
+BPV3	Bos taurus Papillomavirus 3	Xipapillomavirus 1	BPV3REF	Domestic cow	Bos taurus	AF486184
+BPV4	Bos taurus Papillomavirus 4	Xipapillomavirus 1	BPV4REF	Domestic cow	Bos taurus	X05817
+BPV5	Bos taurus Papillomavirus 5	Epsilonpapillomavirus 1	BPV5REF	Domestic cow	Bos taurus	AF457465
+BPV6	Bos taurus Papillomavirus 6	Xipapillomavirus 1	BPV6REF	Domestic cow	Bos taurus	AJ620208
+BPV7	Bos taurus Papillomavirus 7	Dyoxipapillomavirus 1	BPV7REF	Domestic cow	Bos taurus	DQ217793
+BPV8	Bos taurus Papillomavirus 8	Epsilonpapillomavirus 1	BPV8REF	Domestic cow	Bos taurus	DQ098913
+BPV9	Bos taurus Papillomavirus 9	Xipapillomavirus 1	BPV9REF	Domestic cow	Bos taurus	AB331650
+BPV10	Bos taurus Papillomavirus 10	Xipapillomavirus 1	BPV10REF	Domestic cow	Bos taurus	AB331651
+BPV11	Bos taurus Papillomavirus 11	Xipapillomavirus 1	BPV11REF	Domestic cow	Bos taurus	AB543507
+BPV12	Bos taurus Papillomavirus 12	Xipapillomavirus 2	BPV12REF	Domestic cow	Bos taurus	JF834523
+BPV13	Bos taurus Papillomavirus 13	Deltapapillomavirus 4	BPV13REF	Domestic cow	Bos taurus	JQ798171
+BPV14	Bos taurus Papillomavirus 14	Deltapapillomavirus 4	BPV14REF	Domestic cow	Bos taurus	KP276343
+BPV15	Bos taurus Papillomavirus 15	Xipapillomavirus 1	BPV15REF	Domestic cow	Bos taurus	KM983393
+BPV16	Bos taurus Papillomavirus 16	Dyokappapapillomavirus	BPV16REF	Domestic cow	Bos taurus	KU519391
+BPV17	Bos taurus Papillomavirus 17	Xipapillomavirus	BPV17REF	Domestic cow	Bos taurus	KU519392
+BPV18	Bos taurus Papillomavirus 18	Dyokappapapillomavirus	BPV18REF	Domestic cow	Bos taurus	KU519393
+BPV19	Bos taurus Papillomavirus 19	Unclassified	BPV19REF	Domestic cow	Bos taurus	KU519394
+BPV20	Bos taurus Papillomavirus 20	Xipapillomavirus	BPV20REF	Domestic cow	Bos taurus	KU519395
+BPV21	Bos taurus Papillomavirus 21	Unclassified	BPV21REF	Domestic cow	Bos taurus	KU519396
+BPV22	Bos taurus Papillomavirus 22	Dyokappapapillomavirus	BPV22REF	Domestic cow	Bos taurus	KY705374
+BPV23	Bos taurus Papillomavirus 23	Xipapillomavirus	BPV23REF	Domestic cow	Bos taurus	KX098515
+BPV24	Bos taurus Papillomavirus 24	Xipapillomavirus	BPV24REF	Domestic cow	Bos taurus	MG602223
+BPV25	Bos taurus Papillomavirus 25	Epsilonpapillomavirus	BPV25REF	Domestic cow	Bos taurus	MG252779
+BPV26	Bos taurus Papillomavirus 26	Xipapillomavirus	BPV26REF	Domestic cow	Bos taurus	MG281846
+BPV27	Bos taurus Papillomavirus 27	Unclassified	BPV27REF	Domestic cow	Bos taurus	MH512005
+BPV28	Bos taurus Papillomavirus 28	Xipapillomavirus	BPV28REF	Domestic cow	Bos taurus	LC500686
+BPV29	Bos taurus Papillomavirus 29	Xipapillomavirus	BPV29REF	Domestic cow	Bos taurus	LC514113
+BPV30	Bovine papillomavirus type 30	Unclassified	BPV30REF	Domestic cow	Bos taurus	OL672227
+BPV31	Bovine papillomavirus type 31	Unclassified	BPV31REF	Domestic cow	Bos taurus	MW390885
+BPV32	Bovine papillomavirus type 32	Unclassified	BPV32REF	Domestic cow	Bos taurus	MW401529
+BPV33	Bovine papillomavirus type 33	Unclassified	BPV33REF	Domestic cow	Bos taurus	MW401530
+BPV34	Bovine papillomavirus type 34	Unclassified	BPV34REF	Domestic cow	Bos taurus	MW401531
+BPV35	Bovine papillomavirus type 35	Unclassified	BPV35REF	Domestic cow	Bos taurus	MW404256
+BPV36	Bovine papillomavirus type 36	Unclassified	BPV36REF	Domestic cow	Bos taurus	MW404257
+BPV37	Bovine papillomavirus type 37	Unclassified	BPV37REF	Domestic cow	Bos taurus	MW404258
+BPV38	Bovine papillomavirus type 38	Unclassified	BPV38REF	Domestic cow	Bos taurus	MW404259
+BPV39	Bovine papillomavirus type 39	Unclassified	BPV39REF	Domestic cow	Bos taurus	MW404260
+BPV40	Bovine papillomavirus type 40	Unclassified	BPV40REF	Domestic cow	Bos taurus	MW428425
+BPV41	Bovine papillomavirus type 41	Unclassified	BPV41REF	Domestic cow	Bos taurus	MW428427
+BPV42	Bovine papillomavirus type 42	Unclassified	BPV42REF	Domestic cow	Bos taurus	MW428428
+BPV43	Bovine papillomavirus type 43	Unclassified	BPV43REF	Domestic cow	Bos taurus	MW428429
+BPV44	Bovine papillomavirus type 44	Unclassified	BPV44REF	Domestic cow	Bos taurus	MW428430
+BPV-mTAPV-lsx	Bos Taurus papillomavirus TAPV-lsx	Unclassified	BPV-mTAPV-lsxnr	Domestic cow	Bos taurus	MK124621
+BcosPV1	Boa constrictor Papillomavirus 1	Unclassified	BcosPV1REF	Boa constrictor	Boa constrictor	MH605022
+BgPV1	Bos grunniens papillomavirus 1	Deltapapillomavirus 4	BgPV1REF	Yak	Bos grunniens	JX174437
+BpPV1	Bettongia penicillata papillomavirus 1	Dyolambdapapillomavirus 1	BpPV1REF	Brush-tailed Bettong	Bettongia penicillata	GU220391
+CPV1	Canis familiaris oral Papillomavirus 1	Lambdapapillomavirus 2	CPV1REF	Domestic dog	Canis familiaris	D55633
+CPV2	Canis familiaris Papillomavirus 2	Taupapillomavirus 1	CPV2REF	Domestic dog	Canis familiaris	AY722648
+CPV3	Canis familiaris Papillomavirus 3	Chipapillomavirus 1	CPV3REF	Domestic dog	Canis familiaris	DQ295066
+CPV4	Canis familiaris Papillomavirus 4	Chipapillomavirus 2	CPV4REF	Domestic dog	Canis familiaris	EF584537
+CPV5	Canis familiaris Papillomavirus 5	Chipapillomavirus 1	CPV5REF	Domestic dog	Canis familiaris	FJ492743
+CPV6	Canis familiaris Papillomavirus 6	Lambdapapillomavirus 3	CPV6REF	Domestic dog	Canis familiaris	FJ492744
+CPV7	Canis familiaris Papillomavirus 7	Taupapillomavirus 1	CPV7REF	Domestic dog	Canis familiaris	FJ492742
+CPV8	Canis familiaris papillomavirus 8	Chipapillomavirus 3	CPV8REF	Domestic dog	Canis familiaris	HQ262536
+CPV9	Canis familiaris papillomavirus 9	Chipapillomavirus 1	CPV9REF	Domestic dog	Canis familiaris	JF800656
+CPV10	Canis familiaris papillomavirus 10	Chipapillomavirus 3	CPV10REF	Domestic dog	Canis familiaris	JF800657
+CPV11	Canis familiaris papillomavirus 11	Chipapillomavirus 1	CPV11REF	Domestic dog	Canis familiaris	JF800658
+CPV12	Canis familiaris papillomavirus 12	Chipapillomavirus 1	CPV12REF	Domestic dog	Canis familiaris	JQ754321
+CPV13	Canis familiaris papillomavirus 13	Taupapillomavirus 2	CPV13REF	Domestic dog	Canis familiaris	JX141478
+CPV14	Canis familiaris papillomavirus 14	Chipapillomavirus 3	CPV14REF	Domestic dog	Canis familiaris	JQ701802
+CPV15	Canis familiaris papillomavirus 15	Chipapillomavirus 3	CPV15REF	Domestic dog	Canis familiaris	JX899359
+CPV16	Canis familiaris papillomavirus 16	Chipapillomavirus 2	CPV16REF	Domestic dog	Canis familiaris	KP099966
+CPV17	Canis familiaris papillomavirus 17	Taupapillomavirus	CPV17REF	Domestic dog	Canis familiaris	KT272399
+CPV18	Canis familiaris papillomavirus 18	Chipapillomavirus	CPV18REF	Domestic dog	Canis familiaris	KT326919
+CPV19	Canis familiaris papillomavirus 19	Taupapillomavirus	CPV19REF	Domestic dog	Canis familiaris	KX599536
+CPV20	Canis familiaris papillomavirus 20	Chipapillomavirus	CPV20REF	Domestic dog	Canis familiaris	KT901797
+CPV21	Canis familiaris papillomavirus 21	Taupapillomavirus	CPV21REF	Domestic dog	Canis familiaris	MH285952
+CPV22	Canis familiaris papillomavirus 22	Taupapillomavirus	CPV22REF	Domestic dog	Canis familiaris	MH285953
+CPV23	Canis familiaris papillomavirus 23	Taupapillomavirus	CPV23REF	Domestic dog	Canis familiaris	MH285954
+CPV24	Canine papillomavirus type 24	Unclassified	CPV24REF	Domestic dog	Canis familiaris	OP432240
+CcPV1	Caretta caretta Papillomavirus 1	Dyozetapapillomavirus 1	CcPV1REF	Loggerhead turtle	Caretta caretta	EU493092
+CcaPV1	Capreolus capreolus Papillomavirus 1	Deltapapillomavirus 5	CcaPV1REF	Western roe deer	Capreolus capreolus	EF680235
+CcanPV1	Castor canadensis papillomavirus 1	Dyosigmapapillomavirus 1	CcanPV1REF	North American beaver	Castor canadensis	KC020689
+CcrPV1	Crocuta crocuta papillomavirus 1	Lambdapapillomavirus 5	CcrPV1REF	Spotted hyena	Crocuta crocuta	HQ585856
+CdPV1	Camelus dromedarius papillomavirus 1	Deltapapillomavirus 6	CdPV1REF	Arabian camel	Camelus dromedarius	HQ912790
+CdPV2	Camelus dromedarius papillomavirus 2	Deltapapillomavirus 6	CdPV2REF	Arabian camel	Camelus dromedarius	HQ912791
+CdPV3	Camelus dromedarius papillomavirus 3	Unclassified	CdPV3REF	Arabian camel	Camelus dromedarius	MT130100
+CePV1	Cervus elaphus papillomavirus 1	Epsilonpapillomavirus	CePV1REF	Red deer	Cervus elaphus	KU350625
+CePV2	Cervus elaphus papillomavirus 2	Xipapillomavirus	CePV2REF	Red deer	Cervus elaphus	KT932712
+CgPV1	Colobus guereza Papillomavirus 1	Alphapapillomavirus 14	CgPV1REF	Colobus monkey	Colobus guereza	GU014532
+CgPV2	Colobus guereza Papillomavirus 2	Betapapillomavirus 1	CgPV2REF	Colobus monkey	Colobus guereza	GU014533
+ChPV1	Capra hircus Papillomavirus 1	Phipapillomavirus 1	ChPV1REF	Domestic goat	Capra hircus	DQ091200
+ChPV2	Capra hircus Papillomavirus 2	Unclassified	ChPV2REF	Domestic goat	Capra hircus	MN148899
+CmPV1	Chelonia mydas Papillomavirus 1	Dyozetapapillomavirus 1	CmPV1REF	Green seaturtle	Chelonia mydas	EU493091
+CpenPV1	Callithrix penicillata papillomavirus type 1	Gammapapillomavirus	CpenPV1REF	Black-tufted marmoset	Callithrix penicillata	MN535763
+CpenPV2	Callithrix penicillata papillomavirus type 2	Gammapapillomavirus	CpenPV2REF	Black-tufted marmoset	Callithrix penicillata	MN535764
+CstrPV1	Centropristis striata papillomavirus type 1	Unclassified	CstrPV1REF	Sea Bass	Centropristis striata	MZ570863
+CstrPV2	Centropristis striata papillomavirus type 2	Unclassified	CstrPV2REF	Sea Bass	Centropristis striata	MZ570864
+CstrPV3	Centropristis striata papillomavirus type 3	Unclassified	CstrPV3REF	Sea Bass	Centropristis striata	MZ570865
+DdPV1	Delphinus delphis papillomavirus	Upsilonpapillomavirus 1	DdPV1REF	Common short beaked dolphin	Delphinus delphis	GU117620
+DleuPV1	Delphinapterus leucas papillomavirus type 1	Unclassified	DleuPV1REF	Beluga whale	Delphinapterus leucas	OP856597
+EaPV1	Equus asinus papillomavirus	Dyochipapillomavirus 1	EaPV1REF	Donkey	Equus Asinus	KF741371
+EaPV2	Equus asinus papillomavirus	Zetapapillomavirus	EaPV2REF	Donkey	Equus Asinus	MH625918
+EaPV3	equus asinus papillomavirus type 3	Unclassified	EaPV3REF	African wild ass	Equus asinus	OP699054
+EbonPV1	Eumops bonariensis papillomavirus type 1	Unclassified	EbonPV1REF	Dwarf bonneted bat	Eumops bonariensis	OL704824
+EbonPV2	Eumops bonariensis papillomavirus type 2	Unclassified	EbonPV2REF	Dwarf bonneted bat	Eumops bonariensis	OL704825
+EcPV1	Equus caballus Papillomavirus 1	Zetapapillomavirus 1	EcPV1REF	Domestic horse	Equus ferus caballus	AF498323
+EcPV2	Equus caballus Papillomavirus 2	Dyoiotapapillomavirus 1	EcPV2REF	Domestic horse	Equus ferus caballus	EU503122
+EcPV3	Equus caballus papillomavirus 3	Dyorhopapillomavirus 1	EcPV3REF	Domestic horse	Equus ferus caballus	GU384895
+EcPV4	Equus caballus papillomavirus 4	Dyoiotapapillomavirus 2	EcPV4REF	Domestic horse	Equus ferus caballus	JQ031032
+EcPV5	Equus caballus papillomavirus 5	Dyoiotapapillomavirus 2	EcPV5REF	Domestic horse	Equus ferus caballus	JQ031033
+EcPV6	Equus caballus papillomavirus 6	Dyorhopapillomavirus 1	EcPV6REF	Domestic horse	Equus ferus caballus	JQ965698
+EcPV7	Equus caballus papillomavirus 7	Dyorhopapillomavirus 1	EcPV7REF	Domestic horse	Equus ferus caballus	JX035935
+EcPV8	Equus caballus papillomavirus 8	Unclassified	EcPV8REF	Domestic horse	Equus ferus caballus	KU963288
+EcPV9	Equus caballus papillomavirus 9	Unclassified	EcPV9REF	Domestic horse	Equus ferus caballus	MN117918
+EcPV10	Equus caballus papillomavirus 10	Unclassified	EcPV10REF	Domestic horse	Equus ferus caballus	OP870083
+EdPV1	Erethizon dorsatum Papillomavirus 1	Sigmapapillomavirus 1	EdPV1REF	North American porcupine	Erethizon dorsatum	AY684126
+EdPV2	Erethizon dorsatum Papillomavirus 2	Unclassified	EdPV2REF	North American porcupine	Erethizon dorsatum	MH376689
+EePV1	Erinaceus europaeus Papillomavirus 1	Dyoetapapillomavirus 1	EePV1REF	European hedgehog	Erinaceus europaeus	FJ379293
+EhPV1	Eidolon helvum papillomavirus 1	Dyoupsilonpapillomavirus 1	EhPV1REF	straw-colored fruit bat	Eidolon helvum	JX123128
+EhPV2	Eidolon helvum papillomavirus 2	Psipapillomavirus	EhPV2REF	straw-colored fruit bat	Eidolon helvum	KX276957
+EhPV3	Eidolon helvum papillomavirus 3	Psipapillomavirus	EhPV3REF	straw-colored fruit bat	Eidolon helvum	KX276956
+EhPV4	Eidolon helvum papillomavirus 4	Unclassified	EhPV4REF	Straw-coloured fruit bat	Eidolon helvum	KX434763
+ElPV1	Enhydra lutris papillomavirus 1	Lambdapapillomavirus 4	ElPV1REF	Sea Otter	Enhydra lutris	KJ410351
+ErugPV1	Eptesicus regulus  papillomavirus type 1	Unclassified	ErugPV1REF	Southern forest bat	Eptesicus regulus 	MT766314
+EsPV1	Eptesicus serotinus papillomavirus 1	Dyopsipapillomavirus 1	EsPV1REF	Serotine bat	Eptesicus serotinus	KC858263
+EsPV2	Eptesicus serotinus papillomavirus 2	Dyoomegapapillomavirus 1	EsPV2REF	Serotine bat	Eptesicus serotinus	KC858264
+EsPV3	Eptesicus serotinus papillomavirus 3	Dyopsipapillomavirus 1	EsPV3REF	Serotine bat	Eptesicus serotinus	KC858265
+FarcPV1	Fratercula arctica Papillomavirus 1	Unclassified	FarcPV1REF	Atlantic puffin	Fratercula arctica	MK620302
+FcPV1	Fringilla coelebs Papillomavirus	Etapapillomavirus 1	FcPV1REF	Common Chaffinch	Fringilla coelebs	AY057109
+FcaPV1	Felis domesticus Papillomavirus 1	Lambdapapillomavirus 1	FcaPV1REF	Domestic cat	Felis domesticus	AF480454
+FcaPV2	Felis domesticus Papillomavirus 2	Dyothetapapillomavirus 1	FcaPV2REF	Domestic cat	Felis domesticus	EU796884
+FcaPV3	Felis catus papillomavirus 3	Taupapillomavirus 3	FcaPV3REF	Domestic cat	Felis domesticus	JX972168
+FcaPV4	Felis catus papillomavirus 4	Taupapillomavirus 3	FcaPV4REF	Domestic cat	Felis domesticus	KF147892
+FcaPV5	Felis catus papillomavirus 5	Taupapillomavirus	FcaPV5REF	Domestic cat	Felis domesticus	KY853656
+FcaPV6	Felis catus papillomavirus 6	Unclassified	FcaPV6REF	Domestic cat	Felis domesticus	MN857145
+FcaPV7	Felis catus papillomavirus 7	Unclassified	FcaPV7REF	Domestic cat	Felis domesticus	OL310516
+FgPV1	Fulmarus glacialis papillomavirus 1	Treiszetapapillomavirus	FgPV1REF	Northern fulmar	Fulmarus Glacialis	KJ452243
+FlPV1	Francolinus leucoscepus Papillomavirus 1	Dyoepsilonpapillomavirus 1	FlPV1REF	Yellow necked Francolin	Francolinus leucoscepus	EU188799
+GcPV1	Giraffa camelopardalis Papillomavirus 1	Deltapapillomavirus	GcPV1REF	Giraffe	Giraffa camelopardalis	KX954132
+HfrePV1	Hemidactylus frenatus papillomavirus 1	Unclassified	HfrePV1REF	Common house gecko	Hemidactylus frenatus	MK207055
+HfrePV2	Hemidactylus frenatus papillomavirus 2	Unclassified	HfrePV2REF	Common house gecko	Hemidactylus frenatus	MN194600
+LcamPV1	Lutjanus campechanus associated papillomavirus 1	Unclassified	LcamPV1nr	Red Snapper	Lutjanus campechanus	MH617579
+LrPV1	Lynx rufus Papillomavirus 1	Lambdapapillomavirus 1	LrPV1REF	Bobcat	Lynx rufus	AY904722
+LsmiPV1	Larus smithsonianus Papillomavirus 1	Unclassified	LsmiPV1REF	Americam Herring Gull	Larus smithsonianus	MK620304
+LwPV1	Leptonychotes weddelliipapillomavirus 1	Unclassified	LwPV1REF	Weddell seal	Leptonychotes weddellii	MG571090
+LwPV2	Leptonychotes weddelliipapillomavirus 2	Unclassified	LwPV2REF	Weddell seal	Leptonychotes weddellii	MG571089
+LwPV3	Leptonychotes weddelliipapillomavirus 3	Dyonupapillomavirus	LwPV3REF	Weddell seal	Leptonychotes weddellii	MG571093
+LwPV4	Leptonychotes weddelliipapillomavirus 4	Dyothetapapillomavirus	LwPV4REF	Weddell seal	Leptonychotes weddellii	MG571095
+LwPV5	Leptonychotes weddelliipapillomavirus 5	Taupapillomavirus	LwPV5REF	Weddell seal	Leptonychotes weddellii	MG571094
+LwPV6	Leptonychotes weddelliipapillomavirus 6	Omegapapillomavirus	LwPV6REF	Weddell seal	Leptonychotes weddellii	MG571091
+LwPV7	Leptonychotes weddelliipapillomavirus 7	Omegapapillomavirus	LwPV7REF	Weddell seal	Leptonychotes weddellii	MG571092
+LwiePV1	Leopardus wiedii Papillomavirus 1	Lambdapapillomavirus	LwiePV1REF	Margay	Leopardus wiedii	MH910493
+MaPV1	Mesocricetus auratus papillomavirus 1	Pipapillomavirus 2	MaPV1REF	Golden hamster	Mesocricetus auratus	E15111
+MaegPV1	Melanogrammus aeglefinus associated papillomavirus 1	Unclassified	MaegPV1REF	Haddock	Melanogrammus aeglefinus	MH616908
+MaegPV2	Melanogrammus aeglefinus associated papillomavirus 2	Unclassified	MaegPV2REF	Haddock	Melanogrammus aeglefinus	MH617143
+MaegPV3	Melanogrammus aeglefinus associated papillomavirus 3	Unclassified	MaegPV3REF	Haddock	Melanogrammus aeglefinus	MZ570859
+MaegPV4	Melanogrammus aeglefinus associated papillomavirus 4	Unclassified	MaegPV4REF	Haddock	Melanogrammus aeglefinus	MZ570860
+MaegPV5	Melanogrammus aeglefinus associated papillomavirus 5	Unclassified	MaegPV5REF	Haddock	Melanogrammus aeglefinus	MZ570861
+MaegPV6	Melanogrammus aeglefinus associated papillomavirus 6	Unclassified	MaegPV6REF	Haddock	Melanogrammus aeglefinus	MZ570862
+McPV2	Mastomys coucha Papillomavirus 2	Pipapillomavirus 2	McPV2REF	Multimammate mouse	Mastomys coucha	DQ664501
+MfPV1	Macaca fascicularis Papillomavirus 1	Betapapillomavirus 1	MfPV1REF	Cynomolgus macaque	Macaca fascicularis	EF028290
+MfPV2	Macaca fascicularis Papillomavirus 2	Betapapillomavirus 6	MfPV2REF	Cynomolgus macaque	Macaca fascicularis	GU014531
+MfPV3	Macaca fascicularis Papillomavirus 3	Alphapapillomavirus 12	MfPV3REF	Cynomolgus macaque	Macaca fascicularis	EF558839
+MfPV4	Macaca fascicularis Papillomavirus 4	Alphapapillomavirus 12	MfPV4REF	Cynomolgus macaque	Macaca fascicularis	EF558841
+MfPV5	Macaca fascicularis Papillomavirus 5	Alphapapillomavirus 12	MfPV5REF	Cynomolgus macaque	Macaca fascicularis	EF558843
+MfPV6	Macaca fascicularis Papillomavirus 6	Alphapapillomavirus 12	MfPV6REF	Cynomolgus macaque	Macaca fascicularis	EF558840
+MfPV7	Macaca fascicularis Papillomavirus 7	Alphapapillomavirus 12	MfPV7REF	Cynomolgus macaque	Macaca fascicularis	EF558838
+MfPV8	Macaca fascicularis Papillomavirus 8	Alphapapillomavirus 12	MfPV8REF	Cynomolgus macaque	Macaca fascicularis	EF558842
+MfPV9	Macaca fascicularis Papillomavirus 9	Alphapapillomavirus 12	MfPV9REF	Cynomolgus macaque	Macaca fascicularis	EU490516
+MfPV10	Macaca fascicularis Papillomavirus 10	Alphapapillomavirus 12	MfPV10REF	Cynomolgus macaque	Macaca fascicularis	EU490515
+MfPV11	Macaca fascicularis Papillomavirus 11	Alphapapillomavirus 12	MfPV11REF	Cynomolgus macaque	Macaca fascicularis	GQ227670
+MfoiPV1	Martes foina papillomavirus type 1	Unclassified	MfoiPV1REF	Beech marten	Martes foina	MW841296
+MfuPV1	Macaca fuscata papillomavirus 1	Alphapapillomavirus	MfuPV1REF	Japanese Macaque	Macaca fuscata	KT944080
+MfuPV2	Macaca fuscata papillomavirus 2	Alphapapillomavirus	MfuPV2REF	Japanese Macaque	Macaca fuscata	MH469677
+MjavPV1	Manis javanica papillomavirus type 1	Unclassified	MjavPV1REF	Sunda pangolin	Manis javanica	BK062771
+MjavPV2	Manis javanica papillomavirus type 2	Unclassified	MjavPV2REF	Sunda pangolin	Manis javanica	BK062772
+MjavPV3	Manis javanica papillomavirus type 3	Unclassified	MjavPV3REF	Sunda pangolin	Manis javanica	BK062773
+MmPV1	Macaca mulata Papillomavirus 1	Alphapapillomavirus 12	MmPV1REF	Rhesus macaque	Macaca mulata	M60184
+MmPV2	Macaca mulata Papillomavirus 2	Alphapapillomavirus	MmPV2REF	Rhesus macaque	Macaca mulata	MG837557
+MmPV3	Macaca mulata Papillomavirus 3	Alphapapillomavirus	MmPV3REF	Rhesus macaque	Macaca mulata	MG837558
+MmPV4	Macaca mulata Papillomavirus 4	Gammapapillomavirus	MmPV4REF	Rhesus macaque	Macaca mulata	MG837559
+MmPV5	Macaca mulata Papillomavirus 5	Gammapapillomavirus	MmPV5REF	Rhesus macaque	Macaca mulata	MH745747
+MmPV6	Macaca mulata Papillomavirus 6	Alphapapillomavirus	MmPV6REF	Rhesus macaque	Macaca mulata	MH745748
+MmPV7	Macaca mulata Papillomavirus 7	Gammapapillomavirus	MmPV7REF	Rhesus macaque	Macaca mulata	MH745749
+MmiPV1	Micromys minutus Papillomavirus 1	Pipapillomavirus 2	MmiPV1REF	Old World harvest mouse	Micromys minutus	DQ269468
+MmolPV2	Molossus molossus papillomavirus type 2	Unclassified	MmolPV2REF	Velvety free-tailed bat	Molossus molossus	OL704823
+MmuPV1	Mus musculus papillomavirus type 1	Pipapillomavirus 2	MmuPV1REF	House mouse	Mus musculus	GU808564
+MnPV1	Mastomys natalensis Papillomavirus 1	Iotapapillomavirus 1	MnPV1REF	Multimammate mouse	Mastomys natalensis	U01834
+MpPV1	Mustela putorius papillomavirus 1	Taupapillomavirus	MpPV1REF	European polecat	Mustela putorius	KF006988
+MrPV1	Myotis ricketti papillomavirus 1	Unclassified	MrPV1REF	Ricketts big-footed bat	Myotis ricketti	JQ814847
+MsPV1	Morelia spilota papillomavirus 1	Dyomupapillomavirus 1	MsPV1REF	Carpet python	Morelia spilota	HQ262535
+MscPV1	Miniopterus schreibersii papillomavirus 1	Unclassified	MscPV1REF	Common bent-wing bat	Miniopterus schreibersii	JQ814848
+MscPV2	Miniopterus schreibersii papillomavirus 2	Dyotaupapillomavirus 1	MscPV2REF	Common bent-wing bat	Miniopterus schreibersii	JQ692938
+NasiPV1	Neophocaena asiaeorientalis papillomavirus 1	Unclassified	NasiPV1REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274126
+NasiPV2	Neophocaena asiaeorientalis papillomavirus 2	Unclassified	NasiPV2REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274127
+NasiPV3	Neophocaena asiaeorientalis papillomavirus 3	Unclassified	NasiPV3REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274128
+NasiPV4	Neophocaena asiaeorientalis papillomavirus 4	Unclassified	NasiPV4REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274129
+NasiPV5	Neophocaena asiaeorientalis papillomavirus 5	Unclassified	NasiPV5REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274130
+NasiPV6	Neophocaena asiaeorientalis papillomavirus 6	Unclassified	NasiPV6REF	Narrow-ridged finless porpoise	Neophocaena asiaeorientalis	OQ274131
+OaPV1	Ovis aries Papillomavirus 1	Deltapapillomavirus 3	OaPV1REF	Domestic sheep	Ovis aries	U83594
+OaPV2	Ovis aries Papillomavirus 2	Deltapapillomavirus 3	OaPV2REF	Domestic sheep	Ovis aries	U83595
+OaPV3	Ovis aries Papillomavirus 3	Dyokappapapillomavirus 1	OaPV3REF	Domestic sheep	Ovis aries	FJ796965
+OaPV4	Ovis aries Papillomavirus 4	Deltapapillomavirus	OaPV4REF	Domestic sheep	Ovis aries	KX954121
+OcPV1	Oryctolagus cuniculus Papillomavirus 1	Kappapapillomavirus 1	OcPV1REF	New Zealand white rabbit	Oryctolagus cuniculus	AF227240
+OjohPV1	Okapia johnstoni Papillomavirus 1	Deltapapillomavirus	OjohPV1REF	Okapi	Okapia johnstoni	MH049343
+OmykPV1	Oncorhynchus mykiss papillomavirus type 1	Unclassified	OmykPV1REF	rainbow trout	Oncorhynchus mykiss	MH510267
+OvPV1	Odocoileus virginianus Papillomavirus 1	Deltapapillomavirus 2	OvPV1REF	American White-tailed deer	Odocoileus virginianus	M11910
+PaPV1	Pygoscelis adeliae papillomavirus	Treisepsilonpapillomavirus 1	PaPV1REF	Adelie penguin	Pygoscelis adeliae	KJ173785
+PaPV2	Pygoscelis adeliae papillomavirus	Treisepsilonpapillomavirus	PaPV2REF	Adelie penguin	Pygoscelis adeliae	MF168943
+PcPV1	Puma concolor Papillomavirus 1	Lambdapapillomavirus 1	PcPV1REF	Puma	Puma concolor	AY904723
+PePV1	Psittacus erithacus Papillomavirus 1	Thetapapillomavirus 1	PePV1REF	Gray parrot	Psittacus erithacus	AF502599
+PhPV1	Papio hamadryas papillomavirus 1	Alphapapillomavirus 12	PhPV1REF	Hamadryas baboon	Papio hamadryas	JF304764
+PlPV1	Procyon lotor Papillomavirus 1	Lambdapapillomavirus 4	PlPV1REF	Raccoon	Procyon lotor	AY763115
+PlpPV1	Panthera leo persica Papillomavirus 1	Lambdapapillomavirus 1	PlpPV1REF	Asiatic lion	Panthera leo persica	AY904724
+PmPV1	Peromyscus papillomavirus 1	Iotapapillomavirus	PmPV1REF	Peromyscus	Peromyscus	JF755418
+PpPV1	Pan paniscus Papillomavirus 1	Alphapapillomavirus 10	PpPV1REF	Pygmy chimpanzee	Pan paniscus	X62844
+PphPV1	Phocoena phocoena papillomavirus	Omikronpapillomavirus 1	PphPV1REF	Harbor porpoise	Phocoena phocoena	GU117621
+PphPV2	Phocoena phocoena papillomavirus	Upsilonpapillomavirus 3	PphPV2REF	Harbor porpoise	Phocoena phocoena	GU117622
+PphPV4	Phocoena phocoena papillomavirus	Dyopipapillomavirus 1	PphPV4REF	Harbor porpoise	Phocoena phocoena	GU117623
+PpuPV1	Pudu puda papillomavirus type 1	Unclassified	PpuPV1REF	Pudu	Pudu puda	KT932713
+PsPV1	Phocoena spinipinnis Papillomavirus	Omikronpapillomavirus 1	PsPV1REF	Burmeisters porpoise	Phocoena spinipinnis	AJ238373
+PsuPV1	Phodopus sungorus papillomavirus type 1	Pipapillomavirus 1	PsuPV1REF	Siberian Hamster	Phodopus sungorus	HG939559
+PtroPV1	Pan troglodytes papillomavirus 1	Unclassified	PtroPV1REF	Chimpanzee	Pan troglodytes	OP934207
+RaPV1	Rousettus aegyptiacus Papillomavirus 1	Psipapillomavirus 1	RaPV1REF	Egyptian rousette fruitbat	Rousettus aegyptiacus	DQ366842
+RalPV1	Rusa alfredi Papillomavirus 1	Deltapapillomavirus	RalPV1REF	Visayan spotted deer	Rusa alfredi	KT626573
+RfPV1	Rhinolophus ferrumequinum papillomavirus type 1	Treisdeltapapillomavirus 1	RfPV1REF	Greater horseshoe bat	Rhinolophus ferrumequinum	KC858266
+RmarPV1	Rhinella marina papillomavirus type 1	Unclassified	RmarPV1REF	Cane toad	Rhinella marina	MW582900
+RnPV1	Rattus norvegicus Papillomavirus 1	Pipapillomavirus 2	RnPV1REF	Norwegian rat	Rattus norvegicus	GQ180114
+RnPV2	Rattus norvegicus Papillomavirus 2	Iotapapillomavirus 1	RnPV2REF	Norwegian rat	Rattus norvegicus	HQ625441
+RnPV3	Rattus norvegicus Papillomavirus 3	Iotapapillomavirus 1	RnPV3REF	Norwegian rat	Rattus norvegicus	KT945134
+RnPV4	Rattus norvegicus associated Papillomavirus 4	Unclassified	RnPV4nr	Norwegian rat	Rattus norvegicus	MH892425
+RrPV1	Rupicapra rupicapra papillomavirus 1	Dyokappapapillomavirus 2	RrPV1REF	Chamois	Rupicapra rupicapra	KC876045
+RtPV1	Rangifer tarandus Papillomavirus 1	Deltapapillomavirus 1	RtPV1REF	Reindeer	Rangifer tarandus	AF443292
+RtPV2	Rangifer tarandus papillomavirus 2	Xipapillomavirus 3	RtPV2REF	Reindeer	Rangifer tarandus	KC810012
+RtiPV1	Rusa timorensis papillomavirus 1	Unclassified	RtiPV1REF	Javan rusa	Rusa timorensis	KP757765
+RtiPV2	Rusa timorensis papillomavirus 2	Unclassified	RtiPV2REF	Javan Rusa	Rusa timorensis	KT852571
+RtriPV1	Rissa tridactyla Papillomavirus 1	Unclassified	RtriPV1REF	Black-legged Kittiwake	Rissa tridactyla	MK620305
+SaPV1	Sparus aurata Papillomavirus type 1	Unclassified	SaPV1REF	Gilt-head bream	Sparus aurata	KX643372
+ScPV1	Serinus canaria papillomavirus 1	Etapapillomavirus	ScPV1REF	Atlantic canary	Serinus canaria	MF564196
+SfPV1	Sylvilagus floridanus Papillomavirus 1	Kappapapillomavirus 2	SfPV1REF	Cottontail rabbit	Sylvilagus floridanus	K02708
+SglaPV1	Silurus glanis  papillomavirus type 1	Unclassified	SglaPV1REF	Wels catfish	Silurus glanis 	MN515404
+SsPV1	Sus scrofa Papillomavirus 1	Dyodeltapapillomavirus 1	SsPV1REF	Domestic pig	Sus scrofa	EF395818
+SsPV2	Sus scrofa Papillomavirus 2	Unclassified	SsPV2REF	Domestic pig	Sus scrofa	KY817993
+SscPV1	Saimiri sciureus papillomavirus 1	Dyoomikronpapillomavirus 1	SscPV1REF	Common squirrel monkey	Saimiri sciureus	JF304765
+SscPV2	Saimiri sciureus papillomavirus 2	Dyoomikronpapillomavirus 1	SscPV2REF	Common squirrel monkey	Saimiri sciureus	JF304766
+SscPV3	Saimiri sciureus papillomavirus 3	Dyoomikronpapillomavirus 1	SscPV3REF	Common squirrel monkey	Saimiri sciureus	JF304767
+TbelPV1	Tupaia belangeri Papillomavirus 1	Unclassified	Tbel1REF	Tree shrew	Tupaia belangeri	MK443496
+TbelPV2	Tupaia belangeri Papillomavirus 2	Unclassified	Tbel2REF	Tree shrew	Tupaia belangeri	MK443497
+TberPV1	Trematomus bernacchii papillomavirus type 1	Unclassified	TberPV1REF	Emerald rockcod	Trematomus bernacchii	MZ447865
+TbraPV1	Tadarida brasiliensis papillomavirus 1	Unclassified	TbraPV1REF	Mexican free-tailed bat	Tadarida brasiliensis	MN329804
+TbraPV2	Tadarida brasiliensis papillomavirus 2	Unclassified	TbraPV2REF	Mexican free-tailed bat	Tadarida brasiliensis	MW922427
+TbraPV3	Tadarida brasiliensis papillomavirus 3	Unclassified	TbraPV3REF	Mexican free-tailed bat	Tadarida brasiliensis	MW922428
+TePV1	Talpa europaea papillomavirus 1	Dyophipapillomavirus 1	TePV1REF	European mole	Talpa europaea	KC460987
+TmPV1	Trichechus manatus latirostris Papillomavirus 1	Rhopapillomavirus 1	TmPV1REF	Caribbean manatee	Trichechus manatus latirostris	AY609301
+TmPV2	Trichechus manatus latirostris Papillomavirus 2	Rhopapillomavirus 1	TmPV2REF	Caribbean manatee	Trichechus manatus latirostris	JN709473
+TmPV3	Trichechus manatus latirostris Papillomavirus 3	Rhopapillomavirus 2	TmPV3REF	Caribbean manatee	Trichechus manatus latirostris	KP205502
+TmPV4	Trichechus manatus latirostris Papillomavirus 4	Rhopapillomavirus 2	TmPV4REF	Caribbean manatee	Trichechus manatus latirostris	KP205503
+TmPV5	Trichechus manatus papillomavirus type 5	Unclassified	TmPV5REF	Caribbean manatee	Trichechus manatus latirostris	OK073977
+TperPV1	Taphozous perforatus papillomavirus 1	Unclassified	TperPV1REF	Egyptian tomb bat	Taphozous perforatus	KX434764
+TtPV1	Tursiops truncatus Papillomavirus 1	Upsilonpapillomavirus 1	TtPV1REF	Bottlenosed dolphin	Tursiops truncatus	EU240894
+TtPV2	Tursiops truncatus Papillomavirus 2	Upsilonpapillomavirus 2	TtPV2REF	Bottlenosed dolphin	Tursiops truncatus	AY956402
+TtPV3	Tursiops truncatus Papillomavirus 3	Upsilonpapillomavirus 1	TtPV3REF	Bottlenosed dolphin	Tursiops truncatus	EU240895
+TtPV4	Tursiops truncatus papillomavirus 4	Upsilonpapillomavirus 1	TtPV4REF	Bottlenosed dolphin	Tursiops truncatus	JN709469
+TtPV5	Tursiops truncatus papillomavirus 5	Omikronpapillomavirus 1	TtPV5REF	Bottlenosed dolphin	Tursiops truncatus	JN709470
+TtPV6	Tursiops truncatus papillomavirus 6	Omikronpapillomavirus 1	TtPV6REF	Bottlenosed dolphin	Tursiops truncatus	JN709471
+TtPV7	Tursiops truncatus papillomavirus 7	Upsilonpapillomavirus 1	TtPV7REF	Bottlenosed dolphin	Tursiops truncatus	JN709472
+TtPV8	Tursiops truncatuspapillomavirus 8	Dyopipapillomavirus	TtPV8REF	bottle-nosed dolphin	Tursiops truncatus	MG744508
+TtPV9	Tursiops truncatuspapillomavirus 9	Omikronpapillomavirus	TtPV9REF	bottle-nosed dolphin	Tursiops truncatus	MG905161
+UmPV1	Ursus maritimus Papillomavirus 1	Omegapapillomavirus 1	UmPV1REF	Polar bear	Ursus maritimus	EF536349
+UuPV1	Uncia uncia Papillomavirus 1	Lambdapapillomavirus 1	UuPV1REF	Snow leopard	Uncia uncia	DQ180494
+VvPV1	Vulpes vulpes papillomavirus 1	Treisetapapillomavirus	VvPV1REF	Red fox	Vulpes vulpes	KF857586
+VvarPV1	Varecia variegata papillomavirus 1	Unclassified	VvarPV1REF	Black-and-white ruffed lemur	Varecia variegata	OP376964
+VvarPV2	Varecia variegata papillomavirus 2	Unclassified	VvarPV2REF	Black-and-white ruffed lemur	Varecia variegata	OP376965
+ZcPV1	Zalophus californianus papillomavirus 1	Dyonupapillomavirus 1	ZcPV1REF	Sealion	Zalophus californianus	HQ293213
+PV-HMU5-rodent	Rat associated papillomavirus HMU5	Unclassified	PV-HMU5-rodentnr	Rat	Rattus (not defined)	ON932813
+PV-HMU6-rodent	Rat associated papillomavirus HMU6	Unclassified	PV-HMU6-rodentnr	Rat	Rattus (not defined)	ON932814
+PV-wesgulfec-fish	Wesgulfec associated papillomavirus	Unclassified	PV-wesgulfec-fishnr	Unidentified	Unidentified	MZ602149
+PV-fi100-fish	Fish associated papillomavirus fi100	Unclassified	PV-fi100-fishnr	fish	fish (not defined)	OP933686
+AaPV1	Alces alces Papillomavirus 1	Deltapapillomavirus 1	AaPV1REF	European elk	Alces Alces	M15953
+AalbPV1	Atelerix albiventris papillomavirus type 1	Unclassified	AalbPV1REF	Four-toed hedgehog	Atelerix albiventris	LC704675
+AchePV1	Apodemus chevrieri papillomavirus 1	Pipapillomavirus	AchePV1REF	Chevriers field mouse	Apodemus chevrieri	KY370096
+AgPV1	Alouatta guariba papillomavirus 1	Dyoomikronpapillomavirus	AgPV1REF	Brown howler	Alouatta guariba	KP861980
+

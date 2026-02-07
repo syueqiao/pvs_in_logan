@@ -1,5 +1,12 @@
 # pvs_in_logan
-collection of notebooks that document that process to generate and visualize data on papillomaviruses in Logan
-- they are not perfect, but are comprehensive in recording steps that were taken
-- some documents require manually generated or curated files, which are in notebooks/data folder (please let me know if something is missing!)
-- language is between bash and R, through cell magic in jupyter
+Collection of R scripts that document that process to generate and visualize data on papillomaviruses in Logan
+- comprehensive in recording steps that were taken
+- some documents require manually generated or curated files, which are in the files/directory
+
+All code written manually by me (Jessica Shen) with help from the internet. 
+
+Repo organization AI-assisted with Claude Code. Please feel free to reach out if any files are missing, or if you have any inquries.
+
+<p align="center">
+  <img src="files\pvs.jpg" width="100%"/>
+</p>
