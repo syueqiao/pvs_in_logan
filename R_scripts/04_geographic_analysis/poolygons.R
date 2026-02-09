@@ -817,13 +817,10 @@ ggplot(data = st_buffer(st_as_sf(filter(data_wide_sig, p_val < 0.05)), 50000), a
 #   lon = as.numeric(paste0(filter(long_value_prop, p_val < 0.05)$polygon_long)))
 # 
 # ggplot(data = sf_object_joined[!is.na(sf_object_joined$novel_proportion),]) +
-#   ge                                                                                                                                                                                                                                                                                                                             om_sf(data = world_map, fill = 'grey30', color = 'grey20') +
 #   geom_sf(aes(fill = novel_proportion, color = "transparent"), lwd = 0, color = "transparent") +
 #   scale_fill_gradientn(colors = heat.colors(10), na.value = "transparent") +
 #   geom_sf(data = custom_graticule_prop, color = "darkblue", size = 0.5) + # Custom graticule
 #   coord_sf(crs = 4326)+ theme_dark()
-
-
 
 
 ggplot(data = sf_object_joined, aes(x = sample_n, y = pv_obvs_n)) +
