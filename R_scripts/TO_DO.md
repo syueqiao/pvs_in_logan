@@ -4,25 +4,85 @@ Use this checklist to track manual fixes needed before publication.
 
 ---
 
-## Critical Bugs to Fix
+## Critical Bugs to Fix (Previously Identified - Resolved)
 
 - [x] **04_geographic_analysis/vert_counts.R:2** - Fix typo: `gbnstall.packages("ggpmisc")` should be `install.packages("ggpmisc")`
-
 - [x] **04_geographic_analysis/vert_counts.R:114** - Syntax error: two statements on same line. Split into separate lines.
-
 - [x] **02_sequence_characterization/reclass_viz.R:98** - Fix typo: `el_ratio` should be `le_ratio`
-
 - [x] **03_phylogenetics/more_trees.R:16,40** - Fix tab separator: `sep = "/t"` should be `sep = "\t"`
-
 - [x] **05_case_studies/genome_graphs.R:62-68** - Wrong data frame used: `manidae` should be `rat` for the rat genome plot
 
 ---
 
-## Code Cleanup
+## NEW: Critical Bugs Found in Code Review (2026-02-09)
+
+### Syntax Errors (will crash on load)
+
+- [ ] **02_sequence_characterization/L1_pathracer_mining.R:7,59** - Typo: `FALSEALSE` should be `FALSE`
+- [ ] **03_phylogenetics/errmm_twees.R:848** - Jupyter URL accidentally pasted into code line. Remove `http://127.0.0.1:10571/...` from end of the `gsub()` call
+
+### Wrong Variable Names (will crash at runtime)
+
+- [ ] **03_phylogenetics/errmm_twees.R:366** - `c20` should be `c19` (the color vector is defined as `c19` on line 353)
+- [ ] **03_phylogenetics/errmm_twees.R:158** - `weeeeee` should likely be `genus` (created on lines 150-152)
+- [ ] **01_database_construction/logan_3.R:172-174** - `write_file_func_2()` is called in a loop but the function definition is commented out (lines 162-165). Either uncomment it or remove the loop.
+
+### Tab Separator Errors (`/t` instead of `\t`)
+
+Active (uncommented) instances that produce wrong output:
+- [ ] **03_phylogenetics/bugging.R:15** - `sep = "/t"` should be `sep = "\t"`
+- [ ] **03_phylogenetics/bugging.R:32** - `sep = "/t"` should be `sep = "\t"`
+- [ ] **03_phylogenetics/bugging.R:60** - `sep = "/t"` should be `sep = "\t"`
+- [ ] **03_phylogenetics/more_trees.R:40** - `sep = "/t"` should be `sep = "\t"`
+
+Commented-out instances (fix if uncommenting):
+- `03_phylogenetics/twees.R:84,107` (commented out)
+- `03_phylogenetics/errmm_twees.R:91` (commented out)
+
+### Logic Errors
+
+- [ ] **02_sequence_characterization/reclass_viz.R:194** - Invalid filter: `le_ratio == !Inf|!0` should be `!(le_ratio %in% c(Inf, 0))`
+- [ ] **04_geographic_analysis/biomes.R:108** - `across(1:2, sum)` references wrong columns after `dplyr::select()`. Should be `across(known:novel, sum)`
+
+---
+
+## NEW: Missing R Package Dependencies
+
+These packages are used but not declared with `library()` in the scripts that need them:
+
+- [ ] **04_geographic_analysis/map_gen_for_pub.R** - Missing `library(ggpmisc)` for `stat_poly_eq()`
+- [ ] **04_geographic_analysis/map_gen_for_pub.R** - Missing `library(ggrepel)` for `geom_text_repel()`
+- [ ] **05_case_studies/gene_maps_for_pub.R** - Missing `library(gggibbous)` for `geom_moon()`
+- [ ] **03_phylogenetics/bugging.R** - No library calls at all; needs `library(tidyverse)`, `library(ggtree)`, `library(Polychrome)`, `library(stringr)`
+- [ ] **03_phylogenetics/more_trees.R** - No library calls; needs at minimum `library(tidyverse)`, `library(ggtree)`, `library(treeio)`
+- [ ] **02_sequence_characterization/pilot_pr_test.R** - No library calls; needs `library(tidyverse)`
+- [ ] **02_sequence_characterization/sum_stats_longcontig.R** - Missing `library(pheatmap)` for `pheatmap()` calls
+
+### Verify: `geom_aline()` Function
+
+`geom_aline()` is used in 5 scripts (errmm_twees.R, gene_maps_for_pub.R) but is not a standard ggtree/ggplot2 function. Verify it works in your environment. If it's from a custom source or dev version of ggtree, document where it comes from.
+
+---
+
+## NEW: File Path Issues
+
+- [ ] **05_case_studies/gene_maps_for_pub.R:297** - Only the zard genome file has `files/` prefix (`"files/SRR22028468_199653_zard_genome.txt"`); all other genome files lack this prefix. Standardize paths.
+- [ ] **05_case_studies/gene_maps_for_pub.R** - Missing AlphaFold JSON files from repo (fold_rhino_*.json, fold_legless_zard_*.json, fold_human_*.json, fold_salmon_*.json, fold_pango_*.json)
+- [ ] **05_case_studies/gene_maps_for_pub.R:695** - References `generic_pv.txt` which is not in the `files/` directory
+
+---
+
+## Code Cleanup (Previously Identified - Resolved)
 
 - [x] **01_database_construction/pro_file_parsing.R** - Remove `browser()` debugging calls
-
 - [x] **03_phylogenetics/twees.R** - Remove or comment out petase-related code sections if not relevant to PV publication
+
+## NEW: Code Cleanup
+
+- [ ] **03_phylogenetics/errmm_twees.R:258** - Test filename: `"uasdasfasfasasfasdasfasaf.png"` should be renamed
+- [ ] **03_phylogenetics/errmm_twees.R:302** - Localhost URL in comment (leftover from Jupyter)
+- [ ] **05_case_studies/gene_maps_for_pub.R:302** - Localhost URL in comment (leftover from Jupyter)
+- [ ] **01_database_construction/logan_3.R:227** - Hardcoded row index fix (`sra_metadata["144301", "V2"] <- "GENOMIC"`) with no explanation. Add comment or fix at data source.
 
 ---
 
@@ -30,21 +90,25 @@ Use this checklist to track manual fixes needed before publication.
 
 The geographic analysis scripts have specific dependencies. Run in this order:
 
-1. **poolygons.R** (run first)
+1. **map_gen_for_pub.R** (run first)
+   - Creates: `all_pvs_mapping_binned`, `all_pvs_mapping`
+   - Requires: `world` (from rnaturalearth), `sra_metadata` (pre-loaded)
+
+2. **poolygons.R** (depends on map_gen_for_pub.R)
    - Creates: `grid_sf`, `world`, `data_wide`, `giant_geo_table_grid_id_geometry`
-   - Outputs: `my_sf_data.gpkg`
-   - **Note**: Line 17 and 22 reference `all_pvs_mapping_binned` and `all_pvs_mapping` - these need to be loaded first (check if these come from another script or external source)
+   - Outputs: `grids_sf.gpkg`
+   - Requires: `all_pvs_mapping_binned`, `all_pvs_mapping` from map_gen_for_pub.R
+   - Requires: `sra_metadata`, `all_novels`, `final_tree` (pre-loaded)
 
-   #comes from map_gen_for_pub.R!
-
-2. **geo_analysis.R** (depends on poolygons.R)
+3. **geo_analysis.R** (depends on poolygons.R)
    - Requires: `giant_geo_table_grid_id_geometry`, `grid_sf`, `world`, `data_wide`
+   - Creates: `sf_object_joined_prop_rarefy_5k_rowmeans_joined_s`
 
-3. **biomes.R** (depends on poolygons.R)
+4. **biomes.R** (depends on poolygons.R + geo_analysis.R)
    - Reads: `my_sf_data.gpkg` (output from poolygons.R)
-   - Requires: `data_wide`, `grid_sf`, `world`
+   - Requires: `data_wide`, `grid_sf`, `world`, `all_novels`, `final_tree`
 
-4. **vert_counts.R** (standalone - no dependencies on other scripts)
+5. **vert_counts.R** (standalone - no dependencies on other scripts)
 
 ---
 
@@ -152,6 +216,13 @@ Scripts that need this update:
 - [x] `SRR20078264_4021_salmon_genome.txt` (gene_maps_for_pub.R)
 - [x] `generic_pv.txt` (gene_maps_for_pub.R)
 
+### Case Study AlphaFold JSON Files (NOT in repo)
+- [ ] `fold_pango_srr25256522_663139_full_data_0.json` (gene_maps_for_pub.R)
+- [ ] `fold_rhino_srr10902309_46767_full_data_0.json` (gene_maps_for_pub.R)
+- [ ] `fold_legless_zard_srr22028468_199653_full_data_0.json` (gene_maps_for_pub.R)
+- [ ] `fold_human_srr13789839_2669_full_data_0.json` (gene_maps_for_pub.R)
+- [ ] `fold_salmon_srr20078264_4021_full_data_0.json` (gene_maps_for_pub.R)
+
 ### Vertebrate/Host Analysis
 - [x] `files/log_mb_counts.csv` (vert_counts.R)
 - [x] `files/uniq.counts` (vert_counts.R)
@@ -168,5 +239,7 @@ Scripts that need this update:
 
 ## Optional Improvements
 
-- [ ] Add README.md to each subdirectory explaining the scripts
+- [x] Add README.md to each subdirectory explaining the scripts
 - [ ] Add file headers with author/date/description
+- [ ] Create a setup/initialization script that loads shared variables (`world`, `sra_metadata`, `final_tree`, `all_novels`, etc.) used across multiple scripts
+- [ ] Standardize all file paths to use `files/` prefix consistently
