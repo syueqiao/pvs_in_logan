@@ -22,27 +22,22 @@ pvs_in_logan/
 │   ├── 00_utilities/
 │   │   └── hmmsearch_utils.R          # Shared HMMER parsing functions
 │   ├── 01_database_construction/
-│   │   └── logan_3.R                  # Feb 7 PV analysis, novelty search, full L1 ID
+│   │   ├── logan_3.R                  # Feb 7 PV analysis, novelty search, full L1 ID
+│   │   └── logan_3_novelty.R          # Updated novelty search with blastn centroids
 │   ├── 02_sequence_characterization/
-│   │   ├── bugging2.R                 # L1 domain inversion analysis
-│   │   ├── hmmer_results.R            # Logan output HMMER parsing
+│   │   ├── investigation_of_characteristics.R  # L1 domain inversion/coverage analysis
 │   │   ├── L1_pathracer_mining.R      # Pathracer pipeline setup
 │   │   ├── ncbi_L1_character.R        # NCBI L1 characterization
 │   │   ├── pathracer_fullness_hmm.R   # Pathracer output analysis
 │   │   ├── pilot_pr_test.R            # Pathracer pilot testing
-│   │   ├── reclass_viz.R              # Accessory gene distribution viz
-│   │   ├── sum_stats_longcontig.R     # ORF summary statistics
 │   │   └── vert_counts.R             # Vertebrate PV counts analysis
 │   ├── 03_phylogenetics/
-│   │   ├── bugging.R                  # Tree annotation with host metadata
-│   │   ├── errmm_twees.R             # Main tree visualization (1017 lines)
-│   │   ├── more_trees.R              # Tree annotation with SRA/NCBI metadata
-│   │   └── twees.R                   # Earlier tree visualization
+│   │   └── L1_based_trees_and_annotation.R  # Main tree viz, annotation, host classification
 │   ├── 04_geographic_analysis/
 │   │   ├── biomes.R                   # Biome/ecology analysis (WWF ecoregions)
 │   │   ├── geo_analysis.R             # Geographic resampling analysis
-│   │   ├── map_gen_for_pub.R          # Publication-ready maps
-│   │   └── poolygons.R               # Spatial mapping (sf/terra)
+│   │   ├── map_gen_for_pub.R          # Publication-ready maps and novelty search
+│   │   └── polygon_analyses.R         # Spatial mapping (sf/terra), grid analysis
 │   └── 05_case_studies/
 │       └── gene_maps_for_pub.R        # Case study gene maps (pangolin, rhino, etc.)
 ├── files/                             # Input data files
@@ -141,28 +136,24 @@ library(jsonlite)            # JSON parsing (AlphaFold data)
 
 ### Phase 2: Database Construction (`01_database_construction/`)
 - `logan_3.R` - Core pipeline: HMMER filtering, L1 B/I domain identification, novelty search, contig characterization
+- `logan_3_novelty.R` - Updated novelty search using blastn centroids
 - Sources `00_utilities/hmmsearch_utils.R`
 
 ### Phase 3: Sequence Characterization (`02_sequence_characterization/`)
-- `hmmer_results.R` - Parse and analyze HMMER output from Logan runs
+- `investigation_of_characteristics.R` - L1 domain inversion analysis, domain coverage, missing B/I domain detection
 - `ncbi_L1_character.R` - Characterize NCBI L1 sequences, verify domain order
-- `reclass_viz.R` - Accessory gene distribution and late/early gene ratios
 - `vert_counts.R` - Vertebrate PV counts vs sequencing depth analysis
 - `L1_pathracer_mining.R`, `pathracer_fullness_hmm.R`, `pilot_pr_test.R` - Pathracer-related analysis
-- `bugging2.R`, `sum_stats_longcontig.R` - Exploratory characterization
 
 ### Phase 4: Phylogenetics (`03_phylogenetics/`)
-- `errmm_twees.R` - **Main tree visualization** (1017 lines): gheatmap override, annotations, host classification, geographic mapping
-- `twees.R` - Earlier tree visualizations and analysis
-- `more_trees.R` - Additional tree annotation with SRA/NCBI metadata
-- `bugging.R` - Tree annotation with host metadata (fragment script)
+- `L1_based_trees_and_annotation.R` - **Main tree visualization and annotation**: gheatmap override, host classification, geographic mapping, novelty status, library source analysis, ENA/NCBI metadata lookup, circular tree layout
 
 ### Phase 5: Geographic Analysis (`04_geographic_analysis/`)
 Scripts have **run-order dependencies** (see TO_DO.md for details):
-1. `map_gen_for_pub.R` -> creates `all_pvs_mapping_binned`, `all_pvs_mapping`
-2. `poolygons.R` -> creates `grid_sf`, `world`, `data_wide`, outputs `grids_sf.gpkg`
-3. `geo_analysis.R` -> requires objects from poolygons.R
-4. `biomes.R` -> requires objects from poolygons.R, reads `grids_sf.gpkg`
+1. `map_gen_for_pub.R` -> creates `all_pvs_mapping`, `all_novels`, `known_pvs`
+2. `polygon_analyses.R` -> creates `grid_sf`, `world`, `data_wide`, reads `my_sf_data.gpkg`
+3. `geo_analysis.R` -> requires objects from polygon_analyses.R
+4. `biomes.R` -> requires objects from polygon_analyses.R + geo_analysis.R
 5. `vert_counts.R` - standalone
 
 ### Phase 6: Case Studies (`05_case_studies/`)

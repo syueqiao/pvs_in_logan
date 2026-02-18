@@ -1,76 +1,292 @@
 library(tidyverse)
 library(gggenes)
 library(jsonlite)
-
-addtl_ano <- read.table("2025.10.10all_genus_addtl_anno.tsv.txt", sep = "\t", header = T)
-addtl_ano$lib <- gsub("_.*", "", addtl_ano$label)
-addtl_ano$lib <- gsub("Score.*", "", addtl_ano$lib)
-
-addtl_ano <- left_join(addtl_ano, sra_metadata, by = c("lib" = "V1"))
-addtl_tip <- filter(addtl_ano, isTip == "TRUE")
-addtl_tip$broader_gen <- gsub("Cattle", "Bovine", addtl_tip$broader_gen)
+library(treeio)
 
 
-addtl_tip$broader_gen <- factor(addtl_tip$broader_gen, levels = c("Human", "Non-human Primate", "Rodent", 
-                                                                  "Cetacean", "Bovine", 
-                                                                  "Porcine", "Cervine", "Pinnipeds", "Canine", "Feline", "Mustelid", "Equine", "Pangolin", "Bat", "Avian", "Lizard", "Frog", "Ray-finned Fish", "Other"))
-
-addtl_tip$broader_gen <- factor(addtl_tip$broader_gen, levels = c("Human", "Bat", "Bovine", 
-                                                                  "Canine", "Ray-finned Fish", 
-                                                                  "Rodent", "Avian", "Cetacean", "Cervine", "Frog", "Pangolin", "Feline", "Non-human Primate", "Equine", "Pinnipeds", "Lizard", "Porcine", "Mustelid", "Other"))
-
-addtl_tip_novel <- subset(addtl_tip, grepl("[SED][R]{2}", addtl_tip$label))
-
-addtl_tip_novel_tb <- as.data.frame(table(addtl_tip_novel$broader_gen))
-levels(factor(addtl_tip_novel_tb$broader_gen)) 
-
-addtl_tip_novel_tb_ord <- addtl_tip_novel_tb %>%
-  mutate(Var1 = forcats::fct_reorder(factor(Var1), Freq))
-
-addtl_ano <- left_join(addtl_ano, sra_metadata, by = c("lib" = "V1"))
-addtl_ano$generalization <- iconv(addtl_ano$generalization, from = "UTF-8", to = "ASCII", sub = "")
-addtl_ano <- filter(addtl_ano, isTip == "TRUE")
-
-
-addtl_ano_tree_broad <- select(addtl_tip, label, broader_gen)
-
-rownames(addtl_ano_tree_broad) <- addtl_ano_tree_broad$label
-addtl_ano_tree_broad <- select(addtl_ano_tree_broad, broader_gen)
-
-
-c20 <- c(
-  "#D44746", "#F0B2B2", # red
-  "#D4B046",
-  "#175F67", # purple
-  "#8C46D4", # orange
-  "#E146D4",
-  "#882020", "#D28036", # lt pink
-  "#44C8D6", # lt purple
-  "#A3E4EB", # lt orange
-  "#4F1E80",
-  "#941888", "#F0E0B2", "#C099E7", "#3092D4",
-  "#53741D", "#C9E349", "#9BBED1", "#CCCCCC"
-)
-
-names(c20) <- NULL
-color_key_broad <- unique(as.data.frame(addtl_ano_tree_broad$broader_gen))
+########Subset tree objects by related nodes########
+#'
+#' This function allows for a tree object to be subset by specifying a
+#' node and returns all related nodes within a selected number of
+#' levels
+#'
+#' @param tree a tree object of class phylo
+#' @param node either a tip label or a node number for the given
+#' tree that will be the focus of the subsetted tree
+#' @param levels_back a number specifying how many nodes back from
+#' the selected node the subsetted tree should include
+#' @param group_node whether add grouping information of selected node
+#' @param group_name group name (default 'group') for storing grouping information if group_node = TRUE
+#' @param root_edge If TRUE (by default), set root.edge to path length of orginal root to the root of subset tree
+#'
+#' @details This function will take a tree and a specified node from
+#' that tree and subset the tree showing all relatives back to a specified
+#' number of nodes. This function allows for a combination of
+#' \code{ancestor} and \code{offspring} to return a subsetted
+#' tree that is of class phylo. This allows for easy graphing of the tree
+#' with \code{ggtree}
+#'
+#' @examples
+#' \dontrun{
+#'   nwk <- system.file("extdata", "sample.nwk", package="treeio")
+#'   tree <- read.tree(nwk)
+#'
+#'   sub_tree <- tree_subset(tree, node = "A", levels_back = 3)
+#'   ggtree(sub_tree) + geom_tiplab() + geom_nodelab()
+#' }
+#'
+#' @rdname tree_subset
+#' @export
+tree_subset <- function(tree, node, levels_back = 5, group_node = TRUE,
+                        group_name = "group", root_edge = TRUE){
+  UseMethod("tree_subset")
+}
 
 
-ordered_gen_broad <- c("Human", "Non-human Primate", "Rodent", 
-                       "Cetacean", "Bovine", 
-                       "Porcine", "Cervine", "Pinnipeds", "Canine", "Feline", "Mustelid", "Equine", "Pangolin", "Bat", "Avian", "Lizard", "Frog", "Ray-finned Fish", "Other")
+#' @method tree_subset phylo
+#' @rdname tree_subset
+#' @importFrom magrittr %>%
+#' @examples
+#' \dontrun{
+#'   nwk <- system.file("extdata", "sample.nwk", package="treeio")
+#'   tree <- read.tree(nwk)
+#'
+#'   sub_tree <- tree_subset(tree, node = "A", levels_back = 3)
+#'   ggtree(sub_tree) + geom_tiplab() + geom_nodelab()
+#' }
+#'
+#' @importFrom utils tail
+#' @importFrom utils head
+#' @importFrom rlang quo .data
+#' @export
+tree_subset.phylo <- function(tree, node, levels_back = 5, group_node = TRUE,
+                              group_name = "group", root_edge = TRUE){
+  
+  x <- tree_subset_internal(tree = tree, node = node, levels_back = levels_back, root_edge = root_edge)
+  
+  
+  ## This drops all of the tips that are not included in group_nodes
+  subtree <- drop.tip(tree, tree$tip.label[-x$subset_nodes], rooted = TRUE)
+  
+  if (group_node) subtree <- groupOTU.phylo(subtree, .node = x$group_labels, group_name = group_name)
+  
+  subtree$root.edge <- x$root.edge
+  
+  return(subtree)
+}
 
-color_key_broad <- as.data.frame(color_key_broad[order(sapply(color_key_broad$`addtl_ano_tree_broad$broader_gen`, function(x) which(x == ordered_gen_broad))), ])
+##' @importFrom dplyr filter
+##' @importFrom dplyr pull
+##' @importFrom dplyr bind_rows
+tree_subset_internal <- function(tree, node, levels_back = 5, root_edge = TRUE) {
+  
+  ## error catching to ensure the tree input is of class phylo
+  ## if (class(tree) %in% c("phylo", "treedata")) {
+  ##   tree_df <- tidytree::as_tibble(tree)
+  ## } else {
+  ##   stop("tree must be of class 'phylo'")
+  ## }
+  
+  ## error catching to ensure the levels_back input is numeric
+  ## or can be converted to numeric
+  if (!is.numeric(levels_back)) {
+    levels_back <- as.numeric(levels_back)
+    if (is.na(levels_back)) stop("'levels_back' must be of class numeric")
+  }
+  
+  tree_df <- tidytree::as_tibble(tree)
+  
+  selected_node <- node
+  
+  is_tip <- tree_df %>%
+    dplyr::mutate(isTip = !.data$node %in% .data$parent) %>%
+    dplyr::filter(.data$node == selected_node | .data$label == selected_node) %>%
+    dplyr::pull(.data$isTip)
+  
+  if (is_tip & levels_back == 0){
+    stop("The selected node (", selected_node, ") is a tip. 'levels_back' must be > 0",
+         call. = FALSE)
+  }
+  
+  if (is_tip) {
+    group_labels <- tree_df %>%
+      dplyr::filter(.data$node == selected_node | .data$label == selected_node) %>%
+      dplyr::pull(.data$label)
+  } else {
+    group_labels <- tree_df %>%
+      tidytree::offspring(selected_node) %>%
+      dplyr::filter(!.data$node %in% .data$parent) %>%
+      dplyr::pull(.data$label)
+  }
+  
+  ## This pipeline returns the tip labels of all nodes related to
+  ## the specified node
+  ##
+  ## The tail/head combo isolates the base node of the subsetted tree
+  ## as the output from ancestor lists the closest parent nodes of a
+  ## given node from the bototm up.
+  ##
+  ## It then finds all of the offspring of that parent node. From there
+  ## it filters to include only tip and then pulls the labels.
+  
+  if (levels_back == 0) {
+    new_root_node <- selected_node
+  } else {
+    new_root_node <- tidytree::ancestor(tree_df, selected_node) %>%
+      tail(levels_back) %>%
+      head(1) %>%
+      dplyr::pull(.data$node)
+  }
+  
+  subset_labels <- tidytree::offspring(tree_df, new_root_node) %>%
+    dplyr::filter(!.data$node %in% .data$parent) %>%
+    dplyr::pull(.data$label)
+  
+  ## This finds the nodes associated with the labels pulled
+  subset_nodes <- which(tree$tip.label %in% subset_labels)
+  
+  root.edge <- NULL
+  if (is.null(tree$edge.length)) {
+    root_edge <- FALSE
+    ## if not branch length info, no need to determine root.edge
+  }
+  
+  if (root_edge) {
+    root.edge <- ancestor(tree_df, new_root_node) %>%
+      bind_rows(dplyr::filter(tree_df, node == new_root_node)) %>%
+      pull(.data$branch.length) %>%
+      sum(na.rm = TRUE)
+    if (root.edge == 0)
+      root.edge <- NULL
+  }
+  
+  return(list(
+    subset_nodes = subset_nodes,
+    new_root_node = new_root_node,
+    group_labels = group_labels,
+    root.edge = root.edge
+  ))
+}
 
-color_key_broad$color_values <- c20
-colnames(color_key_broad) <- c("gen_label", "color_values")
+#' @method tree_subset treedata
+#' @rdname tree_subset
+#' @importFrom magrittr %>%
+#'
+#' @export
+tree_subset.treedata <- function(tree, node, levels_back = 5, group_node = TRUE,
+                                 group_name = "group", root_edge = TRUE){
+  
+  x <- tree_subset_internal(tree = tree@phylo, node = node, levels_back = levels_back)
+  
+  subtree <- drop.tip(tree, tree@phylo$tip.label[-x$subset_nodes], rooted = TRUE)
+  
+  if (group_node) subtree <- groupOTU(subtree, .node = x$group_labels, group_name = group_name)
+  
+  subtree@phylo$root.edge <- x$root.edge
+  
+  return(subtree)
+}
+###function defined
+##anotha one
+##' @importFrom ape which.edge
+gfocus <- function(phy, focus, group_name, focus_label=NULL,
+                   overlap="overwrite", connect = FALSE) {
+  
+  ## see https://goo.gl/VMMVhi for connect parameter
+  
+  overlap <- match.arg(overlap, c("origin", "overwrite", "abandon"))
+  
+  if (is.factor(focus)) {
+    focus <- as.character(focus)
+  }
+  
+  if (is.character(focus)) {
+    focus <- which(phy$tip.label %in% focus)
+  }
+  
+  n <- getNodeNum(phy)
+  if (is.null(attr(phy, group_name))) {
+    foc <- rep(0, n)
+  } else {
+    foc <- attr(phy, group_name)
+  }
+  i <- max(suppressWarnings(as.numeric(foc)), na.rm=TRUE) + 1
+  if (is.null(focus_label)) {
+    focus_label <- i
+  }
+  
+  induced_edge <- phy$edge[which.edge(phy, focus),]
+  
+  hit <- unique(as.vector(induced_edge))
+  if (overlap == "origin") {
+    sn <- hit[is.na(foc[hit]) | foc[hit] == 0]
+  } else if (overlap == "abandon") {
+    idx <- !is.na(foc[hit]) & foc[hit] != 0
+    foc[hit[idx]] <- NA
+    sn <- hit[!idx]
+  } else {
+    sn <- hit
+  }
+  
+  if (length(sn) > 0 && connect) {
+    if (sum(table(induced_edge[,1]) > 1) == 1) {
+      sn <- focus
+    }
+  }
+  
+  if (length(sn) > 0) {
+    foc[sn] <- focus_label
+  }
+  
+  attr(phy, group_name) <- foc
+  phy
+}
 
-addtl_ano_tree_broad_vals<- left_join(addtl_ano_tree_broad, color_key_broad, by = c("broader_gen" = "gen_label"))
+##' @method groupOTU phylo
+##' @export
+groupOTU.phylo <- function(.data, .node, group_name="group", ...) {
+  phy <- .data
+  focus <- .node
+  attr(phy, group_name) <- NULL
+  if ( is(focus, "list") ) {
+    for (i in seq_along(focus)) {
+      phy <- gfocus(phy, focus[[i]], group_name, names(focus)[i], ...)
+    }
+  } else {
+    phy <- gfocus(phy, focus, group_name, ...)
+  }
+  res <- attr(phy, group_name)
+  res[is.na(res)] <- 0
+  attr(phy, group_name) <- factor(res)
+  return(phy)
+}
 
+##' @method groupOTU treedata
+##' @export
+groupOTU.treedata <- function(.data, .node, group_name = "group", ...) {
+  .data@phylo <- groupOTU(as.phylo(.data), .node, group_name, ...)
+  return(.data)
+}
+
+
+##' calculate total number of nodes
+##'
+##'
+##' @title getNodeNum
+##' @param tree tree object
+##' @return number
+##' @export
+##' @examples
+##' getNodeNum(rtree(30))
+##' @author Guangchuang Yu
+getNodeNum <- function(tree) {
+  Nnode(tree, internal.only=FALSE)
+}
+########
 
 ##################################################PANGO################################
 #case study visualizations
-pango_contig <- read.table("SRR25256522_663139_pangolin_genome.txt", sep ="\t", header = T)
+pango_contig <- read.table("files/SRR25256522_663139_pangolin_genome.txt", sep ="\t", header = T)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -87,7 +303,7 @@ ggplot(pango_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10)) + scale_x_reverse()
 
-ggsave("pango_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/pango_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 ggplot(pango_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
@@ -99,7 +315,7 @@ ggplot(pango_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10)) + scale_x_reverse()
 
-ggsave("pango_map_2.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/pango_map_2.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 
 
@@ -158,7 +374,7 @@ ggplot() +
   theme_classic() +
   theme(panel.grid.major.y = element_line(colour = "grey90"), panel.grid.minor.y = element_line(colour = "grey95")) +
   xlab("") +
-  ylab("wee") 
+  ylab("")
 
 
 biosamp_data_anno %>%
@@ -168,12 +384,12 @@ biosamp_data_anno %>%
   scale_color_identity() +
   coord_fixed() +
   xlab("") +
-  ylab("wee") + theme_bw()
+  ylab("") + theme_bw()
 
 
 ##################################################RHINO################################
 #case study visualizations
-rhino_contig <- read.table("SRR10902309_46767_rhino_genome.txt", sep ="\t", header = T)
+rhino_contig <- read.table("files/SRR10902309_46767_rhino_genome.txt", sep ="\t", header = T)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -192,7 +408,8 @@ ggplot(rhino_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
 
 ggsave("rhino_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
-rhino_subset <- tree_subset(final_tree, "SRR10902309_46767_ka_f_48.102_L_46767_", levels_back = 2)
+rhino_subset <- tree_subset(final_tree, "SRR10902309_46767_ka_f_48-102_L_46767_L_46767__126-1310_1",
+ levels_back = 2)
 rhino_tree <- ggtree(rhino_subset)
 rhino_tree$data$label <- gsub("Edges.*", "", rhino_tree$data$label)
 rhino_tree$data$label <- gsub("ka_f.*", "", rhino_tree$data$label)
@@ -203,8 +420,8 @@ rhino_tree$data$status <- ifelse(grepl("[E|S|D][R][R]", rhino_tree$data$label), 
 
 rhino1 <- rhino_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "10")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "10")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_tiplab(aes(subset = (node != "7")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "7")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
   # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
   # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
   theme(legend.position= "none", text = element_text(family = "Noto Sans"))
@@ -216,9 +433,9 @@ rhino2 <- gheatmap(rhino1, addtl_ano_tree_broad, width=0.05, font.size=0,  offse
                     values=addtl_ano_tree_broad_vals$color_values, name="genotype") + 
   theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
 
-ggsave("rhino2_subtree.jpg", rhino2, width = 25, height =10, units = "cm", limitsize = F)
+ggsave("outputs/rhino2_subtree.jpg", rhino2, width = 25, height =10, units = "cm", limitsize = F)
 
-pae_data <- fromJSON("fold_rhino_srr10902309_46767_full_data_0.json")
+pae_data <- fromJSON("files/fold_rhino_srr10902309_46767_full_data_0.json")
 pae_matrix <- pae_data$pae
 
 
@@ -239,7 +456,7 @@ pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)
   theme(text = element_text(family="Noto Sans", size = 10)) +
   coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
 
-ggsave("rhino_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/rhino_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 world_map <- map_data("world")
 

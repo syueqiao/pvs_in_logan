@@ -1,0 +1,347 @@
+accession	organism	host	generalization	year	miss_reason	sequencing_strat	notes		unique	count
+BK066583.1	Papillomavirus astyanax5827	Astyanax mexicanus	Amphibian	2024	zero_hits				generalization	1
+BK066762.1	Papillomavirus leptobrachium5415	Leptobrachium leishanense	Amphibian	2024	zero_hits				Amphibian	4
+BK066313.1	Papillomavirus rana6035	Rana jiemuxiensis	Amphibian	2024	zero_hits				Avian	21
+MW582900.1	Rhinella marina papillomavirus 1	Rhinella marina	Amphibian	2021	zero_hits				Bat	83
+MW888448.1	Anas platyrhynchos papillomavirus 2	Anas platyrhynchos	Avian	2022	zero_hits				Bovine	32
+OP628184.1	Columba livia papillomavirus 1	Columba livia	Avian	2023	zero_hits				Camelid	3
+KX147683.1	Duck papillomavirus	duck	Avian	2016	filter_fail				Canine	7
+MK620303.1	Duck papillomavirus 3	Anas platyrhynchos (Mallard)	Avian	2019	zero_hits				Caprine	3
+EU188799.1	Francolinus leucoscepus papillomavirus 1	Francolinus leucoscepus	Avian	2009	filter_fail				Cervine	11
+KJ452243.1	Fulmarus glacialis papillomavirus 1	Fulmarus glacialis	Avian	2014	zero_hits				Cetacean	21
+MK620304.1	Gull papillomavirus 1	Larus smithsonianus (American Herring Gull)	Avian	2019	zero_hits				Equine	11
+MK620328.1	Gull papillomavirus 2	Larus smithsonianus (American Herring Gull)	Avian	2019	filter_fail				Feline	8
+MK620331.1	Gull papillomavirus 3	Larus smithsonianus (American Herring Gull)	Avian	2019	filter_fail				Giraffid	2
+MK620332.1	Kittiwake papillomavirus 1	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	zero_hits				Hedgehog	4
+MK620305.1	Kittiwake papillomavirus 2	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	filter_fail				Human	49
+MK620334.1	Kittiwake papillomavirus 3	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	zero_hits				Hyena	1
+MK620336.1	Kittiwake papillomavirus 4	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	zero_hits				Insectivore	8
+MK620340.1	Kittiwake papillomavirus 6	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	zero_hits				Lapine	1
+MK620341.1	Kittiwake papillomavirus 7	Rissa tridactyla (Black-legged Kittiwake)	Avian	2019	zero_hits				Manatee	3
+MK620302.1	Puffin papillomavirus 1	Fratercula arctica (Atlantic puffin)	Avian	2019	zero_hits				Marsupial	3
+KJ173785.1	Pygoscelis adeliae papillomavirus 1	Pygoscelis adeliae	Avian	2014	zero_hits				Mustelid	4
+MF168943.1	Pygoscelis adeliae papillomavirus 2	Pygoscelis adeliae	Avian	2017	filter_fail				Non-human Primate	22
+MF564196.1	Serinus canaria papillomavirus 1	Serinus canaria var. Yorkshire	Avian	2018	zero_hits				Other	2
+AF420235.1	Thetapapillomavirus 1	Various (genus-level type species)	Avian	2002	filter_fail				Ovine	3
+MZ602149.1	Wesgulfec papillomavirus	Unknown	Avian	2021	zero_hits				Panoglin	1
+OR952773.1	Bat papillomavirus	Rhinolophus sp.	Bat	2024	filter_fail	MAG			Pinniped	7
+OR952777.1	Bat papillomavirus	Hipposideros armiger	Bat	2024	filter_fail	MAG			Porcine	1
+OR952780.1	Bat papillomavirus	Scotophilus kuhlii	Bat	2024	filter_fail	MAG			Raccoon	1
+OR952783.1	Bat papillomavirus	Rhinolophus sinicus	Bat	2024	filter_fail	MAG			Ray-finned Fish	14
+OR952784.1	Bat papillomavirus	Aselliscus stoliczkanus	Bat	2024	filter_fail	MAG			Reptile	4
+OR952785.1	Bat papillomavirus	Rhinolophus pusillus	Bat	2024	filter_fail	MAG			Rodent	10
+OR952786.1	Bat papillomavirus	Rhinolophus pusillus	Bat	2024	filter_fail	MAG			Ursine	2
+OR952787.1	Bat papillomavirus	Rhinolophus pusillus	Bat	2024	filter_fail	MAG			0	
+OR952791.1	Bat papillomavirus	Rhinolophus pusillus	Bat	2024	filter_fail	MAG				
+OR952796.1	Bat papillomavirus	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952798.1	Bat papillomavirus	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952803.1	Bat papillomavirus	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952804.1	Bat papillomavirus	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952806.1	Bat papillomavirus	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952808.1	Bat papillomavirus	Tylonycteris pachypus	Bat	2024	filter_fail	MAG				
+OR952815.1	Bat papillomavirus	Tylonycteris pachypus	Bat	2024	filter_fail	MAG				
+OR952821.1	Bat papillomavirus	Tylonycteris pachypus	Bat	2024	filter_fail	MAG				
+OR952823.1	Bat papillomavirus	Pipistrellus abramus	Bat	2024	zero_hits	MAG				
+OR952824.1	Bat papillomavirus	Scotophilus kuhlii	Bat	2024	filter_fail	MAG				
+OR952827.1	Bat papillomavirus	Scotophilus kuhlii	Bat	2024	filter_fail	MAG				
+OR952843.1	Bat papillomavirus	Scotophilus kuhlii	Bat	2024	filter_fail	MAG				
+OR952845.1	Bat papillomavirus	Scotophilus kuhlii	Bat	2024	filter_fail	MAG				
+OR952851.1	Bat papillomavirus	Hipposideros larvatus	Bat	2024	filter_fail	MAG				
+OR952860.1	Bat papillomavirus	Myotis ricketti	Bat	2024	filter_fail	MAG				
+OR952866.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952869.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952871.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952873.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952874.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952875.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	filter_fail	MAG				
+OR952879.1	Bat papillomavirus	Tylonycteris robustula	Bat	2024	zero_hits	MAG				
+OR952885.1	Bat papillomavirus	Hipposideros pomona	Bat	2024	filter_fail	MAG				
+OR952886.1	Bat papillomavirus	Hipposideros pomona	Bat	2024	filter_fail	MAG				
+OR952888.1	Bat papillomavirus	Hipposideros pomona	Bat	2024	filter_fail	MAG				
+OR952890.1	Bat papillomavirus	Hipposideros pomona	Bat	2024	filter_fail	MAG				
+OR952891.1	Bat papillomavirus	Myotis siligorensis	Bat	2024	filter_fail	MAG				
+OR952894.1	Bat papillomavirus	Ia io	Bat	2024	filter_fail	MAG				
+OR952896.1	Bat papillomavirus	Chaerephon plicatus	Bat	2024	zero_hits	MAG				
+OR952909.1	Bat papillomavirus	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952924.1	Bat papillomavirus	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952925.1	Bat papillomavirus	Ia io	Bat	2024	filter_fail	MAG				
+OR952928.1	Bat papillomavirus	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952931.1	Bat papillomavirus	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+PP711991.1	Eidolon bat papillomavirus	Eidolon helvum	Bat	2024	zero_hits	MAG				
+PP711994.1	Eidolon bat papillomavirus	Eidolon helvum	Bat	2024	zero_hits	MAG				
+KX276954.1	Eidolon helvum papillomavirus	Eidolon helvum (straw-coloured fruit bat)	Bat	2017	filter_fail					
+JX123128.1	Eidolon helvum papillomavirus 1	Eidolon helvum (straw-colored fruit bat)	Bat	2013	filter_fail					
+KX276956.1	Eidolon helvum papillomavirus 3	Eidolon helvum (straw-coloured fruit bat)	Bat	2017	zero_hits					
+JX885598.1	Eidolon helvum papillomavirus 4	Eidolon helvum	Bat	2013	zero_hits					
+KC858263.1	Eptesicus serotinus papillomavirus 1	Eptesicus serotinus	Bat	2014	filter_fail					
+KC858264.1	Eptesicus serotinus papillomavirus 2	Eptesicus serotinus	Bat	2014	filter_fail					
+KC858265.1	Eptesicus serotinus papillomavirus 3	Eptesicus serotinus	Bat	2014	filter_fail					
+OR427310.1	Firstpapillomavirinae sp.	Rhinolophus affinis	Bat	2023	filter_fail	PCR				
+JQ692938.1	Miniopterus schreibersii papillomavirus 1	Miniopterus schreibersii	Bat	2012	filter_fail					
+JQ814848.1	Miniopterus schreibersii papillomavirus 1	Miniopterus schreibersii	Bat	2012	zero_hits					
+PP711989.1	Mops bat papillomavirus	Mops condylurus	Bat	2024	filter_fail	MAG				
+OR952862.1	Myotis ricketti associated fish papillomavirus	fish	Bat	2024	zero_hits	MAG				
+JQ814847.1	Myotis ricketti papillomavirus 1	Myotis ricketti	Bat	2012	filter_fail					
+BK066787.1	Papillomavirus bat7808	bat	Bat	2024	filter_fail					
+OR952794.1	Rhinolophus bat papillomavirus 1	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952802.1	Rhinolophus bat papillomavirus 1	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952805.1	Rhinolophus bat papillomavirus 1	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952807.1	Rhinolophus bat papillomavirus 1	Rhinolophus sp.	Bat	2024	filter_fail	MAG				
+OR952904.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952907.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	zero_hits	MAG				
+OR952908.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952910.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952913.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952914.1	Rhinolophus bat papillomavirus 1	Rhinolophus ferrumequinum	Bat	2024	filter_fail	MAG				
+OR952915.1	Rhinolophus bat papillomavirus 1	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952916.1	Rhinolophus bat papillomavirus 1	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952918.1	Rhinolophus bat papillomavirus 1	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952919.1	Rhinolophus bat papillomavirus 1	Rhinolophus affinis	Bat	2024	filter_fail	MAG				
+OR952920.1	Rhinolophus bat papillomavirus 1	Rhinolophus sp.	Bat	2024	filter_fail	MAG				
+OR952797.1	Rhinolophus bat papillomavirus 2	Rhinolophus sinicus	Bat	2024	filter_fail	MAG				
+OR952800.1	Rhinolophus bat papillomavirus 2	Rhinolophus affinis	Bat	2024	zero_hits	MAG				
+OR952917.1	Rhinolophus bat papillomavirus 2	Rhinolophus sinicus	Bat	2024	zero_hits	MAG				
+KC858266.1	Rhinolophus ferrumequinum papillomavirus 1	Rhinolophus ferrumequinum	Bat	2014	filter_fail					
+DQ366842.1	Rousettus aegyptiacus papillomavirus 1	Rousettus aegyptiacus	Bat	2006	zero_hits					
+PP711990.1	Rousettus bat papillomavirus	Rousettus aegyptiacus	Bat	2024	filter_fail	MAG				
+OR952839.1	Scotophilus kuhlii papillomavirus 1	Scotophilus kuhlii	Bat	2024	filter_fail	MAG				
+MH230930.1	Tadarida brasiliensis papillomavirus	Tadarida brasiliensis	Bat	2019	zero_hits					
+MW922428.1	Tadarida brasiliensis papillomavirus 3	Tadarida brasiliensis	Bat	2022	filter_fail					
+JX174437.1	Bos grunniens papillomavirus 1	Bos grunniens (yak)	Bovine	2012	filter_fail					
+MW543423.1	Bos taurus papillomavirus	Bos taurus	Bovine	2021	filter_fail					
+MW543427.1	Bos taurus papillomavirus	Bos taurus	Bovine	2021	zero_hits					
+AB543507.1	Bos taurus papillomavirus 11	Bos taurus	Bovine	2013	filter_fail	PCR				
+JQ798171.1	Bos taurus papillomavirus 13	Bos taurus	Bovine	2013	filter_fail					
+KP276343.1	Bos taurus papillomavirus 14	Felis catus	Bovine	2015	filter_fail					
+KM983393.1	Bos taurus papillomavirus 15	Bos taurus breed Holstein	Bovine	2020	filter_fail					
+KU519391.1	Bos taurus papillomavirus 16	Bos taurus	Bovine	2016	zero_hits					
+KU519392.1	Bos taurus papillomavirus 17	Bos taurus	Bovine	2016	zero_hits					
+KU519393.1	Bos taurus papillomavirus 18	Bos taurus	Bovine	2016	zero_hits					
+KU519394.1	Bos taurus papillomavirus 19	Bos taurus	Bovine	2016	filter_fail					
+KU519395.1	Bos taurus papillomavirus 20	Bos taurus	Bovine	2016	zero_hits					
+KU519396.1	Bos taurus papillomavirus 21	Bos taurus	Bovine	2016	filter_fail					
+KX098515.1	Bos taurus papillomavirus 23	Bos taurus taurus; breed: Holstein	Bovine	2017	filter_fail					
+MG602223.1	Bos taurus papillomavirus 24	Bos taurus	Bovine	2018	filter_fail					
+LC500686.1	Bos taurus papillomavirus 28		Bovine	2023	filter_fail					
+LC514113.1	Bos taurus papillomavirus 29	Bos taurus Holstein Friesian	Bovine	2023	filter_fail					
+AF486184.1	Bos taurus papillomavirus 3	Bos taurus	Bovine	2021	zero_hits					
+MW390885.1	Bos taurus papillomavirus 30	Bos taurus	Bovine	2021	filter_fail					
+OL672227.1	Bos taurus papillomavirus 30	Bos taurus	Bovine	2022	filter_fail	Sanger				
+MW401529.1	Bos taurus papillomavirus 31	Bos taurus	Bovine	2021	filter_fail					
+MW401530.1	Bos taurus papillomavirus 32	Bos taurus	Bovine	2021	zero_hits					
+MW404256.1	Bos taurus papillomavirus 34	Bos taurus	Bovine	2021	filter_fail					
+MW404259.1	Bos taurus papillomavirus 37	Bos taurus	Bovine	2021	filter_fail					
+MW404260.1	Bos taurus papillomavirus 38	Bos taurus	Bovine	2021	filter_fail					
+MW428427.1	Bos taurus papillomavirus 40	Bos taurus	Bovine	2021	filter_fail					
+MW428428.1	Bos taurus papillomavirus 41	Bos taurus	Bovine	2021	filter_fail					
+MW428430.1	Bos taurus papillomavirus 43	Bos taurus	Bovine	2021	filter_fail					
+AF457465.1	Bos taurus papillomavirus 5	Bos taurus	Bovine	2021	filter_fail					
+MH729203.1	Bovine papillomavirus	Bos taurus	Bovine	2020	filter_fail					
+NC_001789.1	Deltapapillomavirus 3	Ruminant (unspecified)	Bovine	2018	filter_fail	PCR				
+MP159677.1	Deltapapillomavirus 4	Ruminant (unspecified)	Bovine	2019	zero_hits					
+HQ912790.1	Camelus dromedarius papillomavirus 1	Camelus dromedarius	Camelid	2011	filter_fail					
+HQ912791.1	Camelus dromedarius papillomavirus 2	Camelus dromedarius	Camelid	2011	zero_hits					
+MT130100.1	Camelus dromedarius papillomavirus 3	camel	Camelid	2020	zero_hits					
+OP432240.1	Canine papillomavirus type 24	Canis lupus familiaris	Canine	2022	zero_hits					
+JF800657.1	Canis familiaris papillomavirus 10	canine	Canine	2011	zero_hits					
+JF800658.1	Canis familiaris papillomavirus 11	canine	Canine	2014	filter_fail					
+JQ754321.1	Canis familiaris papillomavirus 12	dog	Canine	2015	filter_fail					
+KT326919.1	Canis familiaris papillomavirus 18	Canis lupus familiaris	Canine	2016	filter_fail					
+FJ492742.1	Canis familiaris papillomavirus 7	Canis lupus familiaris	Canine	2016	filter_fail					
+OQ836189.1	Canis familiaris papillomavirus type 25	Canis lupus familiaris (domestic dog)	Canine	2023	filter_fail	PCR				
+DQ091200.1	Capra hircus papillomavirus 1	Capra hircus	Caprine	2006	filter_fail					
+MN148899.1	Capra hircus papillomavirus type 2	"Capra hircus (Damascus goat, shamy goat)"	Caprine	2020	filter_fail					
+KC876045.1	Rupicapra rupicapra papillomavirus 1	Rupicapra rupicapra	Caprine	2014	zero_hits					
+EF680235.1	Capreolus capreolus papillomavirus 1	Capreolus capreolus (roedeer)	Cervine	2008	zero_hits					
+KT932712.1	Cervus elaphus papillomavirus 2	Cervus elaphus	Cervine	2016	zero_hits					
+KT626573.1	Deltapapillomavirus 5	Rusa alfredi	Cervine	2015	filter_fail					
+PQ037580.1	Firstpapillomavirinae sp.	Panolia siamensis	Cervine	2024	filter_fail	Sanger 				
+M11910.1	Odocoileus virginianus papillomavirus 1	American white-tailed deer fibroma	Cervine	2020	filter_fail					
+KT932713.1	Pudu puda papillomavirus 1	Pudu puda	Cervine	2016	filter_fail					
+KJ719447.1	Rangifer tarandus granti papillomavirus	Rangifer tarandus granti	Cervine	2014	filter_fail					
+AF443292.1	Rangifer tarandus papillomavirus 1	Rangifer tarandus	Cervine	2020	zero_hits					
+KC810012.1	Rangifer tarandus papillomavirus 2	Rangifer tarandus	Cervine	2013	filter_fail					
+KP757765.1	Rusa timorensis papillomavirus 1	Rusa timorensis	Cervine	2016	filter_fail					
+KT852571.1	Rusa timorensis papillomavirus type 2	Rusa (Cervus) timorensis	Cervine	2018	filter_fail					
+GU117620.1	Delphinus delphis papillomavirus 1	Delphinus delphis	Cetacean	2025	zero_hits					
+OQ274126.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 1	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	filter_fail	MAG				
+OQ274127.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 2	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	zero_hits	MAG				
+OQ274128.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 3	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	filter_fail	MAG				
+OQ274129.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 4	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	filter_fail	MAG				
+OQ274130.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 5	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	zero_hits	MAG				
+OQ274131.1	Neophocaena asiaeorientalis asiaeorientalis papillomavirus 6	Neophocaena asiaeorientalis asiaeorientalis	Cetacean	2023	zero_hits	MAG				
+AJ006302.1	Omikronpapillomavirus 1	Various (genus-level type species)	Cetacean	2007	filter_fail					
+MG905161.1	Omikronpapillomavirus 1	Tursiops truncatus	Cetacean	2018	filter_fail					
+GU117621.1	Phocoena phocoena papillomavirus 1	Phocoena phocoena	Cetacean	2016	filter_fail					
+GU117622.1	Phocoena phocoena papillomavirus 2	Phocoena phocoena	Cetacean	2016	zero_hits					
+GU117623.1	Phocoena phocoena papillomavirus 4	Phocoena phocoena	Cetacean	2016	zero_hits					
+HG939559.1	Phodopus sungorus papillomavirus 1	Phodopus sungorus	Cetacean	2014	filter_fail					
+KJ637940.1	Tursiops aduncus papillomavirus	Indo-pacific bottlenose dolphin	Cetacean	2014	zero_hits					
+EU240894.1	Tursiops truncatus papillomavirus 1	Tursiops truncatus (captive bottlenose dolphin)	Cetacean	2016	zero_hits					
+EU240895.1	Tursiops truncatus papillomavirus 3	Tursiops truncatus (captive bottlenose dolphin)	Cetacean	2024	zero_hits					
+JN709469.1	Tursiops truncatus papillomavirus 4	Tursiops truncatus	Cetacean	2012	zero_hits					
+JN709470.1	Tursiops truncatus papillomavirus 5	Tursiops truncatus	Cetacean	2012	filter_fail					
+JN709471.1	Tursiops truncatus papillomavirus 6	Tursiops truncatus	Cetacean	2012	zero_hits					
+JN709472.1	Tursiops truncatus papillomavirus 7	Tursiops truncatus	Cetacean	2012	zero_hits					
+MG744508.1	Tursiops truncatus papillomavirus 8	Tursiops truncatus	Cetacean	2018	filter_fail					
+KF741371.1	Equus asinus papillomavirus 1	Equus asinus	Equine	2014	filter_fail					
+MH625918.1	Equus asinus papillomavirus 2	donkey	Equine	2019	zero_hits					
+OP870083.1	Equus caballus papillomavirus 10	horse	Equine	2023	zero_hits	PCR/Sanger				
+EU503122.1	Equus caballus papillomavirus 2	Equus caballus	Equine	2009	filter_fail					
+GU384895.1	Equus caballus papillomavirus 3	Equus caballus	Equine	2012	zero_hits					
+JQ031033.1	Equus caballus papillomavirus 5	horse	Equine	2013	zero_hits					
+JQ965698.1	Equus caballus papillomavirus 6	Equus ferus caballus	Equine	2013	zero_hits					
+JX035935.1	Equus caballus papillomavirus 7	Equus ferus caballus	Equine	2013	zero_hits					
+KU963288.1	Equus caballus papillomavirus 8	horse	Equine	2016	zero_hits					
+JF939718.1	Equus caballus papillomavirus IV	Equus caballus	Equine	2013	zero_hits					
+AF394740.1	Zetapapillomavirus 1	Various (genus-level type species)	Equine	2002	zero_hits					
+OQ836188.1	Felis catus papillomavirus	Felis catus (domestic cat)	Feline	2023	zero_hits	PCR				
+MN857145.1	Felis catus papillomavirus 6	Felis catus	Feline	2020	filter_fail					
+MH910493.1	Leopardus wiedii papillomavirus type 1	Leopardus wiedii; sex: female	Feline	2018	filter_fail					
+AY904722.1	Lynx rufus papillomavirus 1	bobcat (Lynx rufus)	Feline	2016	filter_fail					
+AY904724.1	Panthera leo persica papillomavirus 1	Asian lion (Panthera leo persica)	Feline	2016	filter_fail					
+BK066893.1	Papillomavirus panthera8343	Panthera pardus	Feline	2024	filter_fail					
+AY904723.1	Puma concolor papillomavirus 1	Florida panther (Puma concolor)	Feline	2016	zero_hits					
+DQ180494.1	Uncia uncia papillomavirus 1	snow leopard (Uncia uncia)	Feline	2024	filter_fail					
+KX954132.1	Giraffa camelopardalis papillomavirus 1	Giraffa camelopardalis	Giraffid	2016	filter_fail					
+MH049343.1	Okapia johnstoni papillomavirus 1	Okapia johnstoni	Giraffid	2018	filter_fail					
+FJ379293.1	Erinaceus europaeus papillomavirus 1	Erinaceus europaeus (Western European hedgehog)	Hedgehog	2016	filter_fail					
+LC704675.1	Four-toed hedgehog papillomavirus	Atelerix albiventris	Hedgehog	2024	zero_hits					
+MK207055.1	Hemidactylus frenatus papillomavirus	Hemidactylus frenatus	Hedgehog	2019	zero_hits					
+MN194600.1	Hemidactylus frenatus papillomavirus 2	Hemidactylus frenatus	Hedgehog	2019	zero_hits					
+JF966376.1	Human papillomavirus	Homo sapiens	Human	2012	filter_fail					
+JF966378.1	Human papillomavirus	Homo sapiens	Human	2012	filter_fail					
+MH675888.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777176.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777187.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777188.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777223.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777229.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777236.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777239.1	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777262.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+MH777322.2	Human papillomavirus	Homo sapiens	Human	2019	filter_fail					
+DQ080083.1	human papillomavirus 102	Homo sapiens	Human	2005	filter_fail					
+DQ080082.1	human papillomavirus 106	Homo sapiens	Human	2005	filter_fail					
+FJ804072.1	Human papillomavirus 116	Homo sapiens	Human	2009	filter_fail					
+GQ845443.1	Human papillomavirus 121	Homo sapiens	Human	2016	filter_fail					
+AB646346.1	Human papillomavirus 126	Homo sapiens	Human	2011	filter_fail					
+HM999992.1	Human papillomavirus 140	Homo sapiens	Human	2012	filter_fail					
+FB582208.1	Human papillomavirus 16	Homo sapiens	Human	2008	filter_fail					
+KR029094.1	Human papillomavirus 16	Homo sapiens	Human	2016	filter_fail					
+MG516827.1	Human papillomavirus 16	mice	Human	2018	filter_fail					
+AB745694.1	Human papillomavirus 160	Homo sapiens	Human	2018	filter_fail					
+KR029095.1	human papillomavirus 18	Homo sapiens	Human	2016	filter_fail					
+LY715373.1	human papillomavirus 18	Homo sapiens	Human	2020	filter_fail					
+KC108722.1	Human papillomavirus 180	Homo sapiens	Human	2014	filter_fail					
+HG530535.1	Human papillomavirus 184	Homo sapiens	Human	2014	filter_fail					
+ON482334.1	Human papillomavirus 228	Homo sapiens	Human	2023	filter_fail	Sanger				
+MQ005201.1	human papillomavirus 39	Homo sapiens	Human	2021	filter_fail					
+OF201689.1	human papillomavirus 45	Homo sapiens	Human	2021	filter_fail	Patent				
+MQ135610.1	human papillomavirus 51	Homo sapiens	Human	2021	filter_fail					
+JB775979.1	human papillomavirus 52	Homo sapiens	Human	2013	filter_fail					
+KR029096.1	human papillomavirus 58	Homo sapiens	Human	2016	filter_fail					
+OF201607.1	human papillomavirus 59	Homo sapiens	Human	2021	filter_fail	Patent				
+MQ005202.1	human papillomavirus 68	Homo sapiens	Human	2021	filter_fail					
+MQ135611.1	human papillomavirus 69	Homo sapiens	Human	2021	zero_hits					
+Y15175.1	Human papillomavirus 77	Homo sapiens	Human	2016	filter_fail	Sanger 				
+KR816168.1	Human papillomavirus type 177	Homo sapiens	Human	2018	filter_fail					
+MF509816.1	Human papillomavirus type 211	Homo sapiens	Human	2018	filter_fail					
+MF509821.1	Human papillomavirus type 216	Homo sapiens	Human	2018	filter_fail					
+MH172376.1	Human papillomavirus type 219	Homo sapiens	Human	2018	filter_fail					
+MH172378.1	Human papillomavirus type 221	Homo sapiens	Human	2018	filter_fail					
+NC_001354.1	Human papillomavirus type 41	Homo sapiens	Human	2018	zero_hits	Patient swab				
+NC_001690.1	Human papillomavirus type 48	Homo sapiens	Human	2018	filter_fail	Sanger				
+MQ011421.1	Human papillomavirus type 53	Homo sapiens	Human	2021	filter_fail					
+OP577477.1	Papillomaviridae sp.	Homo sapiens	Human	2023	filter_fail	Patient swab				
+BK066485.1	Papillomavirus homo7372	Homo sapiens	Human	2024	filter_fail					
+HQ585856.1	Crocuta crocuta papillomavirus 1	Crocuta crocuta	Hyena	2013	filter_fail					
+BK066421.1	Papillomavirus sorex7377	shrew	Insectivore	2024	zero_hits					
+KC460986.1	Talpa europaea papillomavirus 1	Talpa europaea	Insectivore	2013	filter_fail					
+OR951005.1	Taphozous bat papillomavirus 1	Taphozous melanopogon	Insectivore	2024	zero_hits	MAG				
+OR952881.1	Taphozous bat papillomavirus 1	Taphozous melanopogon	Insectivore	2024	zero_hits	MAG				
+OR952882.1	Taphozous bat papillomavirus 1	Taphozous melanopogon	Insectivore	2024	filter_fail	MAG				
+OR952884.1	Taphozous bat papillomavirus 1	Taphozous melanopogon	Insectivore	2024	filter_fail	MAG				
+MK443496.1	Tree shrew papillomavirus 1	Tupaia chinensis	Insectivore	2019	zero_hits					
+MK443497.1	Tree shrew papillomavirus 2	Tupaia chinensis	Insectivore	2019	zero_hits					
+AF227240.1	Oryctolagus cuniculus papillomavirus 1	Oryctolagus cuniculus	Lapine	2020	zero_hits					
+AY609301.1	Trichechus manatus latirostris papillomavirus 1	Florida manatee (Trichechus manatus latirostris)	Manatee	2022	filter_fail					
+JN709473.1	Trichechus manatus latirostris papillomavirus 2	Trichechus manatus latirostris	Manatee	2012	filter_fail					
+OK073977.1	Trichechus manatus papillomavirus		Manatee	2022	filter_fail	Sanger				
+EU069819.1	Bandicoot papillomatosis carcinomatosis virus type 1	Perameles bougainville (Western barred bandicoot)	Marsupial	2007	filter_fail					
+EU277647.1	Bandicoot papillomatosis carcinomatosis virus type 2	Isoodon obesulus	Marsupial	2008	filter_fail					
+GU220391.1	Bettongia penicillata papillomavirus 1	Bettongia penicillata	Marsupial	2016	filter_fail					
+OQ746290.1	Enhydra lutris kenyoni papillomavirus 2	subadult male Northern sea otter	Mustelid	2023	zero_hits	Sanger				
+KJ410351.1	Enhydra lutris papillomavirus 1	Enhydra lutris nereis	Mustelid	2014	filter_fail					
+MW841296.1	Martes foina papillomavirus 1	Martes foina	Mustelid	2021	filter_fail					
+KF006988.1	Mustela putorius papillomavirus 1	Mustela putorius furo	Mustelid	2018	filter_fail					
+KP861980.1	Alouatta guariba papillomavirus 1	Alouatta guariba clamitans	Non-human Primate	2016	filter_fail					
+GU014532.1	Colobus guereza papillomavirus 1	Colobus guereza	Non-human Primate	2011	filter_fail					
+GU014533.1	Colobus guereza papillomavirus 2	Colobus guereza	Non-human Primate	2011	filter_fail					
+EF028290.1	Macaca fascicularis papillomavirus 1	Macaca fascicularis	Non-human Primate	2009	filter_fail					
+EU490515.1	Macaca fascicularis papillomavirus 10	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+GQ227670.1	Macaca fascicularis papillomavirus 11	Macaca fascicularis	Non-human Primate	2009	zero_hits					
+GU014531.1	Macaca fascicularis papillomavirus 2	Macaca fascicularis	Non-human Primate	2011	zero_hits					
+EF558839.2	Macaca fascicularis papillomavirus 3	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EF558841.1	Macaca fascicularis papillomavirus 4	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EF558843.1	Macaca fascicularis papillomavirus 5	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EF558840.1	Macaca fascicularis papillomavirus 6	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EF558838.1	Macaca fascicularis papillomavirus 7	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EF558842.1	Macaca fascicularis papillomavirus 8	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+EU490516.1	Macaca fascicularis papillomavirus 9	Macaca fascicularis	Non-human Primate	2016	filter_fail					
+KT944080.1	Macaca fuscata papillomavirus 1	Macaca fuscata (Japanese macaque)	Non-human Primate	2016	filter_fail					
+MH469677.1	Macaca fuscata papillomavirus 2	Macaca fuscata (Japanese macaque)	Non-human Primate	2019	filter_fail					
+MH745749.1	Macaca mulatta papillomavirus 7	Macaca mulatta	Non-human Primate	2018	filter_fail					
+JF304764.1	Papio hamadryas papillomavirus 1	Papio hamadryas (baboon monkey)	Non-human Primate	2012	filter_fail					
+EF591300.1	Rhesus papillomavirus 1b	Macaca mulatta	Non-human Primate	2016	filter_fail					
+JF304765.1	Saimiri sciureus papillomavirus 1	Saimiri sciureus (squirrel monkey)	Non-human Primate	2014	filter_fail					
+JF304766.1	Saimiri sciureus papillomavirus 2	Saimiri sciureus (squirrel monkey)	Non-human Primate	2014	filter_fail					
+JF304767.1	Saimiri sciureus papillomavirus 3	Saimiri sciureus (squirrel monkey)	Non-human Primate	2014	filter_fail					
+AY057109.1	Etapapillomavirus 1	Various (genus-level type species)	Other	2002	zero_hits					
+MK124621.1	Tick-associated papillomavirus lsx	tick	Other	2019	filter_fail					
+U83595.1	Ovine papillomavirus type 2	Ovis aries	Ovine	1997	zero_hits	Sanger 				
+FJ796965.1	Ovis aries papillomavirus 3	sheep	Ovine	2010	zero_hits					
+KX954121.1	Ovis aries papillomavirus type 4	Ovis aries	Ovine	2017	filter_fail					
+BK062772.1	Manis javanica papillomavirus 1	Manis javanica	Panoglin	2022	filter_fail					
+OR531434.1	Arctocephalus forsteri papillomavirus 1	Arctocephalus forsteri	Pinniped	2024	filter_fail	PCR				
+MG571089.1	Leptonychotes weddellii papillomavirus 2	Leptonychotes weddellii	Pinniped	2018	filter_fail					
+MG571093.1	Leptonychotes weddellii papillomavirus 3	Leptonychotes weddellii	Pinniped	2018	filter_fail					
+MG571095.1	Leptonychotes weddellii papillomavirus 4	Leptonychotes weddellii	Pinniped	2018	zero_hits					
+MG571094.1	Leptonychotes weddellii papillomavirus 5	Leptonychotes weddellii	Pinniped	2018	filter_fail					
+MG571092.1	Leptonychotes weddellii papillomavirus 7	Leptonychotes weddellii	Pinniped	2018	filter_fail					
+HQ293213.1	Zalophus californianus papillomavirus 1	Zalophus californianus	Pinniped	2011	zero_hits					
+KY817993.1	Sus scrofa papillomavirus 2	Sus scrofa	Porcine	2017	zero_hits					
+AY763115.1	Procyon lotor papillomavirus 1	Procyon lotor (raccoon)	Raccoon	2005	zero_hits					
+OQ633419.1	Betta papillomavirus 1	Betta splendens	Ray-finned Fish	2023	zero_hits	MAG				
+OP933686.1	Fish-associated papillomavirus 1	Fish (unspecified)	Ray-finned Fish	2022	filter_fail	MAG				
+MZ570860.1	Papillomaviridae sp. Haddock_c145	Melanogrammus aeglefinus	Ray-finned Fish	2021	zero_hits					
+MZ570861.1	Papillomaviridae sp. Haddock_c2655	Melanogrammus aeglefinus	Ray-finned Fish	2021	filter_fail					
+MZ570862.1	Papillomaviridae sp. Haddock_c6033	Melanogrammus aeglefinus	Ray-finned Fish	2021	filter_fail					
+MZ570864.1	Papillomaviridae sp. Seabass_c17043	Centropristis striata	Ray-finned Fish	2021	zero_hits					
+MZ570863.1	Papillomaviridae sp. Seabass_c1851	Centropristis striata	Ray-finned Fish	2021	zero_hits					
+MZ570865.1	Papillomaviridae sp. Seabass_c24797	Centropristis striata	Ray-finned Fish	2021	zero_hits					
+BK066814.1	Papillomavirus sparus5907	Candidatus Ichthyocystis sparus	Ray-finned Fish	2024	zero_hits					
+BK066746.1	Papillomavirus xiphophorus6144	Xiphophorus birchmanni	Ray-finned Fish	2024	filter_fail					
+KX643372.1	Sparus aurata papillomavirus 1	Sparus aurata	Ray-finned Fish	2016	zero_hits					
+MZ447865.1	Trematomus bernacchii papillomavirus	Trematomus bernacchii	Ray-finned Fish	2021	zero_hits					
+MZ244208.1	Urolophus aurantiacus papillomavirus 1	Urolophus aurantiacus	Ray-finned Fish	2021	zero_hits					
+MN515404.1	Wels catfish papillomavirus 1	Silurus glanis (Wels catfish)	Ray-finned Fish	2021	zero_hits					
+MW582922.1	Archaeolacerta bedriagae papillomavirus 1	Archaeolacerta bedriagae	Reptile	2021	zero_hits					
+EU493092.1	Caretta caretta papillomavirus 1	Caretta caretta	Reptile	2009	zero_hits					
+EU493091.1	Chelonia mydas papillomavirus 1	Chelonia mydas	Reptile	2009	zero_hits					
+HQ262535.1	Morelia spilota papillomavirus 1	Morelia spilota spilota	Reptile	2016	filter_fail					
+HQ625440.1	Apodemus sylvaticus papillomavirus 1	Apodemus sylvaticus	Rodent	2012	filter_fail					
+KC020689.2	Castor canadensis papillomavirus 1	Castor canadensis (North American beaver)	Rodent	2014	zero_hits					
+AY684126.1	Erethizon dorsatum papillomavirus 1	North American porcupine (Erethizon dorsatum)	Rodent	2005	zero_hits					
+MH376689.1	Erethizon dorsatum papillomavirus 2	Erethizon dorsatum	Rodent	2018	filter_fail					
+NC_001605.1	Iotapapillomavirus 1	Mastomys natalensis	Rodent	2018	filter_fail	Sanger				
+DQ664501.1	Mastomys coucha papillomavirus 2	Mastomys coucha	Rodent	2006	filter_fail					
+DQ269468.1	Micromys minutus papillomavirus 1	Micromys minutus (European harvest mouse)	Rodent	2016	filter_fail					
+JF755418.1	Peromyscus papillomavirus 1	Peromyscus maniculatus	Rodent	2011	zero_hits					
+GQ180114.1	Rattus norvegicus papillomavirus 1	Rattus norvegicus	Rodent	2009	filter_fail					
+ON932813.1	Rodent papillomavirus	Niviventer fulvescens	Rodent	2023	filter_fail	Sanger				
+MF327538.1	Ailuropoda melanoleuca papillomavirus 4	Ailuropoda melanoleuca	Ursine	2017	filter_fail					
+EF536349.1	Ursus maritimus papillomavirus 1	Ursus maritimus	Ursine	2008	filter_fail					
+MH777346.2	Human papillomavirus isolate HPV-mSK_205	Homo sapiens	Human	2018						
+MH777359.2	Human papillomavirus isolate HPV-mSK_220	Homo sapiens	Human	2018						
+OQ930234.1	Human papillomavirus isolate CDCHPV_TL21	Homo sapiens	Human	2023						

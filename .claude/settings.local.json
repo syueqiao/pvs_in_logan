@@ -3,7 +3,12 @@
     "allow": [
       "Bash(git stash:*)",
       "Bash(git checkout:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "WebFetch(domain:www.ebi.ac.uk)",
+      "Bash(python3:*)",
+      "Bash(split:*)",
+      "Bash(ls:*)",
+      "Bash(Rscript:*)"
     ]
   }
 }

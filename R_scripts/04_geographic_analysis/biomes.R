@@ -1,9 +1,36 @@
+source("R_scripts/04_geographic_analysis/geo_setup.R")
 
-library(rnaturalearthdata)
-library(rnaturalearth)
+# Load from environment (if polygon_analyses.R was run) or from saved RDS
+if (!exists("data_wide")) {
+  data_wide <- readRDS("outputs/geo_intermediates/data_wide.rds")
+}
+if (!exists("giant_geo_table_grid_id_geometry")) {
+  giant_geo_table_grid_id_geometry <- readRDS("outputs/geo_intermediates/giant_geo_table_grid_id_geometry.rds")
+}
+
+# Biome color key (used throughout this script)
+biomes_list <- c("Tropical & Subtropical Moist Broadleaf Forests",
+                 "Tropical & Subtropical Dry Broadleaf Forests",
+                 "Tropical & Subtropical Coniferous Forests",
+                 "Temperate Broadleaf & Mixed Forests",
+                 "Temperate Conifer Forests",
+                 "Boreal Forests/Taiga",
+                 "Tropical & Subtropical Grasslands, Savannas & Shrublands",
+                 "Temperate Grasslands, Savannas & Shrublands",
+                 "Flooded Grasslands & Savannas",
+                 "Montane Grasslands & Shrublands",
+                 "Tundra",
+                 "Mediterranean Forests, Woodlands & Scrub",
+                 "Deserts & Xeric Shrublands",
+                 "Mangroves", "Terrestrial Other", "Ocean", "Lake", "Alkaline Lake", "Reservoir")
+biomes_color <- c('#008346','#9DCC00', '#C4B72E',
+                  '#015C31','#20BC10','#FFA8BB'
+                  ,'#FAD505','#8F7C00','#5AD488',
+                  '#993E01','#C20088', '#81A527'
+                  ,'#FFA405','#FFCC99', "#624E38", "#09BEE9","#6E96D0","#284A7C", "#8CD4D4")
+biomes_color_key <- as.data.frame(cbind(biomes_list, biomes_color))
 
 ###ecology?
-giant_geo_table_grid_id_geometry <- st_read("my_sf_data.gpkg")
 
 data_wide_joining <- st_as_sf(data_wide)  %>% st_transform("ESRI:54009")
 ocean_polygons <- st_as_sf(ne_download(scale = 50, type = 'ocean', category = 'physical', returnclass = "sf")) %>% st_transform("ESRI:54009") %>%
@@ -17,7 +44,7 @@ water <- bind_rows(dplyr::select(ocean_polygons, geometry, featurecla_ocean), dp
 
 # my_shapefile <- read_sf("Global_200_Terrestrial.shp")
 #2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
-my_shapefile_2 <- read_sf("Ecoregions2017.shp")
+my_shapefile_2 <- read_sf("files/Ecoregions2017.shp")
 # my_shapefile_fw <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 # my_shapefile_fw_2 <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 
@@ -34,18 +61,8 @@ all_cats$area <- st_area(all_cats)
 all_cats$area_biome <- coalesce(all_cats$BIOME_NAME, all_cats$featurecla_ocean, all_cats$featurecla_fw_2, all_cats$featurecla_fw)
 all_cats$area <- parse_number(as.character(all_cats$area))
 
-all_cats_area <- all_cats %>%
-  group_by(area_biome) %>%
-  summarise(total_area = sum(area), .groups = 'drop')
-
-all_cats_area$area_biome <- replace_na(all_cats_area$area_biome, "Terrestrial Other")
-# my_shapefile_aqua <- st_as_sf(my_shapefile_aqua)  %>% st_transform("ESRI:54009")
-# my_shapefile_aqua_2 <- st_as_sf(my_shapefile_aqua_2)  %>% st_transform("ESRI:54009")
-
-# biomes_joined <- st_join(data_wide_joining, all_cats, join = st_intersects, largest = TRUE)
-
 sf_use_s2(FALSE)
-
+#calculate the area, but in a hacky way or else it takes too long 
 # Create centroids of your grid cells
 grid_centroids <- st_centroid(grid_sf)
 
@@ -81,6 +98,7 @@ data_wide_joining_centroids <- st_centroid(data_wide_joining)
 data_wide_joining$biome_id <- st_intersects(data_wide_joining_centroids, all_cats) %>%
   sapply(function(x) if(length(x) > 0) x[1] else NA)
 
+
 data_wide_joining$biome_name <- all_cats$area_biome[data_wide_joining$biome_id]
 
 data_wide_joining$biome_name[is.na(data_wide_joining$biome_name)] <- "Terrestrial Other"
@@ -109,11 +127,11 @@ summed_biomes <- dplyr::select(biomes_joined, biome_name, known, novel) %>%
 
 summed_biomes$proportions <- summed_biomes$novel/summed_biomes$known
 
-plot(summed_biomes$proportions)
+# plot(summed_biomes$proportions)
 
 library(data.table)
 
-long <- melt(setDT(summed_biomes), id.vars = c("biome_name")) %>% filter(!variable == "geom") %>% filter(!variable == "proportions")
+long <- melt(setDT(summed_biomes), id.vars = c("biome_name")) %>% filter(!variable == "geometry") %>% filter(!variable == "proportions")
 long$variable <- relevel(long$variable, 'novel')
 
 
@@ -132,27 +150,6 @@ aa
 #     color = ifelse(plot_cat %in% marine_list, "#489690", ifelse(plot_cat %in% fw_list, "#6E96D0", ifelse(plot_cat == "Ocean", "#09BEE9", NA)))
 #   )
 
-biomes_list <- c("Tropical & Subtropical Moist Broadleaf Forests", 
-                 "Tropical & Subtropical Dry Broadleaf Forests",
-                 "Tropical & Subtropical Coniferous Forests",
-                 "Temperate Broadleaf & Mixed Forests",
-                 "Temperate Conifer Forests",
-                 "Boreal Forests/Taiga",
-                 "Tropical & Subtropical Grasslands, Savannas & Shrublands",
-                 "Temperate Grasslands, Savannas & Shrublands",
-                 "Flooded Grasslands & Savannas",
-                 "Montane Grasslands & Shrublands",
-                 "Tundra",
-                 "Mediterranean Forests, Woodlands & Scrub",
-                 "Deserts & Xeric Shrublands",
-                 "Mangroves", "Terrestrial Other", "Ocean", "Lake", "Alkaline Lake", "Reservoir")
-biomes_color <- c('#008346','#9DCC00', '#C4B72E',
-                  '#015C31','#20BC10','#FFA8BB'
-                  ,'#FAD505','#8F7C00','#5AD488',
-                  '#993E01','#C20088', '#81A527'
-                  ,'#FFA405','#FFCC99', "#624E38", "#09BEE9","#6E96D0","#284A7C", "#8CD4D4")
-biomes_color_key <- as.data.frame(cbind(biomes_list, biomes_color))
-
 summed_biomes_colored <- left_join(summed_biomes, biomes_color_key, by = c("biome_name" = "biomes_list"))
 summed_biomes_colored$proportions <- summed_biomes_colored$novel/summed_biomes_colored$known
 
@@ -167,7 +164,7 @@ summed_biomes_colored_props <- ggplot(data=summed_biomes_colored,
         axis.ticks.y = element_blank(),
         panel.border = element_blank()) 
 
-ggsave("2026.01.13summed_biomes_colored_props.png", summed_biomes_colored_props, width = 30, height = 20, units = "cm", limitsize = F ,bg='transparent')
+ggsave("outputs/2026.01.13summed_biomes_colored_props.png", summed_biomes_colored_props, width = 30, height = 20, units = "cm", limitsize = F ,bg='transparent')
 
 
 # biomes_joined_aqua_guess_nz_color_2 <- biomes_joined_aqua_guess_nz_color_2 %>%
@@ -205,7 +202,7 @@ theme_bw() + coord_flip() + theme(text = element_text(family = "Noto Sans"))  +
 
 summed_biomes_colored_long_plot
 
-ggsave("2026.01.13.summed_biomes_colored_long_plot.png", summed_biomes_colored_long_plot, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot.png", summed_biomes_colored_long_plot, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 
 # summed_biomes_colored_long_plot_zoom <- summed_biomes_colored_long_plot + 
@@ -220,9 +217,9 @@ ggsave("2026.01.13.summed_biomes_colored_long_plot.png", summed_biomes_colored_l
 # 
 
 
-psh__pv <- ggplot(data = st_buffer(st_as_sf(summed_biomes_colored_long), 0), aes(color = NA, fill = biomes_color)) + 
+psh__pv <- ggplot(data = st_buffer(st_as_sf(summed_biomes_colored_long), 50000), aes(color = NA, fill = biomes_color)) + 
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
-  geom_sf(color = "transparent", alpha = 0.8, aes(geometry = geom)) +
+  geom_sf(color = "transparent", alpha = 0.8, aes(geometry = geometry)) +
   scale_fill_identity(guide='legend', labels=summed_biomes_colored_long$biome_name, breaks=summed_biomes_colored_long$biomes_color) +
   coord_sf(crs = "ESRI:54009") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
@@ -231,8 +228,24 @@ psh__pv <- ggplot(data = st_buffer(st_as_sf(summed_biomes_colored_long), 0), aes
         panel.border = element_blank(),
         legend.position = 'right')
 
-ggsave("2026.01.13.psh__pv.png", psh__pv, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.18.psh__pv_2.png", psh__pv, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
 
+biomes_joined$known_novel <- biomes_joined$known + biomes_joined$novel
+biomes_joined <- left_join(biomes_joined, biomes_color_key, by = c("biome_name" = "biomes_list"))
+
+psh__pv_2 <- ggplot(data = st_buffer(st_as_sf(biomes_joined), 50000), aes(color = NA, fill = biomes_color)) + 
+  geom_sf(data = world, fill = 'grey95', color = 'grey90') +
+  geom_sf(color = "transparent", aes(geometry = geometry, alpha = 0.1+log10(known_novel))) +
+  scale_fill_identity(guide='legend', labels=biomes_joined$biome_name, breaks=biomes_joined$biomes_color) +
+  coord_sf(crs = "ESRI:54009") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank(),
+        legend.position = 'right')
+
+psh__pv_2
+ggsave("outputs/2026.02.18.psh__pv_alpha.png", psh__pv_2, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
 
 aaa <- ggplot(data=summed_biomes_colored_long, aes(x=fct_reorder(biome_name, as.numeric(sumz)), y=as.numeric(sumz))) +
   geom_bar(stat="identity") + coord_flip()
@@ -250,9 +263,9 @@ summed_biomes_colored_long_plot_sampling_pv <- ggplot(data=filter(summed_biomes_
         axis.ticks.y = element_blank(),
         panel.border = element_blank()) 
 
-summed_biomes_colored_long_plot_sampling_pv
+sum(summed_biomes_sampling_color_pv$value)
 
-ggsave("2026.01.13.summed_biomes_colored_long_plot_sampling_pv.png", summed_biomes_colored_long_plot_sampling_pv, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot_sampling_pv.png", summed_biomes_colored_long_plot_sampling_pv, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 
 # biomes_joined_aqua_guess_nz_color_2$plot_cat <- gsub("Salween River|Gulf of Alaska Coastal Rivers", "Terrestrial Other", biomes_joined_aqua_guess_nz_color_2$plot_cat)
@@ -261,7 +274,7 @@ ggsave("2026.01.13.summed_biomes_colored_long_plot_sampling_pv.png", summed_biom
 
 df_fixed_joining <- st_as_sf(giant_geo_table_grid_id_geometry)  %>% st_transform("ESRI:54009")
 
-df_fixed_joining <- filter(df_fixed_joining, Freq > 0)
+# df_fixed_joining <- filter(df_fixed_joining, Freq.x > 0)
 
 df_fixed_joining_centroids <- st_centroid(df_fixed_joining)
 
@@ -275,7 +288,7 @@ df_fixed_joining$biome_name[is.na(df_fixed_joining$biome_name)] <- "Terrestrial 
 
 biomes_joined_sampling <- df_fixed_joining
 
-st_write(obj = biomes_joined_sampling, dsn = "2026.01.13.biomes_joined_sampling.gpkg", driver = "GPKG", append=FALSE)
+st_write(obj = biomes_joined_sampling, dsn = "outputs/2026.01.13.biomes_joined_sampling.gpkg", driver = "GPKG", append=FALSE)
 
 # biomes_joined_sampling <- st_read("biomes_joined_sampling.gpkg")
 
@@ -283,29 +296,10 @@ st_write(obj = biomes_joined_sampling, dsn = "2026.01.13.biomes_joined_sampling.
 
 # biomes_joined_sampling$guess_1[is.na(biomes_joined_sampling$guess_1)] <- "Terrestrial Other"
 
-biomes_joined_sampling_nz <- filter(biomes_joined_sampling, Freq >0)
+biomes_joined_sampling_nz <- filter(biomes_joined_sampling,  Freq > 0) 
 
-biomes_list <- c("Tropical & Subtropical Moist Broadleaf Forests", 
-                 "Tropical & Subtropical Dry Broadleaf Forests",
-                 "Tropical & Subtropical Coniferous Forests",
-                 "Temperate Broadleaf & Mixed Forests",
-                 "Temperate Conifer Forests",
-                 "Boreal Forests/Taiga",
-                 "Tropical & Subtropical Grasslands, Savannas & Shrublands",
-                 "Temperate Grasslands, Savannas & Shrublands",
-                 "Flooded Grasslands & Savannas",
-                 "Montane Grasslands & Shrublands",
-                 "Tundra",
-                 "Mediterranean Forests, Woodlands & Scrub",
-                 "Deserts & Xeric Shrublands",
-                 "Mangroves", "Terrestrial Other", "Ocean", "Lake", "Alkaline Lake", "Reservoir")
-biomes_color <- c('#008346','#9DCC00', '#C4B72E',
-                  '#015C31','#20BC10','#FFA8BB'
-                  ,'#FAD505','#8F7C00','#5AD488',
-                  '#993E01','#C20088', '#81A527'
-                  ,'#FFA405','#FFCC99', "#624E38", "#09BEE9","#6E96D0","#284A7C", "#8CD4D4")
-
-biomes_color_key <- as.data.frame(cbind(biomes_list, biomes_color))
+head(biomes_joined_sampling)
+# biomes_color_key defined at top of script
 
 # biomes_joined_sampling_nz <- biomes_joined_sampling_nz %>% rename(plot_cat = guess_1)
 
@@ -318,7 +312,7 @@ biomes_joined_sampling_nz_color <- left_join(biomes_joined_sampling_nz, biomes_c
 
 psh <- ggplot(data = biomes_joined_sampling_nz_color, aes(color = NA, fill = biomes_color)) + 
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
-  geom_sf(color = "transparent", aes(geometry = geom)) +
+  geom_sf(color = "transparent", aes(geometry = geometry)) +
   scale_fill_identity(guide='legend', labels=biomes_joined_sampling_nz_color$biome_name, breaks=biomes_joined_sampling_nz_color$biomes_color) +
   coord_sf(crs = "ESRI:54009") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
@@ -329,7 +323,7 @@ psh <- ggplot(data = biomes_joined_sampling_nz_color, aes(color = NA, fill = bio
 
 psh
 
-ggsave("2026.01.13.psh.png", psh, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.18.psh.png", psh, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
 
 
 summed_biomes_sampling <- dplyr::select(biomes_joined_sampling_nz_color, biome_name, Freq, biomes_color) %>%
@@ -357,7 +351,7 @@ summed_biomes_colored_long_plot_sampling <- ggplot(data=summed_biomes_sampling_c
 
 summed_biomes_colored_long_plot_sampling
 
-ggsave("2026.01.13.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 30, height = 20, units = "cm", limitsize = F, bg='transparent')
+ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 30, height = 20, units = "cm", limitsize = F, bg='transparent')
 
 # summed_biomes_colored_long_plot_zoom_sampling <- summed_biomes_colored_long_plot_sampling + 
 #   coord_flip(ylim = c(0, 5000)) +
@@ -420,10 +414,10 @@ palma_plot <- ggplot(data = df_palma_info, aes(x = log(total_freq), y = log(palm
         legend.key = element_rect(fill = "transparent", colour = NA), panel.background = element_rect(fill = "transparent", colour = NA), # Transparent panel bg (the area where data is plotted)
         plot.background = element_rect(fill = "transparent", colour = NA) ) 
 
-ggsave("palma_plot.png", palma_plot, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/palma_plot.png", palma_plot, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 
-hdi_2023 <- read.table("hdi_2023.txt", sep = "\t")
+hdi_2023 <- read.table("files/hdi_2023.txt", sep = "\t")
 hdi_2023$V1 <- country_name(x= hdi_2023$V1, to="ISO3", fuzzy_match = T)
 
 df_hdi <- left_join(as.data.frame(df_palma), hdi_2023, by = c("Code" = "V1"))
@@ -445,7 +439,7 @@ hdi <- ggplot(data = df_hdi_info, aes(y = total_freq+0.01, x = V2)) +
         legend.key = element_rect(fill = "transparent", colour = NA), panel.background = element_rect(fill = "transparent", colour = NA), # Transparent panel bg (the area where data is plotted)
         plot.background = element_rect(fill = "transparent", colour = NA) ) 
 
-ggsave("hdi_plot.png", hdi, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/hdi_plot.png", hdi, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 hdi_cut <- ggplot(data = df_hdi_info, aes(y = total_freq+0.01, x = V2)) + 
   ylim(c(0, 300000)) + 
@@ -460,7 +454,7 @@ hdi_cut <- ggplot(data = df_hdi_info, aes(y = total_freq+0.01, x = V2)) +
 
 hdi_cut
 
-ggsave("hdi_plot_cut.png", hdi_cut, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/hdi_plot_cut.png", hdi_cut, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 #ordered biome
 biome_count_order <- levels(fct_reorder(summed_biomes_sampling_color$biome_name, as.numeric(summed_biomes_sampling_color$freq_count)))
@@ -485,8 +479,9 @@ summed_biomes_colored_long_plot_sampling_pv_ordered <- ggplot(data=filter(summed
         panel.border = element_blank()) 
 
 summed_biomes_colored_long_plot_sampling_pv_ordered
+sum(as.numeric(summed_biomes_sampling_color_pv_ordered$value), na.rm = T)
 
-ggsave("2026.01.13.summed_biomes_colored_long_plot_sampling_pv_ordered.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 30, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling_pv_ordered.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 30, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 
 summed_biomes_colored_long_plot_sampling_pv_ordered_grey <- ggplot(data=filter(summed_biomes_sampling_color_pv_ordered, !is.na(proportions.x)), aes(x=biome_name, y=as.numeric(sumz), fill =biomes_color.x)) +
@@ -503,7 +498,7 @@ knwon <- filter(summed_biomes_colored_long, variable == 'known')
 wuhhh <- summed_biomes_colored_long_plot_sampling_pv_ordered_grey + geom_bar(data=filter(summed_biomes_colored_long, variable == 'known'), stat="identity", fill = "grey90", alpha = 0.8, aes(y = value))
 
 
-ggsave("2026.01.13.summed_biomes_colored_long_plot_sampling_pv_ordered_grey.png", wuhhh, width = 30, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot_sampling_pv_ordered_grey.png", wuhhh, width = 30, height = 20, units = "cm", limitsize = F,bg='transparent')
 
 
 #normalize sampling based on biome area
@@ -556,7 +551,7 @@ grid_sf <- grid_sf %>%
 
 summed_biomes_colored_world <- left_join(grid_sf, biomes_color_key, by = c("biome_name" = "biomes_list"))
 
-wurld_biomes <- ggplot(data =summed_biomes_colored_world, aes(geometry = geometry, fill=biomes_color)) + 
+wurld_biomes <- ggplot(data =summed_biomes_colored_world, aes(geometry = geometryetry, fill=biomes_color)) + 
   geom_sf(color = "transparent") + 
   scale_fill_identity(guide='legend', labels=summed_biomes_colored_world$biome_name, breaks=summed_biomes_colored_world$biomes_color) +
   theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
@@ -584,6 +579,6 @@ lin <- ggplot(data = summed_biomes_sampling_area, aes(x = as.numeric(area_km2), 
 
 lin 
 
-ggsave("2026.01.12.change_da_world.png", wurld_biomes, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
-ggsave("2026.01.13.lin.png", lin, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.12.change_da_world.png", wurld_biomes, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.13.lin.png", lin, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
 
