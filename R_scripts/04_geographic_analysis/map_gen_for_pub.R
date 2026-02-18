@@ -1,15 +1,15 @@
 #geo data
-library(tidyverse)
+source("R_scripts/04_geographic_analysis/geo_setup.R")
 
 ###for novelty search
-all_seq_geo <- read.table("all_full_l1s_logan_and_pr_blastn.tsv", sep = "\t", header = F)
+all_seq_geo <- read.table("files/all_full_l1s_logan_and_pr_blastn.tsv", sep = "\t", header = F)
 all_seq_geo$library <- gsub("Score.*", "", all_seq_geo$V1)
 #calculate qcov
 all_seq_geo$qcov <- abs(all_seq_geo$V2 - all_seq_geo$V3)/all_seq_geo$V4
 
 #evals fil 
-all_seq_geo_fil <- filter(all_seq_geo, V10 < 0.0001)
-all_seq_geo_fil_low_conf <- filter(all_seq_geo, V10 > 0.0001)
+all_seq_geo_fil <- filter(all_seq_geo, V10 < 0.00001)
+all_seq_geo_fil_low_conf <- filter(all_seq_geo, V10 > 0.00001)
 
 what_hits <- as.data.frame(table(all_seq_geo$V1))
 
@@ -51,10 +51,10 @@ length(unique(all_seq_geo_fil_low_conf_hits$V1))
 #group all the ones with hits that are novel
 all_hit_novel <- bind_rows(all_seq_geo_fil_low_conf_hits, all_seq_geo_sliced_90)
 # write.table(all_hit_novel, "all_hit_novel.txt", quote = F, col.names = F, row.names = F)
-
+length(unique(all_hit_novel$V1))
 
 ####read in geo data and full list of hits
-all_input_into_blastn <- read.table("run_in_blastn.list", sep = "\t", header = F)
+all_input_into_blastn <- read.table("files/run_in_blastn.list", sep = "\t", header = F)
 all_input_into_blastn$V1 <- gsub(">", "", all_input_into_blastn$V1)
 all_input_into_blastn_joined <- left_join(all_input_into_blastn, all_seq_geo, by = c("V1"))
 all_input_into_blastn_joined_min_eval <- all_input_into_blastn_joined %>% group_by(V1) %>% slice_min(n = 1, V10) %>% slice_max(n = 1, V9)
@@ -72,12 +72,13 @@ all_novels <- bind_rows(no_hits_in_blastn, novel_pvs)
 all_novels$Run <- gsub("_.*", "", all_novels$V1)
 all_novels$Run <- gsub("Score.*", "", all_novels$Run)
 
+length(unique(all_novels$V1))
 
 #add geo data to known and unknown
-geo_data_annotation_for_all_biosamps <- read.csv("geo_data_annotation_for_all_biosamps.txt", header = F)
+geo_data_annotation_for_all_biosamps <- read.csv("files/geo_data_annotation_for_all_biosamps.txt", header = F)
 
 
-all_hits_library_biosample <- read.table("who_puts_vlookup_man.list", sep = "\t", header = T, fill = T)
+all_hits_library_biosample <- read.table("files/who_puts_vlookup_man.list", sep = "\t", header = T, fill = T)
 
 
 geo_data <- left_join(geo_data_annotation_for_all_biosamps, all_hits_library_biosample, by = c("V1" = "BioSample"))
@@ -115,17 +116,9 @@ all_pvs_mapping <- bind_rows(all_novels_w_geo, all_knowns_w_geo)
 
 sum(is.na(all_pvs_mapping$V1.y))
 
-library(rnaturalearth)
+# world is loaded by geo_setup.R
 
-# world_map <- ne_countries(scale = "medium", returnclass = "sf")
-# world_map_outline <- ne_coastline()
-
-# all_pvs_mapping_geom_2 <- st_as_sf(all_pvs_mapping_geom, coords = c("geometry"))
-
-world <- ne_countries(scale = "medium", returnclass = "sf")
-world <-  st_transform(world, "ESRI:54009")
-
-pwot <- all_pvs_mapping %>%
+world_plot <- all_pvs_mapping %>%
   ggplot(aes(color= NA)) +
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
   geom_sf(aes(geometry = geometry,  color = status, lwd = 0, fill = NA), lwd = 0, alpha = 0.5, stroke = 0, size =1, shape=16) +
@@ -136,61 +129,15 @@ pwot <- all_pvs_mapping %>%
         axis.ticks.y = element_blank(),
         panel.border = element_blank()) 
 
-pwot
+world_plot
 
-ggsave("2026.01.09geo_data_moll.png", pwot, width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
-
-
-library(ggExtra)
-library(spatstat)
-library(stars)
-
-# win <- owin( c(-180, 180), c(-90, 90))
-# world_map_outline_flat <- st_transform(world_map_outline, crs = 4326)
-# plot(world_map_outline_flat)
-# 
-# 
-# ga_campgrounds_density <- st_as_sf(density_campgrounds_stars) %>%
-#   st_set_crs(4326)
-# 
-# plot_density <- ggplot() +
-#   geom_sf(data = ga_campgrounds_density, aes(fill = v), color = NA) +
-#   geom_sf(data = world_map, fill = NA, color = "black", linewidth = 0.25) +
-#   scale_fill_gradient(high = 'grey90', low = 'grey20') + coord_sf(crs = "ESRI:54009")
-# 
-# plot_density
-# 
-# 
-# 
-# pwot2 <- ggMarginal(pwot, type = "density", 
-#            groupColour = TRUE,
-#            groupFill = TRUE, binwidth = 10, alpha = 0.2)
-# 
-# pwot2
-# 
-# ggsave("2025.11.28geo_data.png", pwot2, width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.09geo_data_moll.png", world_plot, width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
 
 all_pvs_mapping$LibrarySource <- gsub("SYNTHETIC", "OTHER", all_pvs_mapping$LibrarySource)
 type_table <- as.data.frame(table(filter(all_pvs_mapping, status == "novel")$LibrarySource))
 type_table = type_table[-1,]
 
-#genomic = 146, METAGENOMIC = 121, METATRANSCRIPTOMIC = 2, OTHER = 1, VIRAL RNA = 36, TRANSCRIPTOMIC = 22
-
-
-ggplot(type_table, aes(x=reorder(Var1, Freq), y=Freq, fill = Var1)) + 
-  geom_bar(stat = "identity") + theme_classic() + scale_fill_manual(values = c("#1C1C7E", "#101048", "#E3E3F9", "#D2D2F6", "#B9B9F1")) +
-  coord_flip()+ 
-  theme(text = element_text(family = "Noto Sans", size = 28))+ 
-  theme(axis.text.y = element_text(hjust=1))
-
-type_table_all <- as.data.frame(table(all_pvs_mapping$LibrarySource))
-type_table_all = type_table_all[-1,]
-ggplot(type_table_all, aes(x=reorder(Var1, Freq), y=Freq, fill = Var1)) + 
-  geom_bar(stat = "identity") + theme_classic() + scale_fill_manual(values = c("#1C1C7E", "#101048", "#E3E3F9", "#D2D2F6", "#B9B9F1")) +
-  coord_flip()+ 
-  theme(text = element_text(family = "Noto Sans", size = 28))+ 
-  theme(axis.text.y = element_text(hjust=1))
-
-sum(type_table$Freq)
-
-
+# Save key objects for downstream scripts
+dir.create("outputs/geo_intermediates", showWarnings = FALSE, recursive = TRUE)
+saveRDS(all_pvs_mapping, "outputs/geo_intermediates/all_pvs_mapping.rds")
+saveRDS(all_novels, "outputs/geo_intermediates/all_novels.rds")

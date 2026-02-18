@@ -8,7 +8,7 @@ library(ggplot2)
 #function for parsing hmmsearch outputs
 source("00_utilities/hmmsearch_utils.R")
 
-all_ncbi_pv_sto_sto <- hmmsearch_clean("updated_ncbi_all.domtbl")
+all_ncbi_pv_sto_sto <- hmmsearch_clean("files/updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting
 all_ncbi_pv_sto_sto$contig_orf <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", all_ncbi_pv_sto_sto$query_acc)
 all_ncbi_pv_sto_sto$contig <- sub("_[^_]+$", "", all_ncbi_pv_sto_sto$contig_orf)
@@ -59,7 +59,7 @@ ggplot(all_ncbi_pv_sto_sto_BI_coords, aes(xmin = orf_start, xmax = orf_end, y = 
   scale_fill_brewer(palette = "Set3") +
   theme_genes()
 
-ggsave("orfs_updated.pdf", width = 20, height = 20, limitsize = FALSE)
+ggsave("outputs/orfs_updated.pdf", width = 20, height = 20, limitsize = FALSE)
 
 ###############look for possible inversions
 ##split based on fw and rev
@@ -85,7 +85,7 @@ all_ncbi_pv_sto_sto_order_end_fw <- reshape(all_ncbi_pv_sto_sto_order_end_fw, id
   filter(., contig %in% NCBI_BI_contigs)
 
 #look for regions that are/not in the right order
-blacklist <- read.table("blacklist.txt", header = F)
+blacklist <- read.table("files/blacklist.txt", header = F)
 all_ncbi_pv_sto_sto_order_start_fw_clean <- filter(all_ncbi_pv_sto_sto_order_start_fw, !contig %in% blacklist$V1)
 all_ncbi_pv_sto_sto_order_CD_B <- filter(all_ncbi_pv_sto_sto_order_start_fw_clean, envcoord_from.L1_B_super5 > envcoord_from.L1_CD_super5)
 all_ncbi_pv_sto_sto_order_E_CD <- filter(all_ncbi_pv_sto_sto_order_start_fw_clean, envcoord_from.L1_CD_super5 > envcoord_from.L1_E_super5)
@@ -160,7 +160,7 @@ return(p)
 }
 
 p <- order_plot_hm(all_ncbi_pv_sto_sto_bare_long)
-ggsave("domains.pdf", width = 10, height = 2500, limitsize = FALSE)
+ggsave("outputs/domains.pdf", width = 10, height = 2500, limitsize = FALSE)
 
 
 #only visualize the ones with identifiable B and I domains
@@ -187,7 +187,7 @@ k <- all_ncbi_pv_sto_sto_bare_long_BI %>%
   theme_bw() +
   theme(axis.ticks.y.left = element_blank())
 
-ggsave("domains_BI.pdf", width = 10, height = 1000, limitsize = FALSE)
+ggsave("outputs/domains_BI.pdf", width = 10, height = 1000, limitsize = FALSE)
 
 ##try this with all domains?
 all_ncbi_pv_sto_sto_bare_long_all <- all_ncbi_pv_sto_sto_bare_long
@@ -212,13 +212,13 @@ l <- all_ncbi_pv_sto_sto_bare_long %>%
   theme_bw() +
   theme(axis.ticks.y.left = element_blank())
 
-ggsave("domains_BI_all_dendro.pdf", width = 10, height = 2000, limitsize = FALSE)
+ggsave("outputs/domains_BI_all_dendro.pdf", width = 10, height = 2000, limitsize = FALSE)
 
 #look at if B and I are missing using length based calculation
 #first look at things with CD hits, and a possible B based on how much room there is in the orf/contig
 
 all_ncbi_pv_sto_sto_30len_CD <- filter(all_ncbi_pv_sto_sto, qlen > 30 & envcoord_from > 15 & pfam == "L1_CD_super5" & !contig %in% all_ncbi_pv_sto_sto_split$L1_B_super5$contig & !contig %in% blacklist$V1)
-write.table( all_ncbi_pv_sto_sto_30len_CD$contig, "ncbi_B_misses.txt", quote = F, col.names = F, row.names = F)
+write.table( all_ncbi_pv_sto_sto_30len_CD$contig, "outputs/ncbi_B_misses.txt", quote = F, col.names = F, row.names = F)
 
 ggplot(all_ncbi_pv_sto_sto_30len_CD, aes(xmin = 1, xmax = qlen, y = query_acc_clean)) +
   geom_gene_arrow(aes(alpha = 0.5)) +
@@ -230,7 +230,7 @@ ggplot(all_ncbi_pv_sto_sto_30len_CD, aes(xmin = 1, xmax = qlen, y = query_acc_cl
   scale_fill_brewer(palette = "Set1") +
   theme_genes()
 
-ggsave("domains_B_fail.pdf", width = 10, height = 20, limitsize = FALSE)
+ggsave("outputs/domains_B_fail.pdf", width = 10, height = 20, limitsize = FALSE)
 
 #now look at GH domains for "space" after the hit
 all_ncbi_pv_sto_sto_30len_GH <- all_ncbi_pv_sto_sto
@@ -247,7 +247,7 @@ ggplot(all_ncbi_pv_sto_sto_30len_GH, aes(xmin = 1, xmax = qlen, y = query_acc_cl
   scale_fill_brewer(palette = "PRGn") +
   theme_genes()
 
-ggsave("domains_I_fail.pdf", width = 10, height = 30, limitsize = FALSE)
+ggsave("outputs/domains_I_fail.pdf", width = 10, height = 30, limitsize = FALSE)
 
 
 #finally... after trials and tribulations, we can extract the B and I domain
@@ -274,7 +274,7 @@ all_ncbi_pv_sto_sto_L1_envcoords_envaa <- select(all_ncbi_pv_sto_sto_L1_envcoord
 
 all_ncbi_pv_sto_sto_L1_envcoords_envaa$nuc_from <- all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_from*2 + (all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_from - 3)
 all_ncbi_pv_sto_sto_L1_envcoords_envaa$nuc_to <- all_ncbi_pv_sto_sto_L1_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(all_ncbi_pv_sto_sto_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "all_ncbi_pv_sto_sto_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(all_ncbi_pv_sto_sto_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/all_ncbi_pv_sto_sto_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 all_ncbi_pv_sto_sto_L1_envcoords$query_acc <- sub("_$","",all_ncbi_pv_sto_sto_L1_envcoords$query_acc)
 all_ncbi_pv_sto_sto_L1_envcoords <- all_ncbi_pv_sto_sto_L1_envcoords %>% extract(query_acc, into = c("query_acc", "orf_end"), "(.*)_([^_]+)$")
@@ -283,13 +283,13 @@ all_ncbi_pv_sto_sto_L1_envcoords <- all_ncbi_pv_sto_sto_L1_envcoords %>% extract
 
 #next to get the sequences manually for the ones that have failed B and I hits
 all_ncbi_pv_sto_sto_L1_envcoords_nuc <- select(all_ncbi_pv_sto_sto_L1_envcoords, query_acc, orf_start, orf_end)
-write.table(all_ncbi_pv_sto_sto_L1_envcoords_nuc, "all_ncbi_pv_sto_sto_p12_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(all_ncbi_pv_sto_sto_L1_envcoords_nuc, "outputs/all_ncbi_pv_sto_sto_p12_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 
-write.table(unique(all_ncbi_pv_sto_sto_p2$query_acc), "all_ncbi_pv_sto_sto_p2.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(unique(all_ncbi_pv_sto_sto_p2$query_acc), "outputs/all_ncbi_pv_sto_sto_p2.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 #finally get the spliced sequences manually (not in R)
-group3 <- hmmsearch_clean("group3.domtbl")
+group3 <- hmmsearch_clean("files/group3.domtbl")
 
 group3_envcoord_from <- group3 %>% group_by(query_acc) %>% slice_min(n = 1, envcoord_from)
 group3_envcoord_from <- select(group3_envcoord_from, query_acc, envcoord_from)
@@ -303,8 +303,8 @@ group3_envcoords_envaa <- select(group3_envcoords, query_acc, envcoord_from, env
 
 group3_envcoords_envaa$nuc_from <- group3_envcoords_envaa$envcoord_from*2 + (group3_envcoords_envaa$envcoord_from - 3)
 group3_envcoords_envaa$nuc_to <- group3_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(group3_envcoords_envaa, query_acc, nuc_from, nuc_to), "group3_envcoords_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
-write.table(select(group3_envcoords_envaa, query_acc, envcoord_from, envcoord_to), "group3_envcoords_aa.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(group3_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/group3_envcoords_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(group3_envcoords_envaa, query_acc, envcoord_from, envcoord_to), "outputs/group3_envcoords_aa.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 
 group3_envcoords$query_acc <- sub("_$","",group3_envcoords$query_acc)
@@ -315,7 +315,7 @@ group3_envcoords <- group3_envcoords %>% extract(query_acc, into = c("query_acc"
 #extract nucleotide and aa seq of the ncbi input
 
 ##characterize the nt diversity in L1 for the accessions to get an updated view of the known diversity of PVs
-L1_cluster_nt_accs <- read.table("ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
+L1_cluster_nt_accs <- read.table("files/ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
 L1_cluster_nt_accs$V1 <- sub(">","",L1_cluster_nt_accs$V1)
 L1_cluster_nt_accs$V1 <- sub("\\..*","",L1_cluster_nt_accs$V1)
 
@@ -325,9 +325,9 @@ ncbi_tags_manual_nt$Newick_label <- sub("-.*","", ncbi_tags_manual_nt$Newick_lab
 L1_cluster_nt_accs_annot <- left_join(L1_cluster_nt_accs, ncbi_tags_manual_nt, by = c("V1" = "Newick_label"))
 L1_cluster_nt_accs_annot <- L1_cluster_nt_accs_annot[!duplicated(L1_cluster_nt_accs_annot), ]
 L1_cluster_nt_accs_annot_NAs <- L1_cluster_nt_accs_annot[rowSums(is.na(L1_cluster_nt_accs_annot)) > 0,]
-write.table(L1_cluster_nt_accs_annot_NAs$V1, "L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(L1_cluster_nt_accs_annot_NAs$V1, "outputs/L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
-L1_cluster_nt_accs_NAs_key <- read.table("L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
+L1_cluster_nt_accs_NAs_key <- read.table("files/L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
 L1_cluster_nt_accs_NAs_key$V1 <- sub("\\..*","",L1_cluster_nt_accs_NAs_key$V1)
 
 L1_cluster_nt_accs_annot_all <- left_join(L1_cluster_nt_accs_annot, L1_cluster_nt_accs_NAs_key, by = "V1")
@@ -339,17 +339,17 @@ L1_cluster_nt_accs_annot_all_graph_table <- as.data.frame(table(L1_cluster_nt_ac
 sum(L1_cluster_nt_accs_annot_all_graph_table$Freq) - 485
 
 
-ncbi_tax_counts <- read.table("host_table_ncbi.txt", sep ="\t", header = T)
+ncbi_tax_counts <- read.table("files/host_table_ncbi.txt", sep ="\t", header = T)
 ncbi_tax_counts <- ncbi_tax_counts[1:57,]
 agg_tax_counts <-aggregate(ncbi_tax_counts$Recorded.PVs, by=list(Category=ncbi_tax_counts$X), FUN=sum)
 sum(ncbi_tax_counts$Recorded.PVs) - 485
 
-write.table(agg_tax_counts, "host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(agg_tax_counts, "outputs/host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 ##
 #essentially redo this for the new output
 #im sorry its SO ugly
-updated_ncbi_all <- hmmsearch_clean("updated_ncbi_all.domtbl")
+updated_ncbi_all <- hmmsearch_clean("files/updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting
 updated_ncbi_all$contig_orf <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", updated_ncbi_all$query_acc)
 updated_ncbi_all$contig <- sub("_[^_]+$", "", updated_ncbi_all$contig_orf)
@@ -398,7 +398,7 @@ updated_ncbi_all_L1_envcoords_envaa <- select(updated_ncbi_all_L1_envcoords, que
 
 updated_ncbi_all_L1_envcoords_envaa$nuc_from <- updated_ncbi_all_L1_envcoords_envaa$envcoord_from*2 + (updated_ncbi_all_L1_envcoords_envaa$envcoord_from - 3)
 updated_ncbi_all_L1_envcoords_envaa$nuc_to <- updated_ncbi_all_L1_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(updated_ncbi_all_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "updated_ncbi_all_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(updated_ncbi_all_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/updated_ncbi_all_L1_envcoords_p12.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 updated_ncbi_all_L1_envcoords$query_acc <- sub("_$","",updated_ncbi_all_L1_envcoords$query_acc)
 updated_ncbi_all_L1_envcoords <- updated_ncbi_all_L1_envcoords %>% extract(query_acc, into = c("query_acc", "orf_end"), "(.*)_([^_]+)$")
@@ -407,10 +407,10 @@ updated_ncbi_all_L1_envcoords <- updated_ncbi_all_L1_envcoords %>% extract(query
 
 ###########next to get the sequences manually for the ones that have failed B and I hits###################
 updated_ncbi_all_L1_envcoords_nuc <- select(updated_ncbi_all_L1_envcoords, query_acc, orf_start, orf_end)
-write.table(updated_ncbi_all_L1_envcoords_nuc, "updated_ncbi_all_p12_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(updated_ncbi_all_L1_envcoords_nuc, "outputs/updated_ncbi_all_p12_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 #finally get the spliced sequences manually (not in R)
-group3 <- hmmsearch_clean("group3.domtbl")
+group3 <- hmmsearch_clean("files/group3.domtbl")
 
 group3_envcoord_from <- group3 %>% group_by(query_acc) %>% slice_min(n = 1, envcoord_from)
 group3_envcoord_from <- select(group3_envcoord_from, query_acc, envcoord_from)
@@ -424,8 +424,8 @@ group3_envcoords_envaa <- select(group3_envcoords, query_acc, envcoord_from, env
 
 group3_envcoords_envaa$nuc_from <- group3_envcoords_envaa$envcoord_from*2 + (group3_envcoords_envaa$envcoord_from - 3)
 group3_envcoords_envaa$nuc_to <- group3_envcoords_envaa$envcoord_to*3 - 1
-write.table(select(group3_envcoords_envaa, query_acc, nuc_from, nuc_to), "group3_envcoords_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
-write.table(select(group3_envcoords_envaa, query_acc, envcoord_from, envcoord_to), "group3_envcoords_aa.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(group3_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/group3_envcoords_nuc.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(select(group3_envcoords_envaa, query_acc, envcoord_from, envcoord_to), "outputs/group3_envcoords_aa.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 
 group3_envcoords$query_acc <- sub("_$","",group3_envcoords$query_acc)
@@ -436,7 +436,7 @@ group3_envcoords <- group3_envcoords %>% extract(query_acc, into = c("query_acc"
 #extract nucleotide and aa seq of the ncbi input
 
 ##characterize the nt diversity in L1 for the accessions to get an updated view of the known diversity of PVs
-L1_cluster_nt_accs <- read.table("ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
+L1_cluster_nt_accs <- read.table("files/ncbi_JR_centroids_acc.nt", sep = "\t", header = F)
 L1_cluster_nt_accs$V1 <- sub(">","",L1_cluster_nt_accs$V1)
 L1_cluster_nt_accs$V1 <- sub("\\..*","",L1_cluster_nt_accs$V1)
 
@@ -446,9 +446,9 @@ ncbi_tags_manual_nt$Newick_label <- sub("-.*","", ncbi_tags_manual_nt$Newick_lab
 L1_cluster_nt_accs_annot <- left_join(L1_cluster_nt_accs, ncbi_tags_manual_nt, by = c("V1" = "Newick_label"))
 L1_cluster_nt_accs_annot <- L1_cluster_nt_accs_annot[!duplicated(L1_cluster_nt_accs_annot), ]
 L1_cluster_nt_accs_annot_NAs <- L1_cluster_nt_accs_annot[rowSums(is.na(L1_cluster_nt_accs_annot)) > 0,]
-write.table(L1_cluster_nt_accs_annot_NAs$V1, "L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(L1_cluster_nt_accs_annot_NAs$V1, "outputs/L1_cluster_nt_accs_annot_NAs.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
-L1_cluster_nt_accs_NAs_key <- read.table("L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
+L1_cluster_nt_accs_NAs_key <- read.table("files/L1_cluster_nt_acc_annot_NAs_key.txt", sep = "\t", header = F)
 L1_cluster_nt_accs_NAs_key$V1 <- sub("\\..*","",L1_cluster_nt_accs_NAs_key$V1)
 
 L1_cluster_nt_accs_annot_all <- left_join(L1_cluster_nt_accs_annot, L1_cluster_nt_accs_NAs_key, by = "V1")
@@ -460,9 +460,9 @@ L1_cluster_nt_accs_annot_all_graph_table <- as.data.frame(table(L1_cluster_nt_ac
 sum(L1_cluster_nt_accs_annot_all_graph_table$Freq) - 485
 
 
-ncbi_tax_counts <- read.table("host_table_ncbi.txt", sep ="\t", header = T)
+ncbi_tax_counts <- read.table("files/host_table_ncbi.txt", sep ="\t", header = T)
 ncbi_tax_counts <- ncbi_tax_counts[1:57,]
 agg_tax_counts <-aggregate(ncbi_tax_counts$Recorded.PVs, by=list(Category=ncbi_tax_counts$X), FUN=sum)
 sum(ncbi_tax_counts$Recorded.PVs) - 485
 
-write.table(agg_tax_counts, "host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")
+write.table(agg_tax_counts, "outputs/host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")

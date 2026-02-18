@@ -16,20 +16,40 @@ This repository documents a **papillomavirus (PV) discovery and characterization
 pvs_in_logan/
 ├── CLAUDE.md                          # This file - AI assistant guide
 ├── README.md                          # Project overview
-└── notebooks/                         # Main analysis directory
-    ├── 2024.backlog.p1.first_pv_db.ipynb      # Phase 1: Initial PV database
-    ├── 2024.backlog.p2.hmms.ipynb             # Phase 2: HMM profile development
-    ├── 2025.01.24.second_pv_db.ipynb          # Phase 3: PVDB2 generation
-    ├── 2025.02.07.process_logan_output.ipynb  # Phase 4: Logan output processing
-    ├── 2025.02.07.statistics_and_interpretation.ipynb  # Phase 5: Data analysis
-    ├── 2025.02.14.novelty_search.ipynb        # Phase 6: Novel sequence ID
-    ├── 2025.02.20.updated_tree.ipynb          # Phase 7: Phylogenetic trees
-    ├── data/                                  # Processed data files
-    │   ├── *_envcoords_*.txt                  # Jellyroll domain coordinates
-    │   ├── *_metadata.txt                     # SRA and NCBI metadata
-    │   ├── blacklist.txt                      # QC-failed sequences
-    │   └── *.txt                              # Various intermediate files
-    └── *.pdf                                  # Visualization outputs
+├── R_SCRIPTS_ANALYSIS.md              # Detailed R scripts analysis report
+├── R_scripts/                         # All R analysis scripts
+│   ├── TO_DO.md                       # Bug tracker and checklist
+│   ├── 00_utilities/
+│   │   └── hmmsearch_utils.R          # Shared HMMER parsing functions
+│   ├── 01_database_construction/
+│   │   ├── logan_3.R                  # Feb 7 PV analysis, novelty search, full L1 ID
+│   │   └── logan_3_novelty.R          # Updated novelty search with blastn centroids
+│   ├── 02_sequence_characterization/
+│   │   ├── investigation_of_characteristics.R  # L1 domain inversion/coverage analysis
+│   │   ├── L1_pathracer_mining.R      # Pathracer pipeline setup
+│   │   ├── ncbi_L1_character.R        # NCBI L1 characterization
+│   │   ├── pathracer_fullness_hmm.R   # Pathracer output analysis
+│   │   ├── pilot_pr_test.R            # Pathracer pilot testing
+│   │   └── vert_counts.R             # Vertebrate PV counts analysis
+│   ├── 03_phylogenetics/
+│   │   └── L1_based_trees_and_annotation.R  # Main tree viz, annotation, host classification
+│   ├── 04_geographic_analysis/
+│   │   ├── biomes.R                   # Biome/ecology analysis (WWF ecoregions)
+│   │   ├── geo_analysis.R             # Geographic resampling analysis
+│   │   ├── map_gen_for_pub.R          # Publication-ready maps and novelty search
+│   │   └── polygon_analyses.R         # Spatial mapping (sf/terra), grid analysis
+│   └── 05_case_studies/
+│       └── gene_maps_for_pub.R        # Case study gene maps (pangolin, rhino, etc.)
+├── files/                             # Input data files
+│   ├── *.txt, *.tsv, *.csv           # Metadata, annotations, accession lists
+│   ├── *.treefile, *.nhx             # Phylogenetic tree files
+│   ├── *.domtbl                      # HMMER domain table outputs
+│   ├── *.acc                          # Accession lists
+│   └── *.jpg, *.json                 # Images and AlphaFold data
+└── outputs/                           # Script-generated output files
+    ├── *.list, *.txt                  # Filtered sequence/library lists
+    ├── *.bed                          # Coordinate files
+    └── *.png                          # Generated visualizations
 ```
 
 ## Technology Stack
@@ -37,7 +57,6 @@ pvs_in_logan/
 ### Languages
 - **R** (primary): Data manipulation and visualization via tidyverse, ggtree
 - **Bash** (secondary): Bioinformatic tool orchestration and file processing
-- **Jupyter Notebooks**: Documentation and code execution environment
 
 ### External Bioinformatic Tools (Required)
 ```bash
@@ -55,6 +74,7 @@ esl-reformat    # Reformat alignment files (Easel)
 # Alignment and phylogenetics
 muscle5.1       # Multiple sequence alignment
 iqtree2         # Phylogenetic tree building
+FastTree        # Fast approximate phylogenetic trees
 
 # Sequence comparison
 blastn          # NCBI nucleotide BLAST
@@ -68,45 +88,76 @@ aws s3          # Data transfer from cloud storage
 
 ### R Packages
 ```r
-tidyverse       # Data manipulation (dplyr, tidyr, ggplot2)
-ggtree          # Phylogenetic tree visualization
-Polychrome      # Color palette generation for large trees
+# Core
+library(tidyverse)           # Data manipulation (dplyr, tidyr, ggplot2, stringr)
+library(reshape2)            # melt/dcast functions
+
+# Phylogenetics
+library(ggtree)              # Tree visualization
+library(treeio)              # Tree I/O
+library(ape)                 # Phylogenetic analysis
+library(Polychrome)          # Color palette generation
+library(ggnewscale)          # Multiple scales in ggplot
+
+# Visualization
+library(viridis)             # Color palettes
+library(ggpubr)              # Publication-ready plots
+library(pheatmap)            # Heatmaps
+library(gggenes)             # Gene arrow diagrams
+library(ggbeeswarm)          # Beeswarm plots
+library(ggupset)             # Upset plots
+library(ggrepel)             # Label repelling
+library(ggpmisc)             # Polynomial equation annotations
+library(gggibbous)           # Moon/pie geoms (geom_moon)
+library(ggmosaic)            # Mosaic plots
+library(extrafont)           # Font management
+
+# Geographic/Spatial
+library(sf)                  # Simple features
+library(terra)               # Raster data
+library(rnaturalearth)       # World maps
+library(rnaturalearthdata)   # Map data
+library(tmap)                # Thematic maps
+
+# Statistics
+library(iNEXT)               # Rarefaction
+library(matrixStats)         # Row statistics
+
+# Bioinformatics
+library(rentrez)             # NCBI Entrez API
+library(jsonlite)            # JSON parsing (AlphaFold data)
 ```
 
-## Pipeline Phases
+## Pipeline Phases (R Scripts)
 
-### Phase 1: Initial Database Creation (`2024.backlog.p1.first_pv_db.ipynb`)
-- Downloads PV sequences from NCBI Virus portal
-- Performs ORF finding using stop-stop method
-- Runs HMMER against Pfam models (e-value < 10^-9)
-- QC against host genomes (human, yeast, mouse, E. coli)
-- Uses logan_unsticker to mask contaminants
+### Phase 1: Shared Utilities (`00_utilities/`)
+- `hmmsearch_utils.R` - Defines `hmmsearch_clean()`, `hmmsearch_clean_info()`, and `clean_inputs()` for parsing HMMER and Diamond outputs
+- **Must be sourced** by scripts in `01_*`, `02_*` that use these functions
 
-### Phase 2: HMM Profile Development (`2024.backlog.p2.hmms.ipynb`)
-- Downloads PAVE L1 protein sequences
-- Generates MSAs for L1 jellyroll domains (B, I, CD, E, F, GH)
-- Creates HMM profiles for each domain
-- Characterizes sequences for domain completeness
+### Phase 2: Database Construction (`01_database_construction/`)
+- `logan_3.R` - Core pipeline: HMMER filtering, L1 B/I domain identification, novelty search, contig characterization
+- `logan_3_novelty.R` - Updated novelty search using blastn centroids
+- Sources `00_utilities/hmmsearch_utils.R`
 
-### Phase 3: Database Iteration (`2025.01.24.second_pv_db.ipynb`)
-- Processes first Logan run output
-- Filters Diamond results (e < 10^-10)
-- Combines PVDB1 with novel SRA-derived sequences
-- Clusters at 90% AA identity
-- Output: `pvdb2_90_final.fa`
+### Phase 3: Sequence Characterization (`02_sequence_characterization/`)
+- `investigation_of_characteristics.R` - L1 domain inversion analysis, domain coverage, missing B/I domain detection
+- `ncbi_L1_character.R` - Characterize NCBI L1 sequences, verify domain order
+- `vert_counts.R` - Vertebrate PV counts vs sequencing depth analysis
+- `L1_pathracer_mining.R`, `pathracer_fullness_hmm.R`, `pilot_pr_test.R` - Pathracer-related analysis
 
-### Phase 4-5: Logan Output Processing (`2025.02.07.*.ipynb`)
-- Downloads results from AWS S3 (~2.7M unique contigs)
-- Filters high-confidence hits (e < 10^-10)
-- ORF calling and HMM annotation (307K L1 hits)
-- Identifies 14,048 full-length L1 candidates
+### Phase 4: Phylogenetics (`03_phylogenetics/`)
+- `L1_based_trees_and_annotation.R` - **Main tree visualization and annotation**: gheatmap override, host classification, geographic mapping, novelty status, library source analysis, ENA/NCBI metadata lookup, circular tree layout
 
-### Phase 6-7: Novelty and Phylogenetics (`2025.02.14-20.*.ipynb`)
-- BLAST filtering (e < 10^-4)
-- Identifies < 90% identity sequences as novel
-- Clusters 240 novel sequences to 234 representatives
-- IQtree phylogenetics (1000 bootstrap replicates)
-- Final tree: 1039 sequences (805 NCBI + 234 novel)
+### Phase 5: Geographic Analysis (`04_geographic_analysis/`)
+Scripts have **run-order dependencies** (see TO_DO.md for details):
+1. `map_gen_for_pub.R` -> creates `all_pvs_mapping`, `all_novels`, `known_pvs`
+2. `polygon_analyses.R` -> creates `grid_sf`, `world`, `data_wide`, reads `my_sf_data.gpkg`
+3. `geo_analysis.R` -> requires objects from polygon_analyses.R
+4. `biomes.R` -> requires objects from polygon_analyses.R + geo_analysis.R
+5. `vert_counts.R` - standalone
+
+### Phase 6: Case Studies (`05_case_studies/`)
+- `gene_maps_for_pub.R` - Gene map visualizations for pangolin, rhinoceros, lizard, human, and salmon PV case studies. Uses AlphaFold JSON data for structural confidence.
 
 ## Key Analysis Parameters
 
@@ -121,11 +172,6 @@ Polychrome      # Color palette generation for large trees
 | Bootstrap | 1000 | IQtree replicates |
 
 ## Conventions for AI Assistants
-
-### Notebook Organization
-- **Date-based naming**: `YYYY.MM.DD.phase_description.ipynb`
-- **Section markers**: Use "## P1", "## P2", etc. for pipeline phases within notebooks
-- **Markdown cells**: Provide biological context and methodology rationale
 
 ### R Code Style
 ```r
@@ -142,43 +188,41 @@ hmmsearch_clean <- function(file_path) { ... }
 tree %<+% annotation_df
 ```
 
-### Bash Code Style
-```bash
-# Complex piping with comments explaining each step
-cat input.fa | \
-  seqkit seq -m 100 | \     # Filter minimum length
-  seqkit rmdup | \           # Remove duplicates
-  awk '{print $1}' > out.fa  # Extract headers
-```
+### File Path Conventions
+- Input data files: `files/` directory
+- Script outputs: `outputs/` directory
+- Scripts reference files with relative paths from the project root
+- **Note**: Some scripts have inconsistent path prefixes - see TO_DO.md
 
-### File Naming Conventions
-- **Intermediate files**: `descriptive_name_vX.ext` (e.g., `L1_B_super5.hmm`)
-- **Data outputs**: `[date]_[content]_[status].ext`
-- **Final outputs**: Clear descriptive names with format suffix
+### Script Execution Notes
+- Many scripts are **interactive/exploratory** - designed to be run cell-by-cell in RStudio
+- Several scripts share variables via the global R environment (not standalone)
+- Geographic analysis scripts have strict run-order dependencies
+- Most scripts assume the working directory is the project root (`pvs_in_logan/`)
 
 ### When Modifying Code
-1. **Read context**: Each notebook builds on previous ones - understand the data flow
+1. **Read context**: Scripts build on each other - understand data flow and variable dependencies
 2. **Preserve thresholds**: The e-value and identity cutoffs are biologically motivated
-3. **Document changes**: Add markdown cells explaining modifications
-4. **Test incrementally**: Notebooks are exploratory - run cells individually
-5. **Mind file paths**: Many paths reference `notebooks/data/` - maintain consistency
+3. **Check TO_DO.md**: Known bugs are tracked there - avoid introducing duplicates
+4. **Mind file paths**: Scripts reference `files/` for input, `outputs/` for generated files
+5. **Source utilities**: Scripts using `hmmsearch_clean()` must source `00_utilities/hmmsearch_utils.R`
 
 ### Common Tasks
 
 **Adding new sequences to analysis**:
-1. Add to appropriate input file in `notebooks/data/`
+1. Add to appropriate input file in `files/`
 2. Re-run clustering step with usearch
 3. Update annotation/metadata files
 4. Re-run phylogenetic analysis if needed
 
 **Modifying filtering thresholds**:
-1. Document biological rationale in notebook
+1. Document biological rationale
 2. Track how changes affect downstream counts
 3. Consider impact on novelty classification
 
 **Updating visualizations**:
 1. Use ggtree for phylogenetic trees
-2. Generate PDF outputs for publication quality
+2. Generate PDF/PNG outputs for publication quality
 3. Use Polychrome for consistent color schemes with many categories
 
 ## Data Scale Reference
@@ -191,9 +235,11 @@ cat input.fa | \
 ## Caveats and Limitations
 - **External dependencies**: Requires installation of bioinformatic tools not tracked in repo
 - **Manual curation**: Some steps require manually generated/curated files
-- **Large files**: Some data files need to be downloaded from external sources (NCBI, AWS S3)
+- **Large files**: Some data files stored with Git LFS
 - **No automated tests**: Pipeline is exploratory - validate outputs manually
-- **Path dependencies**: Some hardcoded paths may need adjustment for different environments
+- **Path dependencies**: Scripts assume project root as working directory
+- **Interactive scripts**: Most scripts share state via global environment, not standalone
+- **Known bugs**: See `R_scripts/TO_DO.md` for tracked issues
 
 ## Quick Commands Reference
 
@@ -214,7 +260,7 @@ iqtree2 -s alignment.fa -B 1000 --keep-ident
 ```
 
 ## Contact and Resources
-- Repository issues: Document problems in notebooks with clear descriptions
-- Missing files: Check `notebooks/data/` folder and README for data sourcing instructions
+- Repository issues: Document problems in `R_scripts/TO_DO.md`
+- Missing files: Check `files/` directory and README for data sourcing instructions
 - PAVE database: https://pave.niaid.nih.gov/
 - NCBI Virus: https://www.ncbi.nlm.nih.gov/labs/virus/

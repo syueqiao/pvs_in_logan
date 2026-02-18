@@ -1,0 +1,2 @@
+molecule	gene	start	end	strand
+SRR25256564_207500	E1	6496	4619	-

@@ -4,7 +4,7 @@ library(viridisLite)
 library(viridis)
 
 hmmsearch_clean <- function(input_domtbl){
-  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = FALSEALSE, fill = TRUE) %>% na.omit() %>% .[,1:22]
+  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = FALSE, fill = TRUE) %>% na.omit() %>% .[,1:22]
   # input_domtbl_scan <- input_domtbl_scan[!(is.na(input_domtbl_scan$V21) | input_domtbl_scan$V21=="" | !(input_domtbl_scan$V2 == "-")), ]
   
   colnames(input_domtbl_scan) <- c("query_acc", "misc", "qlen", "pfam", "pfam_acc", "tlen", "eval_full", "score_full", "bias_full", "#", "of", 
@@ -56,7 +56,7 @@ concat_pv2_fil_pv_FP_L1_max <- concat_pv2_fil_pv_FP_L1 %>% group_by(library) %>%
 
 ##analyse output
 hmmsearch_clean <- function(input_domtbl){
-  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = FALSEALSE, fill = TRUE) %>% na.omit() %>% .[,1:22]
+  input_domtbl_scan <- read.table(input_domtbl, sep = "",  header = FALSE, fill = TRUE) %>% na.omit() %>% .[,1:22]
   input_domtbl_scan <- input_domtbl_scan[!(is.na(input_domtbl_scan$V21) | input_domtbl_scan$V21=="" | !(input_domtbl_scan$V2 == "-")), ]
   
   colnames(input_domtbl_scan) <- c("query_acc", "misc", "qlen", "pfam", "pfam_acc", "tlen", "eval_full", "score_full", "bias_full", "#", "of", 
@@ -92,6 +92,11 @@ ggplot(mega_results_eval_tab, aes(x=sum, fill=method)) +
 
 ####remove pcr amp libraries
 library_metadata <- read.table("files/L1_library_metadata.txt", fill = TRUE, sep = "\t", quote = "")
+#do some counting
+
+library_amplicons <- dplyr::filter(library_metadata, V2 == "AMPLICON")
+library_amplicons <- dplyr::filter(library_amplicons, V9 == "PCR")
+
 
 pv2_L1_sto_sto_uniq_metadata <- left_join(pv2_L1_sto_sto_uniq, library_metadata, by = c("library" = "V1"))
 # length(unique(pv2_L1_sto_sto_uniq_metadata$library))
