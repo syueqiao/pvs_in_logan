@@ -10,7 +10,7 @@ feb_7_pv <- hmmsearch_clean("files/feb_7_pv_fil_form.aa.domtbl")
 feb_7_pv$contig <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", feb_7_pv$query_acc)
 feb_7_pv$library <- sub("_.*", "\\1", feb_7_pv$contig)
 length(unique(feb_7_pv$library))
-
+check_table <- filter(feb_7_pv, library == "SRR8788207")
 #some graphs
 #for contig length
 a1 <- mean(feb_7_pv$qlen)
@@ -80,6 +80,7 @@ write.table(feb_7_pv_L1$query_acc, "outputs/feb_7_pv_L1_orf.txt",
 
 #next, tabulate which are "full"
 feb_7_pv_L1_BI <- hmmsearch_clean("files/feb_7_pv_fil_form_L1_BI.domtbl")
+check_table <- filter(feb_7_pv_L1_BI, library == "ERR5056149")
 
 feb_7_pv_L1_BI$contig <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", feb_7_pv_L1_BI$query_acc)
 feb_7_pv_L1_BI$library <- sub("_.*", "\\1", feb_7_pv_L1_BI$contig)

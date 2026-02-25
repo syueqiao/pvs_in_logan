@@ -197,7 +197,7 @@ library(viridis)
 plot_sample_n_log10 <- ggplot(data = giant_geo_table_grid_id_geometry) +
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
   geom_sf(aes(fill = log(Freq), color = "transparent"), lwd = 0,  color = "transparent") +
-  scale_fill_gradientn(colors = c( viridis(option = 'mako', n = 10, direction = -1)), na.value = "transparent") +
+  scale_fill_gradientn(colors = RColorBrewer::brewer.pal(9, "OrRd"), na.value = "transparent") +
   coord_sf(crs = "ESRI:54009") + # Explicitly set coord_sf CRSs
   theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
@@ -205,7 +205,7 @@ plot_sample_n_log10 <- ggplot(data = giant_geo_table_grid_id_geometry) +
         axis.ticks = element_blank(),
         panel.border = element_blank())
 
-ggsave("outputs/2026.02.18.plot_sample_n_log10_new_test.png", plot_sample_n_log10, width = 20, height = 15, units = "cm", limitsize = F)
+ggsave("outputs/2026.02.24.plot_sample_n_log10_new_test.png", plot_sample_n_log10, width = 20, height = 15, units = "cm", limitsize = F)
 
 giant_geo_table_grid_id_geometry$Var1 <- as.numeric(giant_geo_table_grid_id_geometry$Var1)
 

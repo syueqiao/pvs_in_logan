@@ -129,16 +129,17 @@ df_wide_updated <- pivot_wider(
 
 df_wide_updated[is.na(df_wide_updated)] <- 0
 
-write.table(df_wide_updated, "outputs/2025.02.17.all_organism_group_assignments_updated.tsv", sep = '\t', quote = F, row.names = F, col.names = F)
+write.table(df_wide_updated, "outputs/2025.02.20.all_organism_group_assignments_updated.tsv", sep = '\t', quote = F, row.names = F, col.names = F)
 
+check_table <- as.data.frame(table(addtl_tip_plus_new_manual$broader_gen))
 
 addtl_tip_plus_new_manual$broader_gen <- factor(addtl_tip_plus_new_manual$broader_gen, levels = c("Human", "Bat", "Bovine",
-"Canine", "Ray-finned Fish",
-"Rodent", "Avian", 
-"Cetacean", "Feline","Amphibian", 
-"Cervine", "Non-human Primate","Reptile",  "Equine", 
+"Canine", "Rodent","Ray-finned Fish",
+ "Avian", 
+"Amphibian","Feline","Cetacean",  
+"Non-human Primate","Cervine", "Reptile",  "Equine", 
 "Pangolin", 
-"Porcine", "Other"))
+"Pinnipeds", "Other"))
 
 addtl_tip_plus_new_manual[is.na(addtl_tip_plus_new_manual)] <- "Other"
 
@@ -378,6 +379,9 @@ biosamp_novel_headers <- left_join(novel_headers_type, biosamp_data, by = c("lib
 
 write.table(biosamp_novel_headers$BioSample, "outputs/all_novel_biosamples.tsv", sep = "\t", col.names = F, row.names = F, quote = F)
 
+
+################################END LIB TYPE############################
+
 addtl_ano <- left_join(addtl_ano, sra_metadata, by = c("lib" = "V1"))
 addtl_ano$generalization <- iconv(addtl_ano$generalization, from = "UTF-8", to = "ASCII", sub = "")
 addtl_ano <- filter(addtl_ano, isTip == "TRUE")
@@ -409,7 +413,7 @@ color_key_broad <- unique(as.data.frame(addtl_ano_tree_broad$broader_gen))
 
 ordered_gen_broad <- c("Human", "Non-human Primate", "Rodent", 
                                          "Cetacean", "Bovine", 
-                                         "Porcine", "Cervine", "Canine", 
+                                         "Pinnipeds", "Cervine", "Canine", 
                                          "Feline", "Equine", "Pangolin", "Bat", "Avian", "Reptile", "Amphibian", "Ray-finned Fish", "Other")
 
 color_key_broad <- as.data.frame(color_key_broad[order(sapply(color_key_broad$`addtl_ano_tree_broad$broader_gen`, function(x) which(x == ordered_gen_broad))), ])
@@ -573,6 +577,11 @@ pp$data$label <- gsub("__1", "_", pp$data$label)
 
 #force dplyr select
 select <- dplyr::select
+check_table <- pp$data
+
+SRR7688519Score_626.948__1
+SRR7688519Score_626.948__1
+
 
 gheatmap(pp, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 0.4,  color = NA) +
   scale_fill_manual(breaks=addtl_ano_tree_broad_vals$broader_gen, 
@@ -580,12 +589,13 @@ gheatmap(pp, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 0.4,  colo
                     theme(legend.position = 'right')
 
 
-ggsave("outputs/2026.02.17.fixed_new_broad_colors_LARGE.pdf", width = 50, height =200, units = "cm", limitsize = F)
-ggsave("outputs/2026.02.17.fixed_new_broad_colors_LARGE.png", width = 50, height =200, units = "cm", limitsize = F)
+ggsave("outputs/2026.02.23.fixed_new_broad_colors_medium_FINAL.png", width = 50, height =75, units = "cm", limitsize = F)
+ggsave("outputs/2026.02.23.fixed_new_broad_colors_LARGE_FINAL.pdf", width = 50, height =200, units = "cm", limitsize = F)
+ggsave("outputs/2026.02.23.fixed_new_broad_colors_LARGE_final.png", width = 50, height =200, units = "cm", limitsize = F)
 
 pp_joined <- left_join(pp$data, rownames_to_column(addtl_ano_tree_broad), by = c("label" = "rowname"))
 pp_joined <- filter(pp_joined, isTip == TRUE)
-per_host_group <- as.data.frame(table(pp_joined$broader_gen, pp_joined$status.x))
+per_host_group <- as.data.frame(table(pp_joined$broader_gen, pp_joined$status))
 
 per_host_group_wide <- pivot_wider(
   per_host_group,
@@ -601,8 +611,8 @@ tree_unroot$data$label <- gsub("Edges.*", "", tree_unroot$data$label)
 tree_unroot$data$label <- gsub("ka_f.*", "", tree_unroot$data$label)
   
 
-tree_unroot$data$x10 <- iconv(tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
-tree_unroot$data[1092, 10] <- "Zhangixalus_dugritei_associated"
+# tree_unroot$data$x10 <- iconv(tree_unroot$data$x10, from = "UTF-8", to = "ASCII", sub = "")
+# tree_unroot$data[1092, 10] <- "Zhangixalus_dugritei_associated"
 
 tree_unroot$data$status <- ifelse(grepl("[E|S|D][R][R]", tree_unroot$data$label), "novel", "ncbi")
 
@@ -626,7 +636,7 @@ pp_unroot$data <- pp_unroot$data %>%
 
 pp_unroot$data$label <- gsub("__1", "_", pp_unroot$data$label)
 
-  p1 <- gheatmap(pp_unroot, addtl_ano_tree_broad_host, offset=2, width=0.2,
+  p1 <- gheatmap(pp_unroot, addtl_ano_tree_broad, offset=2, width=0.2,
            colnames_angle=-45, color = NA, font.size=0) + 
     scale_fill_manual(breaks=addtl_ano_tree_broad$broader_gen, 
                       values=addtl_ano_tree_broad_vals$color_values, 
@@ -637,15 +647,20 @@ pp_unroot$data$label <- gsub("__1", "_", pp_unroot$data$label)
   
   
   p2 <- p1 + new_scale_fill()
-  
-  p3 <- gheatmap(p2, addtl_ano_tree_broad_stats, width=0.1, font.size=0, 
+
+addtl_ano_tree_broad_stats <- addtl_ano_tree_broad
+addtl_ano_tree_broad_stats$status <- ifelse(grepl("[ESD]RR", rownames(addtl_ano_tree_broad_stats)), "novel", "ncbi")
+addtl_ano_tree_broad_stats$color_values <- ifelse(grepl("ncbi", addtl_ano_tree_broad_stats$status), "grey", "#3333E7")
+addtl_ano_tree_broad_stats <- select(addtl_ano_tree_broad_stats, status, color_values)
+
+  p3 <- gheatmap(p2, addtl_ano_tree_broad_stats %>% select(status), width=0.1, font.size=0,
            colnames_angle=-45, color = NA) +
-    scale_fill_manual(breaks=addtl_ano_tree_broad_stats$status, 
-                      values=addtl_ano_tree_broad_stats_color_vals$stats_color_vals, name="genotype") + theme(legend.position = 'none' )
+    scale_fill_manual(values=c("novel" = "#3333E7", "ncbi" = "grey"), name="genotype") + theme(legend.position = 'none' )
   
   p3
 
-ggsave("outputs/2026.02.17.circular_tree.png", width = 20, height =20, units = "cm", limitsize = F)
+ggsave("outputs/2026.02.20.circular_tree.png", width = 20, height =20, units = "cm", limitsize = F)
+
 
 
 

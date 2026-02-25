@@ -286,7 +286,7 @@ getNodeNum <- function(tree) {
 
 ##################################################PANGO################################
 #case study visualizations
-pango_contig <- read.table("files/SRR25256522_663139_pangolin_genome.txt", sep ="\t", header = T)
+pango_contig <- read.table("files/SRR25256564_207500_pangolin_genome.txt", sep ="\t", header = T)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -295,29 +295,15 @@ color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7C
 
 ggplot(pango_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
-  geom_gene_arrow(aes(xmin = 3617, xmax = 2675, y = "SRR25256522_663139"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
+  geom_gene_arrow(aes(xmin = 265+(83*3), xmax = 265+(3*392), y = "SRR25256564_207500"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  geom_text(aes(x = end - ((end-start)/2), y = 2, label = gene, fontface = 'bold', family = "Noto Sans"))  +  scale_fill_manual(values = color_match_genes) +
+  geom_text(aes(x = end - ((end-start)/2), y = 1.2, label = gene, fontface = 'bold', family = "Noto Sans"))  +  
   scale_fill_manual(values = color_match_genes) +
   ylab("Contig") +
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10)) + scale_x_reverse()
 
 ggsave("outputs/pango_map.png", width = 20, height = 10, units = "cm", limitsize = F)
-
-ggplot(pango_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
-  geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
-  geom_gene_arrow(aes(xmin = 3617, xmax = 2675, y = "SRR25256522_663139"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
-  # geom_gene_arrow(aes(xmin = 3617, xmax = 2675, y = "SRR25256522_663139"), color="white", fill = "#B2F0B7", arrowhead_height = unit(0, "mm"), arrowhead_width = unit(0, "mm"), arrow_body_height = unit(5, "mm"),  alpha=0.4) +
-  facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  geom_text(aes(x = end - ((end-start)/2), y = 1.2, label = gene, fontface = 'bold', family = "Noto Sans"))  +  scale_fill_manual(values = color_match_genes) +
-  ylab("Contig") +
-  guides(fill=guide_legend(title="Gene")) +
-  theme_genes() + theme(text = element_text(family="Noto Sans", size = 10)) + scale_x_reverse()
-
-ggsave("outputs/pango_map_2.png", width = 20, height = 10, units = "cm", limitsize = F)
-
-
 
 
 world_map <- map_data("world")
@@ -386,6 +372,51 @@ biosamp_data_anno %>%
   xlab("") +
   ylab("") + theme_bw()
 
+  
+pango_subset <- tree_subset(final_tree, "SRR25256564_207500_ka_f_17.658_L_207500_L_207500__246-1421_1",
+ levels_back = 3)
+pango_subset <- ggtree(pango_subset)
+pango_subset$data$label <- gsub("Edges.*", "", pango_subset$data$label)
+pango_subset$data$label <- gsub("ka_f.*", "", pango_subset$data$label)
+
+pango_subset$data$status <- ifelse(grepl("[E|S|D][R][R]", pango_subset$data$label), "novel", "ncbi")
+# rhino_tree$data <- left_join(rhino_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
+# rhino_tree$data$x10 <- iconv(rhino_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
+
+pango1 <- pango_subset + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+  scale_color_manual(values = c("grey","#4646d4")) +
+  geom_tiplab(aes(subset = (node != "8")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "8")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
+  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"), plot.margin = margin(5, 80, 5, 5, unit = "mm")) + coord_cartesian(clip = "off")
+
+pango1
+
+ggsave("outputs/pango1_subtree.jpg", pango1, width = 30, height =10, units = "cm", limitsize = F)
+
+pae_data <- fromJSON("files/fold_pango_srr25256564_207500_full_data_0.json")
+pae_matrix <- pae_data$pae
+
+
+pae_df <- as.data.frame(pae_matrix)
+pae_df$Residue_i <- seq_len(nrow(pae_df))
+pae_df <- pivot_longer(pae_df, cols = -Residue_i, names_to = "Residue_j", values_to = "PAE_Error")
+pae_df$Residue_j <- as.numeric(gsub("V", "", pae_df$Residue_j))
+colnames(pae_df) <- c("Residue_i", "Residue_j", "PAE_Error")
+
+pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)) +
+  geom_tile() +m
+  scale_fill_gradient(low = "darkgreen", high = "white", limit = c(0, 31.7)) + # Emulate AlphaFold's color scheme
+  labs(title = "Predicted Aligned Error (PAE) Plot",
+       x = "Residue",
+       y = "Residue",
+       fill = "PAE Error (Å)") +
+  theme_classic() +
+  theme(text = element_text(family="Noto Sans", size = 10)) +
+  coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
+
+ggsave("outputs/pango_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 ##################################################RHINO################################
 #case study visualizations

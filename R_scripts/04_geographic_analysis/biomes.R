@@ -43,8 +43,8 @@ fw_polygons_2 <- st_as_sf(ne_download(scale = 50, type = 'lakes', category = 'ph
 water <- bind_rows(dplyr::select(ocean_polygons, geometry, featurecla_ocean), dplyr::select(fw_polygons, geometry, featurecla_fw), dplyr::select(fw_polygons_2, geometry, featurecla_fw_2))
 
 # my_shapefile <- read_sf("Global_200_Terrestrial.shp")
-#2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
-my_shapefile_2 <- read_sf("files/Ecoregions2017.shp")
+#the 2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
+my_shapefile_2 <- read_sf("C:/Users/qqjes/Documents/rnalab_2024/pv_project/Ecoregions2017.shp")
 # my_shapefile_fw <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 # my_shapefile_fw_2 <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 
@@ -135,10 +135,10 @@ long <- melt(setDT(summed_biomes), id.vars = c("biome_name")) %>% filter(!variab
 long$variable <- relevel(long$variable, 'novel')
 
 
-aa <- ggplot(data=long, aes(x=fct_reorder(biome_name, as.numeric(value)), y=as.numeric(value), fill=variable)) +
+test_graph <- ggplot(data=long, aes(x=fct_reorder(biome_name, as.numeric(value)), y=as.numeric(value), fill=variable)) +
   geom_bar(stat="identity") + coord_flip()
 
-aa
+
 
 
 # marine_list <- my_shapefile_aqua$G200_REGIO
@@ -339,19 +339,20 @@ summed_biomes_sampling_color <- left_join(summed_biomes_sampling, biomes_color_k
 
 summed_biomes_colored_long_plot_sampling <- ggplot(data=summed_biomes_sampling_color, aes(x=fct_reorder(biome_name, as.numeric(freq_count)), y=as.numeric(freq_count), fill =biomes_color)) +
   geom_bar(stat="identity") + 
-  geom_text(aes(label = freq_count), hjust = -0.1, size = 3, fontface = 'bold') +
+  geom_text(aes(label = scales::comma(freq_count)), hjust = -0.1, size = 3, fontface = 'bold') +
   scale_fill_identity(guide='legend', labels=summed_biomes_sampling_color$biome_name, breaks=summed_biomes_sampling_color$biomes_color) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.5))) +
   coord_flip(clip = "off") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
         axis.ticks.y = element_blank(),
         panel.border = element_blank(), legend.background = element_rect(fill = "transparent"),             # Transparent legend bg
         legend.box.background = element_rect(fill = "transparent"),         # Transparent legend panel bg
         legend.key = element_rect(fill = "transparent", colour = NA), panel.background = element_rect(fill = "transparent", colour = NA), # Transparent panel bg (the area where data is plotted)
-        plot.background = element_rect(fill = "transparent", colour = NA) ) 
+        plot.background = element_rect(fill = "transparent", colour = NA), legend.position = 'none' ) 
 
 summed_biomes_colored_long_plot_sampling
 
-ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 30, height = 20, units = "cm", limitsize = F, bg='transparent')
+ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 20, height = 10, units = "cm", limitsize = F, bg='transparent')
 
 # summed_biomes_colored_long_plot_zoom_sampling <- summed_biomes_colored_long_plot_sampling + 
 #   coord_flip(ylim = c(0, 5000)) +
@@ -461,8 +462,8 @@ biome_count_order <- levels(fct_reorder(summed_biomes_sampling_color$biome_name,
 
 summed_biomes_sampling_color_pv_ordered <- filter(summed_biomes_sampling_color_pv, !is.na(proportions.y))
 
-resevoir <- c("Reservoir", NA, "white", NA, NA, NA,0, NA)
-alkaline <- c("Alkaline Lake", NA, "white", NA, NA, NA, 0, NA)
+resevoir <- c("Reservoir", "bwip", "white", NA, NA, NA,0, NA)
+alkaline <- c("Alkaline Lake", "bwip", "white", NA, NA, NA, 0, NA)
 summed_biomes_sampling_color_pv_ordered <- rbind(summed_biomes_sampling_color_pv_ordered[,-2], alkaline, resevoir)
 
 summed_biomes_sampling_color_pv_ordered <- summed_biomes_sampling_color_pv_ordered %>%
@@ -471,7 +472,7 @@ summed_biomes_sampling_color_pv_ordered <- summed_biomes_sampling_color_pv_order
 
 summed_biomes_colored_long_plot_sampling_pv_ordered <- ggplot(data=filter(summed_biomes_sampling_color_pv_ordered, !is.na(proportions.x)), aes(x=biome_name, y=as.numeric(sumz), fill =biomes_color.x)) +
   geom_bar(stat="identity") + 
-  geom_text(aes(label = as.numeric(sumz)), hjust = -0.1, size = 3, fontface = 'bold') +
+  geom_text(aes(label = scales::comma(as.numeric(sumz))), hjust = -0.1, size = 3, fontface = 'bold') +
   scale_fill_identity(guide='legend', labels=summed_biomes_sampling_color$biome_name, breaks=summed_biomes_sampling_color$biomes_color) +
   coord_flip(clip = "off") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
@@ -481,7 +482,7 @@ summed_biomes_colored_long_plot_sampling_pv_ordered <- ggplot(data=filter(summed
 summed_biomes_colored_long_plot_sampling_pv_ordered
 sum(as.numeric(summed_biomes_sampling_color_pv_ordered$value), na.rm = T)
 
-ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling_pv_ordered.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 30, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling_pv_ordered.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 30, height = 10, units = "cm", limitsize = F,bg='transparent')
 
 
 summed_biomes_colored_long_plot_sampling_pv_ordered_grey <- ggplot(data=filter(summed_biomes_sampling_color_pv_ordered, !is.na(proportions.x)), aes(x=biome_name, y=as.numeric(sumz), fill =biomes_color.x)) +
@@ -551,7 +552,7 @@ grid_sf <- grid_sf %>%
 
 summed_biomes_colored_world <- left_join(grid_sf, biomes_color_key, by = c("biome_name" = "biomes_list"))
 
-wurld_biomes <- ggplot(data =summed_biomes_colored_world, aes(geometry = geometryetry, fill=biomes_color)) + 
+wurld_biomes <- ggplot(data =summed_biomes_colored_world, aes(geometry = geometry, fill=biomes_color)) + 
   geom_sf(color = "transparent") + 
   scale_fill_identity(guide='legend', labels=summed_biomes_colored_world$biome_name, breaks=summed_biomes_colored_world$biomes_color) +
   theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
@@ -560,13 +561,14 @@ wurld_biomes <- ggplot(data =summed_biomes_colored_world, aes(geometry = geometr
 
 
 library(ggrepel)
-
+library(ggExtra)
+  library(ggpmisc)
 
 lin <- ggplot(data = summed_biomes_sampling_area, aes(x = as.numeric(area_km2), y = as.numeric(freq_count))) + 
     scale_x_log10() +
     scale_y_log10() +
     geom_smooth(method = 'lm', color = 'black', fill = 'grey85') +
-    geom_point(aes(color = biomes_color)) + geom_text_repel(aes(label = biome_name, color = biomes_color)) + 
+    geom_point(aes(color = biomes_color)) + geom_text_repel(aes(label = biome_name, color = biomes_color), size = 3) + 
   scale_color_identity(
     name = "Biomes",               # Legend title
     breaks = summed_biomes_sampling_area$biome_name, # Which values to include in the legend
@@ -580,5 +582,213 @@ lin <- ggplot(data = summed_biomes_sampling_area, aes(x = as.numeric(area_km2), 
 lin 
 
 ggsave("outputs/2026.01.12.change_da_world.png", wurld_biomes, width = 40, height = 30, units = "cm", limitsize = F,bg='transparent')
-ggsave("outputs/2026.01.13.lin.png", lin, width = 20, height = 20, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.01.13.lin_medium.png", lin, width = 15, height = 12, units = "cm", limitsize = F,bg='transparent')
+
+####overlay###
+
+###overlay: sampling biomes (faded) + PV locations (vivid)####
+
+psh_sampling_pv_overlay <- ggplot() +
+  # World basemap
+  geom_sf(data = world, fill = 'grey95', color = 'grey90') +
+  # Underlay: all sampled grid cells colored by biome, low alpha (grey overtone)
+  geom_sf(data = biomes_joined_sampling_nz_color,
+          aes(geometry = geometry, fill = biomes_color),
+          color = "transparent", alpha = 0.1) +
+  geom_sf(data = biomes_joined_sampling_nz_color,
+          aes(geometry = geometry), fill = "grey40",
+          color = "transparent", alpha = 0.2) +
+  # Overlay: grid cells where PVs were detected, full biome color
+  geom_sf(data = st_buffer(biomes_joined, 100000),
+          aes(geometry = geometry, fill = biomes_color),
+          color = "white", alpha = 0.9, linewidth = 0.25) +
+  scale_fill_identity(
+    guide = 'legend',
+    labels = biomes_color_key$biomes_list,
+    breaks = biomes_color_key$biomes_color
+  ) +
+  coord_sf(crs = "ESRI:54009") +
+  theme_bw() +
+  theme(text = element_text(family = "Noto Sans"),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank(),
+        legend.position = 'right')
+
+psh_sampling_pv_overlay
+
+ggsave("outputs/2026.02.24.psh_sampling_pv_overlay.png", psh_sampling_pv_overlay,
+       width = 40, height = 30, units = "cm", limitsize = FALSE, bg = 'transparent')
+
+###############################################################################################
+# Same analysis but with "INSDC center name" geolocations filtered out
+###############################################################################################
+
+# Load all_pvs_mapping_clean to get geo source info (V2 column)
+if (!exists("all_pvs_mapping_clean")) {
+  all_pvs_mapping_clean <- readRDS("outputs/geo_intermediates/all_pvs_mapping_clean.rds")
+}
+
+# Remove individual PVs whose geo source is "INSDC center name", then rebuild counts
+# (Previously only removed grid cells where ALL PVs were INSDC — this removes each INSDC-sourced PV)
+all_pvs_noinsdc <- all_pvs_mapping_clean %>%
+  filter(V2 != "INSDC center name")
+
+cat("PVs removed (INSDC center name source):", nrow(all_pvs_mapping_clean) - nrow(all_pvs_noinsdc), "\n")
+
+# Rebuild data_wide without INSDC PVs
+noinsdc_props <- st_drop_geometry(
+  dplyr::select(st_as_sf(all_pvs_noinsdc), status, cluster_number_updated, grid_group)
+)
+noinsdc_table <- as.data.frame(with(noinsdc_props, table(grid_group, status)))
+
+data_wide_noinsdc <- noinsdc_table %>%
+  pivot_wider(id_cols = grid_group, names_from = status, values_from = Freq, values_fill = 0)
+data_wide_noinsdc$novel_species_proportion <- data_wide_noinsdc$novel / (data_wide_noinsdc$known + data_wide_noinsdc$novel)
+data_wide_noinsdc$grid_group <- as.numeric(paste(data_wide_noinsdc$grid_group))
+
+# Rejoin grid geometry
+grid_geom_lookup <- st_sf(grid_group = grid_sf$id, geometry = st_geometry(grid_sf))
+data_wide_noinsdc <- left_join(data_wide_noinsdc, grid_geom_lookup, by = "grid_group")
+
+# Drop grid cells with 0 PVs after filtering
+data_wide_noinsdc <- data_wide_noinsdc %>% filter((known + novel) > 0)
+
+data_wide_noinsdc_joining <- st_as_sf(data_wide_noinsdc) %>% st_transform("ESRI:54009")
+
+data_wide_noinsdc_joining_centroids <- st_centroid(data_wide_noinsdc_joining)
+data_wide_noinsdc_joining$biome_id <- st_intersects(data_wide_noinsdc_joining_centroids, all_cats) %>%
+  sapply(function(x) if(length(x) > 0) x[1] else NA)
+data_wide_noinsdc_joining$biome_name <- all_cats$area_biome[data_wide_noinsdc_joining$biome_id]
+data_wide_noinsdc_joining$biome_name[is.na(data_wide_noinsdc_joining$biome_name)] <- "Terrestrial Other"
+
+biomes_joined_noinsdc <- data_wide_noinsdc_joining
+
+# Summarise by biome
+summed_biomes_noinsdc <- dplyr::select(biomes_joined_noinsdc, biome_name, known, novel) %>%
+  group_by(biome_name) %>% summarise(across(1:2, sum))
+summed_biomes_noinsdc$proportions <- summed_biomes_noinsdc$novel / summed_biomes_noinsdc$known
+
+# Bar plot
+summed_biomes_noinsdc_colored <- left_join(summed_biomes_noinsdc, biomes_color_key, by = c("biome_name" = "biomes_list"))
+summed_biomes_noinsdc_colored$proportions <- summed_biomes_noinsdc_colored$novel / summed_biomes_noinsdc_colored$known
+
+summed_biomes_noinsdc_colored_long <- summed_biomes_noinsdc_colored %>%
+  pivot_longer(cols = c(known, novel), names_to = "variable", values_to = "value")
+summed_biomes_noinsdc_colored_long <- left_join(summed_biomes_noinsdc_colored_long, dplyr::select(summed_biomes_noinsdc_colored, biome_name), by = "biome_name")
+summed_biomes_noinsdc_colored_long_sum <- summed_biomes_noinsdc_colored_long %>%
+  group_by(biome_name, proportions) %>%
+  summarize(sumz = sum(value), .groups = 'drop')
+summed_biomes_noinsdc_colored_long <- unique(left_join(summed_biomes_noinsdc_colored_long, summed_biomes_noinsdc_colored_long_sum, by = "biome_name"))
+summed_biomes_noinsdc_colored_long$proportions.x[seq_len(nrow(summed_biomes_noinsdc_colored_long)) %% 2 == 0] <- NA
+
+summed_biomes_noinsdc_long_plot <- ggplot(data = summed_biomes_noinsdc_colored_long,
+       aes(x = fct_reorder(biome_name, as.numeric(value)), y = as.numeric(value), fill = biomes_color)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(y = sumz, x = fct_reorder(biome_name, as.numeric(sumz)), label = signif(proportions.x, 2)), size = 2, hjust = -0.3, fontface = 'bold') +
+  geom_bar(data = filter(summed_biomes_noinsdc_colored_long, variable == 'known'), stat = "identity", fill = "grey90", alpha = 0.8) +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_noinsdc_colored_long$biome_name, breaks = summed_biomes_noinsdc_colored_long$biomes_color) +
+  theme_bw() + coord_flip() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+ggsave("outputs/2026.02.18.summed_biomes_noinsdc_long_plot.png", summed_biomes_noinsdc_long_plot, width = 40, height = 20, units = "cm", limitsize = F, bg = 'transparent')
+
+# Proportion bar plot (no INSDC)
+summed_biomes_noinsdc_colored_props <- ggplot(data = summed_biomes_noinsdc_colored,
+       aes(x = fct_reorder(biome_name, as.numeric(proportions)), y = as.numeric(proportions), fill = biomes_color)) +
+  geom_text(aes(label = signif(proportions, 2)), hjust = -0.1, size = 2, fontface = 'bold') +
+  geom_bar(stat = "identity") +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_noinsdc_colored$biome_name, breaks = summed_biomes_noinsdc_colored$biomes_color) +
+  coord_flip() + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+ggsave("outputs/2026.02.18.summed_biomes_noinsdc_props.png", summed_biomes_noinsdc_colored_props, width = 30, height = 20, units = "cm", limitsize = F, bg = 'transparent')
+
+# Map plot (no INSDC)
+biomes_joined_noinsdc$known_novel <- biomes_joined_noinsdc$known + biomes_joined_noinsdc$novel
+biomes_joined_noinsdc <- left_join(biomes_joined_noinsdc, biomes_color_key, by = c("biome_name" = "biomes_list"))
+
+psh__pv_noinsdc <- ggplot(data = st_buffer(st_as_sf(biomes_joined_noinsdc), 50000), aes(color = NA, fill = biomes_color)) +
+  geom_sf(data = world, fill = 'grey95', color = 'grey90') +
+  geom_sf(color = "transparent", aes(geometry = geometry, alpha = known_novel)) +
+  scale_fill_identity(guide = 'legend', labels = biomes_joined_noinsdc$biome_name, breaks = biomes_joined_noinsdc$biomes_color) +
+  coord_sf(crs = "ESRI:54009") + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(),
+        panel.border = element_blank(), legend.position = 'right')
+
+psh__pv_noinsdc
+
+ggsave("outputs/2026.02.18.psh__pv_noinsdc.png", psh__pv_noinsdc, width = 40, height = 30, units = "cm", limitsize = F, bg = 'transparent')
+
+# PV sampling bar plot — ordered by total PVs (no INSDC)
+summed_biomes_noinsdc_sampling_color_pv <- left_join(summed_biomes_noinsdc_colored_long, biomes_color_key, by = c("biome_name" = "biomes_list"))
+
+summed_biomes_noinsdc_long_plot_sampling_pv <- ggplot(
+  data = filter(summed_biomes_noinsdc_sampling_color_pv, !is.na(proportions.x)),
+  aes(x = fct_reorder(biome_name, as.numeric(sumz)), y = as.numeric(sumz), fill = biomes_color.x)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = sumz), hjust = -0.1, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_noinsdc_sampling_color_pv$biome_name, breaks = summed_biomes_noinsdc_sampling_color_pv$biomes_color.x) +
+  coord_flip() + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+cat("Total PVs (no INSDC):", sum(summed_biomes_noinsdc_sampling_color_pv$value, na.rm = TRUE), "\n")
+
+ggsave("outputs/2026.02.18.summed_biomes_noinsdc_long_plot_sampling_pv.png", summed_biomes_noinsdc_long_plot_sampling_pv, width = 40, height = 20, units = "cm", limitsize = F, bg = 'transparent')
+
+# Ordered PV bar plot by sampling count order (no INSDC)
+# Use the same biome_count_order from the unfiltered sampling data
+summed_biomes_noinsdc_sampling_color_pv_ordered <- as.data.frame(st_drop_geometry(filter(summed_biomes_noinsdc_sampling_color_pv, !is.na(proportions.y))))
+summed_biomes_noinsdc_sampling_color_pv_ordered <- summed_biomes_noinsdc_sampling_color_pv_ordered[, -2]
+summed_biomes_noinsdc_sampling_color_pv_ordered <- dplyr::select(summed_biomes_noinsdc_sampling_color_pv_ordered, 
+                                                            biome_name, variable, biomes_color.x, sumz)
+
+resevoir_ni <- c("Reservoir", "bwip", "white", 0)
+alkaline_ni <- c("Alkaline Lake", "bwip", "white", 0)
+summed_biomes_noinsdc_sampling_color_pv_ordered <- rbind(summed_biomes_noinsdc_sampling_color_pv_ordered, alkaline_ni, resevoir_ni)
+                      
+          summed_biomes_noinsdc_sampling_color_pv_ordered <- summed_biomes_noinsdc_sampling_color_pv_ordered %>%
+            mutate(biome_name = factor(biome_name, levels = biome_count_order))
+
+summed_biomes_noinsdc_pv_ordered_dedup <- unique(summed_biomes_noinsdc_sampling_color_pv_ordered[, c("biome_name", "biomes_color.x", "sumz")])
+summed_biomes_noinsdc_long_plot_sampling_pv_ordered <- ggplot(
+  data = summed_biomes_noinsdc_pv_ordered_dedup,
+  aes(x = biome_name, y = as.numeric(sumz), fill = biomes_color.x)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = as.numeric(sumz)), hjust = 0, nudge_y = 50, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_sampling_color$biome_name, breaks = summed_biomes_sampling_color$biomes_color) +
+  coord_flip(clip = "off") + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+ggsave("outputs/2026.02.18.summed_biomes_noinsdc_long_plot_sampling_pv_ordered.png", summed_biomes_noinsdc_long_plot_sampling_pv_ordered, width = 30, height = 20, units = "cm", limitsize = F, bg = 'transparent')
+
+# Grey overlay version — ordered, with known greyed out (no INSDC)
+summed_biomes_noinsdc_long_plot_sampling_pv_ordered_grey <- ggplot(
+  data = filter(summed_biomes_noinsdc_sampling_color_pv_ordered, !is.na(proportions.x)),
+  aes(x = biome_name, y = as.numeric(sumz), fill = biomes_color.x)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = as.numeric(signif(as.numeric(proportions.y), 2))), hjust = -0.1, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_sampling_color$biome_name, breaks = summed_biomes_sampling_color$biomes_color) +
+  coord_flip(clip = "off") + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+wuhhh_noinsdc <- summed_biomes_noinsdc_long_plot_sampling_pv_ordered_grey +
+  geom_bar(data = filter(summed_biomes_noinsdc_colored_long, variable == 'known'), stat = "identity", fill = "grey90", alpha = 0.8, aes(y = value))
+
+ggsave("outputs/2026.02.18.summed_biomes_noinsdc_long_plot_sampling_pv_ordered_grey.png", wuhhh_noinsdc, width = 30, height = 20, units = "cm", limitsize = F, bg = 'transparent')
+
+# Normalized by sampling — species per 10k samples (no INSDC)
+long_noinsdc <- melt(setDT(summed_biomes_noinsdc), id.vars = c("biome_name")) %>%
+  filter(!variable == "geometry") %>% filter(!variable == "proportions")
+long_noinsdc$variable <- relevel(long_noinsdc$variable, 'novel')
+long_noinsdc_normalized <- left_join(long_noinsdc, summed_biomes_sampling, by = "biome_name")
+long_noinsdc_normalized$species_per_10k <- (as.numeric(long_noinsdc_normalized$value) / (as.numeric(long_noinsdc_normalized$freq_count) / 10000))
+
+long_noinsdc_normalized_plot <- ggplot(data = long_noinsdc_normalized,
+  aes(x = fct_reorder(biome_name, as.numeric(species_per_10k)), y = as.numeric(species_per_10k), fill = variable)) +
+  geom_bar(stat = "identity") + coord_flip() + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+ggsave("outputs/2026.02.18.long_noinsdc_normalized_plot.png", long_noinsdc_normalized_plot, width = 30, height = 20, units = "cm", limitsize = F, bg = 'transparent')
 

@@ -121,8 +121,12 @@ sum(is.na(all_pvs_mapping$V1.y))
 world_plot <- all_pvs_mapping %>%
   ggplot(aes(color= NA)) +
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
-  geom_sf(aes(geometry = geometry,  color = status, lwd = 0, fill = NA), lwd = 0, alpha = 0.5, stroke = 0, size =1, shape=16) +
-  scale_color_manual(values = c("grey40", "#3333E7")) +
+  geom_sf(data = filter(all_pvs_mapping, status == "known"),
+        aes(geometry = geometry), fill = "#222222", color = "#222222",
+        size = 1.2, shape = 16, stroke = 0, alpha = 0.3) +   # hollow
+geom_sf(data = filter(all_pvs_mapping, status == "novel"),
+        aes(geometry = geometry), fill = "#3333E7", color = 'white', 
+        size = 1.5, shape = 21, stroke = 0.5, alpha = 0.8) +    # filled
   coord_sf(crs = "ESRI:54009") +
   theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
@@ -131,7 +135,39 @@ world_plot <- all_pvs_mapping %>%
 
 world_plot
 
-ggsave("outputs/2026.01.09geo_data_moll.png", world_plot, width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.24geo_data_moll.png", world_plot, width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
+
+library(patchwork)
+library(cowplot)
+
+proj_df <- all_pvs_mapping %>%
+  filter(!is.na(geometry)) %>%
+  mutate(
+    x_proj = st_coordinates(geometry)[, 1],
+    y_proj = st_coordinates(geometry)[, 2]
+  ) %>%
+  select(-geometry)
+
+# Top strip: longitude density
+lon_dens <- axis_canvas(world_plot, axis = "x") +
+  geom_density(data = proj_df, aes(x = x_proj, fill = status, color = status),
+               alpha = 0.4, linewidth = 0.3) +
+  scale_fill_manual(values = c("#222222", "#3333E7")) +
+  scale_color_manual(values = c("#222222", "#3333E7"))
+
+# Right strip: latitude density
+lat_dens <- axis_canvas(world_plot, axis = "y") +
+  geom_density(data = proj_df, aes(y = y_proj, fill = status, color = status),
+               alpha = 0.4, linewidth = 0.3) +
+  scale_fill_manual(values = c("#222222", "#3333E7")) +
+  scale_color_manual(values = c("#222222", "#3333E7"))
+
+# Assemble — unit controls the strip thickness relative to main plot
+p1 <- insert_xaxis_grob(world_plot, lon_dens, grid::unit(0.12, "null"), position = "bottom")
+p2 <- insert_yaxis_grob(p1,         lat_dens, grid::unit(0.12, "null"), position = "right")
+ggdraw(p2)
+
+ggsave("outputs/2026.02.24geo_data_moll_density.png", width = 25, height = 8, units = "cm", limitsize = F,bg='transparent')
 
 all_pvs_mapping$LibrarySource <- gsub("SYNTHETIC", "OTHER", all_pvs_mapping$LibrarySource)
 type_table <- as.data.frame(table(filter(all_pvs_mapping, status == "novel")$LibrarySource))
