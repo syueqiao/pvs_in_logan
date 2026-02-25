@@ -8,7 +8,12 @@
       "Bash(python3:*)",
       "Bash(split:*)",
       "Bash(ls:*)",
-      "Bash(Rscript:*)"
+      "Bash(Rscript:*)",
+      "Bash(awk:*)",
+      "Bash(# For the overlapping ambiguous accessions, look at ScientificName \\(col29\\), SampleName \\(col30\\), Body_Site \\(col41\\) # First let''s see what ScientificName says for metagenome entries comm -12 /tmp/ambig_accessions.txt /tmp/hits_accessions.txt grep -f /tmp/overlap.txt \"\"c:/Users/qqjes/Documents/GitHub/pvs_in_logan/files/all_hits_info.list\"\")",
+      "Read(//c/Users/qqjes/Documents/GitHub/pvs_in_logan/**)",
+      "Bash(curl:*)",
+      "WebFetch(domain:eutils.ncbi.nlm.nih.gov)"
     ]
   }
 }

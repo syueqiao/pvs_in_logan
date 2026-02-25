@@ -28,7 +28,7 @@ giant_geo_table_grid_id_geometry$Var1 <- as.numeric(paste0(giant_geo_table_grid_
 
 aa <- st_sf(Var1 = seq_len(nrow(grid_sf)), geometry = st_geometry(grid_sf))
 
-giant_geo_table_grid_id_geometry <- left_join(aa, giant_geo_table_grid_id_geometry, by = c("Var1"))
+giant_geo_table_grid_id_geometry <- left_join(aa, st_drop_geometry(giant_geo_table_grid_id_geometry), by = "Var1")
 
 giant_geo_table_grid_id_geometry[is.na(giant_geo_table_grid_id_geometry)] <- 0
 
@@ -36,7 +36,7 @@ giant_geo_table_grid_id_geometry[is.na(giant_geo_table_grid_id_geometry)] <- 0
 #set arbitrary seed
 set.seed(102938501)
 
-sf_object_joined_sampling_rarefy_5k <- as.data.frame(giant_geo_table_grid_id_geometry$Freq.x)
+sf_object_joined_sampling_rarefy_5k <- as.data.frame(giant_geo_table_grid_id_geometry$Freq)
 sf_object_joined_sampling_rarefy_5k[is.na(sf_object_joined_sampling_rarefy_5k)] <- 0
 colnames(sf_object_joined_sampling_rarefy_5k) <- c("V1")
 sf_object_joined_sampling_rarefy_5k$V1 <- as.numeric(sf_object_joined_sampling_rarefy_5k$V1)
@@ -56,29 +56,24 @@ sf_object_joined_sampling_rarefy_5k_rowmeans <- sf_object_joined_sampling_rarefy
   bind_cols(sf_object_joined_sampling_rarefy_5k, .)
 
 
-sf_object_joined_sampling_rarefy_5k_rowmeans <- cbind(dplyr::select(giant_geo_table_grid_id_geometry, geometry.x, Var1, Freq.x) , sf_object_joined_sampling_rarefy_5k_rowmeans)
+sf_object_joined_sampling_rarefy_5k_rowmeans <- cbind(dplyr::select(giant_geo_table_grid_id_geometry, geometry, Var1, Freq) , sf_object_joined_sampling_rarefy_5k_rowmeans)
 
 #calculate stat values#calculate stat valuesNULL
 sf_object_joined_sampling_rarefy_5k_rowmeans$z_score <- (as.numeric(sf_object_joined_sampling_rarefy_5k_rowmeans$Freq) - sf_object_joined_sampling_rarefy_5k_rowmeans$mean) / sf_object_joined_sampling_rarefy_5k_rowmeans$sd
 sf_object_joined_sampling_rarefy_5k_rowmeans$p_val <- pnorm(sf_object_joined_sampling_rarefy_5k_rowmeans$z_score, mean = 0, sd = 1, lower.tail = F)
 
-#add multiple testing corrections
-
-sf_object_joined_sampling_rarefy_5k_rowmeans$p_adj <- p.adjust(
-  sf_object_joined_sampling_rarefy_5k_rowmeans$p_val, method = "BH"
-)
 
 #smaller df to look at manually
-sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs <- dplyr::select(sf_object_joined_sampling_rarefy_5k_rowmeans, geometry.x, Freq.x, z_score, p_adj, mean)
+sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs <- dplyr::select(sf_object_joined_sampling_rarefy_5k_rowmeans, geometry, Freq, z_score, p_val, mean)
 # sf_object_joined_summed_by_long_samples_joined_zs$p_val <- pnorm(sf_object_joined_summed_by_long_samples_joined_zs$z_score, mean = 0, sd = 1, lower.tail = F)
 
 #graph the ones below a certain cutoff value set by cut()
 
-sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs_fil <- filter(sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs, p_adj < 0.05)
+sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs_fil <- filter(sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs, p_val < 0.05)
 
 p_vals <- ggplot(data = sf_object_joined_sampling_rarefy_5k_rowmeans_joined_zs_fil) +
   geom_sf(data = world, fill = 'grey80', color = 'grey70') +
-  geom_sf(fill = "#2e22d3", color = "transparent", aes(fill = '#2e22d3', color = "#2e22d3", geometry = geometryetry.x)) + 
+  geom_sf(fill = "red", color = "transparent", aes(fill = 'red', color = "red", geometry = geometry)) + 
   coord_sf(crs = "ESRI:54009") + # Explicitly set coord_sf CRSs
   theme_bw() + theme(legend.position = 'none')
 
@@ -87,8 +82,8 @@ ggsave("outputs/p_vals_test.png", p_vals, width = 20, height = 15, units = "cm",
 
 mean_sampling_dense <- ggplot(data = sf_object_joined_sampling_rarefy_5k_rowmeans, aes(fill = 'transparent', color = "transparent")) +
   geom_sf(data = world, fill = 'grey80', color = 'grey70') +
-  geom_sf(aes(fill = mean, color = "transparent", geometry = geometryetry), lwd = 0,  na.value = "transparent", color = NA) +
-  scale_fill_gradientn(colors = c(viridis(option = 'mako', n = 10, direction = -1)), na.value = "transparent") +
+  geom_sf(aes(fill = mean, color = "transparent", geometry = geometry), lwd = 0,  na.value = "transparent", color = NA) +
+  scale_fill_gradientn(colors = c(viridis(option = 'plasma', n = 10, direction = -1)), na.value = "transparent") +
   coord_sf(crs = "ESRI:54009") + # Explicitly set coord_sf CRSs
   theme_bw() + theme(legend.position = 'none')
 
@@ -105,7 +100,7 @@ set.seed(102938501)
 
 sf_object_joined_novel_prop_rarefy_5k <- as.data.frame(data_wide$novel_species_proportion)
 colnames(sf_object_joined_novel_prop_rarefy_5k) <- c("novel_proportion")
-for (i in 1:5000) {
+for (i in 1:2000) {
   # Randomly sample one value from x and assign it to y
   sf_object_joined_novel_prop_rarefy_5k[[i]] <- sample(sf_object_joined_novel_prop_rarefy_5k$novel_proportion, replace = F)
 }
@@ -148,13 +143,8 @@ sf_object_joined_prop_rarefy_5k_rowmeans_joined <- cbind(data_wide, sf_object_jo
 sf_object_joined_prop_rarefy_5k_rowmeans_joined$z_score <- (sf_object_joined_prop_rarefy_5k_rowmeans_joined$novel_species_proportion - sf_object_joined_prop_rarefy_5k_rowmeans_joined$mean) / sf_object_joined_prop_rarefy_5k_rowmeans_joined$sd
 sf_object_joined_prop_rarefy_5k_rowmeans_joined$p_val <- pnorm(sf_object_joined_prop_rarefy_5k_rowmeans_joined$z_score, mean = 0, sd = 1, lower.tail = F)
 
-#add multiple testing corrections
-
-sf_object_joined_sampling_rarefy_5k_rowmeans$p_adj <- p.adjust(
-  sf_object_joined_sampling_rarefy_5k_rowmeans$p_val, method = "BH"
-)
 #smaller df to look at manually
-sf_object_joined_prop_rarefy_5k_rowmeans_joined_s <- dplyr::select(sf_object_joined_prop_rarefy_5k_rowmeans_joined, geometry, novel_proportion, z_score, mean, p_val)
+sf_object_joined_prop_rarefy_5k_rowmeans_joined_s <- dplyr::select(sf_object_joined_prop_rarefy_5k_rowmeans_joined, geometry, novel_species_proportion, z_score, mean, p_val, grid_group)
 # sf_object_joined_summed_by_long_samples_joined_zs$p_val <- pnorm(sf_object_joined_summed_by_long_samples_joined_zs$z_score, mean = 0, sd = 1, lower.tail = F)
 
 #graph the ones below a certain cutoff value set by cut()
@@ -181,16 +171,53 @@ sf_object_joined_prop_rarefy_5k_rowmeans_joined_s <- dplyr::select(sf_object_joi
 # 
 # ggsave("outputs/p_vals_prop_p_0.05_test.png", vals_prop_p_0.05, width = 20, height = 15, units = "cm", limitsize = F)
 
-vals_prop_all <- ggplot(data =  st_buffer(st_as_sf(sf_object_joined_prop_rarefy_5k_rowmeans_joined), 50000), aes(fill = 'transparent', color = "transparent")) +
-  geom_sf(data = world, fill = 'white', color = 'grey80') +
-  geom_sf(aes(fill = novel_proportion, geometry = geometry), lwd = 0, color = "grey20", alpha = 0.7) +
-  geom_sf(data =  st_buffer(st_as_sf(filter(sf_object_joined_prop_rarefy_5k_rowmeans_joined, novel_proportion > 0.5)), 50000), aes(fill = novel_proportion, geometry = geometry), lwd = 0, color = "grey20", alpha = 1) +
-  scale_fill_gradientn(colors = c("#9695B9", "#3333E7"), na.value = "transparent") +
-  coord_sf(crs = "ESRI:54009") + # Explicitly set coord_sf CRSs
-  theme(legend.position = 'none') +
-  theme_bw()
+# Split into zero and non-zero novelty for distinct coloring
+sf_novel_sorted <- st_as_sf(arrange(sf_object_joined_prop_rarefy_5k_rowmeans_joined, novel_species_proportion))
+sf_novel_zero    <- filter(sf_novel_sorted, novel_species_proportion == 0)
+sf_novel_nonzero <- filter(sf_novel_sorted, novel_species_proportion > 0)
 
-ggsave("outputs/vals_prop_all.png", vals_prop_all, width = 20, height = 15, units = "cm", limitsize = F)
+vals_prop_all <- ggplot() +
+  geom_sf(data = world, fill = 'grey95', color = 'grey90') +
+  # Zero novelty: distinct warm-grey so it reads as "sampled but none found"
+  geom_sf(data = st_buffer(sf_novel_zero, 75000),
+          fill = "grey60", color = "white", lwd = 0.2, alpha = 0.6) +
+  # Non-zero novelty: blue gradient, higher values drawn on top
+  geom_sf(data = st_buffer(sf_novel_nonzero, 100000),
+          aes(fill = novel_species_proportion), color = "white", lwd = 0.2, alpha = 0.8) +
+  scale_fill_gradientn(colors = c("#86b3c6", "#3333E7"), na.value = "transparent") +
+  coord_sf(crs = "ESRI:54009") +
+  theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank())
+
+ggsave("outputs/vals_prop_all_split.png", vals_prop_all, width = 20, height = 15, units = "cm", limitsize = F)
+
+
+vals_prop_all_overlay <- ggplot() +
+  geom_sf(data = world, fill = 'grey95', color = 'grey90') +
+  # Bottom layer: sampling density (red)
+  geom_sf(data = giant_geo_table_grid_id_geometry,
+          aes(fill = log(Freq)), lwd = 0, color = "transparent") +
+  scale_fill_gradientn(colors = RColorBrewer::brewer.pal(9, "OrRd"), na.value = "transparent") +
+  ggnewscale::new_scale_fill() +
+  # Zero novelty: distinct warm-grey so it reads as "sampled but none found"
+  geom_sf(data = st_buffer(sf_novel_zero, 75000),
+          fill = "grey20", color = "white", lwd = 0.2, alpha = 0.6) +
+  # Non-zero novelty: blue gradient, higher values drawn on top
+  geom_sf(data = st_buffer(sf_novel_nonzero, 75000),
+          aes(fill = novel_species_proportion), color = "white", lwd = 0.2, alpha = 0.8) +
+  scale_fill_gradientn(colors = c("#a8c4d4", "#5f89b0", "#3333E7"), na.value = "transparent") +
+  coord_sf(crs = "ESRI:54009") +
+  theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank())
+
+ggsave("outputs/vals_prop_all_overlay_split.png", vals_prop_all_overlay, width = 20, height = 15, units = "cm", limitsize = F)
+
 
 vals_prop_p_0.05 <- ggplot(data =  st_buffer(st_as_sf(sf_object_joined_prop_rarefy_5k_rowmeans_joined), 50000), aes(fill = 'transparent', color = "transparent")) +
   geom_sf(data = world, fill = 'grey95', color = 'grey80') +

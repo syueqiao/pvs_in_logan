@@ -17,16 +17,15 @@ if (!exists("sf_object_joined_prop_rarefy_5k_rowmeans_joined_s")) {
     "outputs/geo_intermediates/sf_object_joined_prop_rarefy_5k_rowmeans_joined_s.rds")
 }
 
-data_wide_sig <- st_join(st_as_sf(data_wide), st_as_sf(sf_object_joined_prop_rarefy_5k_rowmeans_joined_s), largest = T)
 
-borders <- st_buffer(st_as_sf(filter(data_wide_sig, p_val < 0.05)), 75000)
+sf_object_joined_prop_rarefy_5k_rowmeans_joined_s
 
-plot_novel_proportion <- ggplot(data = st_buffer(st_as_sf(data_wide_sig), 50000), aes(fill = novel_species_proportion)) +
+plot_novel_proportion <- ggplot(data = st_buffer(st_as_sf(sf_object_joined_prop_rarefy_5k_rowmeans_joined_s), 50000), aes(fill = novel_species_proportion)) +
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
   geom_sf(shape=16, color = NA, alpha = 0.8) +
   scale_fill_gradientn(colors = c("grey70", "#3333E7")) +
-  geom_sf (data =borders,
-          aes(geometry = geometry), color = "#E7338D", fill = NA) +
+  # geom_sf (data =borders,
+  #         aes(geometry = geometry), color = "#E7338D", fill = NA) +
   coord_sf(crs = "ESRI:54009") +
   theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
   theme(axis.title = element_blank(),
