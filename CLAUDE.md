@@ -230,7 +230,7 @@ tree %<+% annotation_df
 - ~2.7 million unique contigs retrieved from Logan
 - 307K+ L1-annotated ORFs
 - 14,048 full-length L1 candidates
-- 240 putatively novel sequences (234 after clustering)
+- 386 putatively novel clusters (as of 2026-04, per `test_21k_host.R` three-way classification)
 
 ## Caveats and Limitations
 - **External dependencies**: Requires installation of bioinformatic tools not tracked in repo
