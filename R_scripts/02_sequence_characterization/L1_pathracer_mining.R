@@ -25,9 +25,6 @@ pv2_L1_sto_sto_uniq$library <- sub("_.*", "", pv2_L1_sto_sto_uniq$contig)
 
 ###########
 
-# pv2_L1_sto_sto_uniq_lib <- pv2_L1_sto_sto_uniq %>% 
-#   group_by(library, pfam) %>% 
-#   slice_max(score_one)
 pv2_L1_sto_sto_uniq$pfam <- factor(x = pv2_L1_sto_sto_uniq$pfam,
                                    levels = c("ncbi_and_pave_L1_I","ncbi_and_pave_L1_B", "ncbi_and_pave_L1_CD", "ncbi_and_pave_L1_E", "ncbi_and_pave_L1_F", "ncbi_and_pave_L1_GH"))
 
@@ -45,6 +42,18 @@ pv2_L1_sto_sto_uniq_partial <- filter(pv2_L1_sto_sto_uniq, !query_acc %in% pv2_L
 pv2_L1_sto_sto_uniq_partial_tab <- pv2_L1_sto_sto_uniq_partial %>%
   count(query_acc, pfam) %>%
   spread(pfam, n, fill = 0)
+
+pv2_L1_sto_sto_uniq_partial_tab_100 <- pv2_L1_sto_sto_uniq_partial_tab[sample(nrow(pv2_L1_sto_sto_uniq_partial_tab), 1000), ]
+pv2_L1_sto_sto_uniq_partial_tab_100$library <- gsub("_.*", "", pv2_L1_sto_sto_uniq_partial_tab_100$query_acc)
+
+pv2_L1_sto_sto_uniq_partial_tab_100_sum <- select(pv2_L1_sto_sto_uniq_partial_tab_100, library, ncbi_and_pave_L1_B,
+ncbi_and_pave_L1_CD, ncbi_and_pave_L1_E, ncbi_and_pave_L1_GH, ncbi_and_pave_L1_I) %>% 
+    as.data.frame() %>%
+    group_by(library) %>% 
+    summarize_all(sum) %>%
+    as.data.frame()
+
+table(pv2_L1_sto_sto_uniq_partial_tab_100$library)
 
 pv2_L1_sto_sto_uniq_partial_lib_tab <- pv2_L1_sto_sto_uniq_partial %>%
   count(library, pfam) %>%
@@ -127,11 +136,6 @@ pv2_L1_sto_sto_uniq_metadata_noamp_tab <- pv2_L1_sto_sto_uniq_metadata_noamp %>%
   count(query_acc, pfam) %>%
   spread(pfam, n, fill = 0)
 
-# pv2_L1_sto_sto_uniq_metadata_noamp_tab_lib <- pv2_L1_sto_sto_uniq_metadata_noamp %>%
-#   count(library, pfam) %>%
-#   spread(pfam, n, fill = 0)
-
-
 pv2_L1_sto_sto_uniq_metadata_noamp_tab_full <- pv2_L1_sto_sto_uniq_metadata_noamp_tab %>%
   filter(if_all(ncbi_and_pave_L1_I:ncbi_and_pave_L1_GH, ~ .x > 0))
 
@@ -144,9 +148,7 @@ pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_num <- pv2_L1_sto_sto_uniq_metada
 
 pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num <- aggregate(. ~ library, pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_num, function(x) sum(as.numeric(x)))
 pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num$sums <- rowSums(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num[,2:7])
-# hist(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num$sums)
 pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num_4 <- filter(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num, sums > 3)
-# hist(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num_4$sums)
 
 ggplot(pv2_L1_sto_sto_uniq_metadata_noamp_tab_partial_lib_num_4, aes(x=sums)) +
   geom_histogram(binwidth = 5, fill="#69b3a2", color="#e9ecef", alpha=0.9) +

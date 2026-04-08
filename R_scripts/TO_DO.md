@@ -45,22 +45,21 @@ The following scripts were **deleted** and replaced by consolidated versions:
 
 ### File Path Issues
 
-- [ ] **05_case_studies/gene_maps_for_pub.R:6** - `SRR25256522_663139_pangolin_genome.txt` is missing `files/` prefix (inconsistent with other genome file reads)
-- [ ] **05_case_studies/gene_maps_for_pub.R:347** - `SRR13789839_2669_human_genome.txt` is missing `files/` prefix
-- [ ] **05_case_studies/gene_maps_for_pub.R:470** - `SRR20078264_4021_salmon_genome.txt` is missing `files/` prefix
-- [ ] **05_case_studies/gene_maps_for_pub.R:629** - `generic_pv.txt` is missing `files/` prefix
-- [ ] **05_case_studies/gene_maps_for_pub.R:274,443,565,598** - AlphaFold JSON files missing `files/` prefix (`fold_legless_zard_*.json`, `fold_human_*.json`, `fold_salmon_*.json`, `fold_pango_*.json`)
-- [ ] **04_geographic_analysis/polygon_analyses.R:19** - `cluster_number_key_for_geo.tsv` missing `files/` prefix
-- [ ] **04_geographic_analysis/polygon_analyses.R:26** - `who_puts_vlookup_man.list` missing `files/` prefix
-- [ ] **04_geographic_analysis/polygon_analyses.R:30** - `geo_data_annotation_for_all_biosamps.txt` missing `files/` prefix
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R:923-924** - `wot` and `all_known_geo.tsv` missing `files/` prefix
+- [x] **05_case_studies/gene_maps_for_pub.R** - `SRR13789839_2669_human_genome.txt` was missing `files/` prefix
+- [x] **05_case_studies/gene_maps_for_pub.R** - `SRR20078264_4021_salmon_genome.txt` was missing `files/` prefix
+- [x] **05_case_studies/gene_maps_for_pub.R** - `generic_pv.txt` was missing `files/` prefix
+- [x] **05_case_studies/gene_maps_for_pub.R** - AlphaFold JSON files were missing `files/` prefix
+- [x] **04_geographic_analysis/polygon_analyses.R** - `hits_library_biosample.list` (formerly `who_puts_vlookup_man.list`) was missing `files/` prefix
+- [x] **04_geographic_analysis/polygon_analyses.R** - `geo_data_annotation_for_all_biosamps.txt` was missing `files/` prefix
+- [x] **04_geographic_analysis/polygon_analyses.R** - `cluster_number_key_for_geo.tsv` — now generated in-script, read removed
+- [x] **03_phylogenetics/L1_based_trees_and_annotation.R** - `wot` and `all_known_geo.tsv` — code block removed in prior cleanup
 
 ---
 
 ## Non-Critical Bugs / Logic Issues
 
 - [ ] **02_sequence_characterization/investigation_of_characteristics.R:9** - `fw_rev_contigs <- unique(all_ncbi_pv_sto_sto_fr_split$contig)` - accessing `$contig` on a list of data frames (result of `split()`). Should probably be accessing a specific element e.g. `$fw$contig` or using `lapply`.
-- [ ] **04_geographic_analysis/polygon_analyses.R:380** - Uses `brewer.pal()` without loading `RColorBrewer` package
+- [x] **04_geographic_analysis/polygon_analyses.R** - Added `library(RColorBrewer)` for `brewer.pal()`
 - [ ] **03_phylogenetics/L1_based_trees_and_annotation.R:988** - `geom_point(aes(x = lat_lon.X[1], y = lat_lon.X[2]...))` - likely should be `lat_lon.X` and `lat_lon.Y` columns, not indexing into X twice
 
 ---
@@ -69,10 +68,9 @@ The following scripts were **deleted** and replaced by consolidated versions:
 
 These packages are used but not declared with `library()` in the scripts that need them:
 
-- [ ] **05_case_studies/gene_maps_for_pub.R** - Missing `library(gggibbous)` for `geom_moon()` (line 527)
+- [x] **05_case_studies/gene_maps_for_pub.R** - Added `library(gggibbous)` for `geom_moon()`
 - [ ] **04_geographic_analysis/polygon_analyses.R** - Missing `library(ggpmisc)` for `stat_poly_eq()` (line 827)
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R** - Missing `library(sf)` at top (used on line 956)
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R** - Missing `library(ggmosaic)` (used on line 979)
+- [x] **03_phylogenetics/L1_based_trees_and_annotation.R** - `sf` and `ggmosaic` no longer used in current version
 
 ### Verify: `geom_aline()` Function
 
@@ -82,10 +80,8 @@ These packages are used but not declared with `library()` in the scripts that ne
 
 ## Code Cleanup
 
-- [ ] **05_case_studies/gene_maps_for_pub.R:236** - Localhost URL in comment (leftover from Jupyter): `http://127.0.0.1:40769/...`
-- [ ] **05_case_studies/gene_maps_for_pub.R:635** - Same localhost URL in comment
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R:994** - y-axis label is `"wee"` - placeholder?
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R:1007-1066** - Loose code block at end of file (references `output_df`, `file_name` which don't exist). Appears to be leftover exploratory code - consider removing.
+- [x] **05_case_studies/gene_maps_for_pub.R** - Removed localhost URLs (leftover from Jupyter)
+- [x] **03_phylogenetics/L1_based_trees_and_annotation.R** - `"wee"` label and loose code block removed in prior cleanup
 - [ ] **04_geographic_analysis/polygon_analyses.R** - Massive amount of commented-out code (lines ~420-828). Consider removing if no longer needed.
 
 ---

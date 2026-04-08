@@ -2,6 +2,7 @@ library(tidyverse)
 library(gggenes)
 library(jsonlite)
 library(treeio)
+library(gggibbous)
 
 
 ########Subset tree objects by related nodes########
@@ -547,7 +548,6 @@ zard_contig <- read.table("files/SRR22028468_199653_zard_genome.txt", sep ="\t",
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
 
-#SRR25256522_663139	JR	3617	2675	-http://127.0.0.1:40769/graphics/plot_zoom_png?width=1810&height=920
 
 ggplot(zard_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
@@ -585,7 +585,7 @@ zard2 <- gheatmap(zard1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset 
 
 ggsave("zard2_subtree.jpg", zard2, width = 25, height =10, units = "cm", limitsize = F)
 
-pae_data <- fromJSON("fold_legless_zard_srr22028468_199653_full_data_0.json")
+pae_data <- fromJSON("files/fold_legless_zard_srr22028468_199653_full_data_0.json")
 pae_matrix <- pae_data$pae
 
 
@@ -658,7 +658,7 @@ ggplot() +
 
 ##################################################HUMAN################################
 
-human_contig <- read.table("SRR13789839_2669_human_genome.txt", sep ="\t", header = T)
+human_contig <- read.table("files/SRR13789839_2669_human_genome.txt", sep ="\t", header = T)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -754,7 +754,7 @@ human2 <- gheatmap(human1, addtl_ano_tree_broad, width=0.05, font.size=0,  offse
 ggsave("human2_subtree.jpg", human2, width = 25, height =10, units = "cm", limitsize = F)
 
 
-pae_data <- fromJSON("fold_human_srr13789839_2669_full_data_0.json")
+pae_data <- fromJSON("files/fold_human_srr13789839_2669_full_data_0.json")
 pae_matrix <- pae_data$pae
 
 
@@ -781,7 +781,7 @@ ggsave("human_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = 
 ##################################################SALMON###########################################
 
 
-salmon_contig <- read.table("SRR20078264_4021_salmon_genome.txt", sep ="\t", header = T)
+salmon_contig <- read.table("files/SRR20078264_4021_salmon_genome.txt", sep ="\t", header = T)
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
@@ -876,7 +876,7 @@ salmon2 <- gheatmap(salmon1, addtl_ano_tree_broad, width=0.05, font.size=0,  off
 
 ggsave("salmon2_subtree.jpg", salmon2, width = 25, height =10, units = "cm", limitsize = F)
 
-pae_data <- fromJSON("fold_salmon_srr20078264_4021_full_data_0.json")
+pae_data <- fromJSON("files/fold_salmon_srr20078264_4021_full_data_0.json")
 pae_matrix <- pae_data$pae
 
 
@@ -909,7 +909,7 @@ ggsave("salmon_pae.png", pae, width = 10, height = 10, units = "cm", limitsize =
 # install.packages("jsonlite")
 library(jsonlite)
 
-pae_data <- fromJSON("fold_pango_srr25256522_663139_full_data_0.json")
+pae_data <- fromJSON("files/fold_pango_srr25256522_663139_full_data_0.json")
 pae_matrix <- pae_data$pae
 
 
@@ -940,13 +940,12 @@ ggsave("pango_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = 
 
   #generate generic map for linearized PV genome
 
-generic_pv <- read.table("generic_pv.txt", sep ="\t", header = T)
+generic_pv <- read.table("files/generic_pv.txt", sep ="\t", header = T)
 
 
 #set consistent colors for each gene
 color_match_genes = setNames(c("#46D452","#99A599","#99A599", "#99A599", "#CBD7CB", "#CBD7CB", "#CBD7CB",  "#CBD7CB", "#B2F0B7"), c("L1", "L2", "E1", "E2", "E4", "E5", "E6", "E7", "JR"))
 
-#SRR25256522_663139	JR	3617	2675	-http://127.0.0.1:40769/graphics/plot_zoom_png?width=1810&height=920
 
 ggplot(generic_pv, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene, forward = T)) +
   geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"), arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +

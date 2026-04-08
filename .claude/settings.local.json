@@ -13,7 +13,13 @@
       "Bash(# For the overlapping ambiguous accessions, look at ScientificName \\(col29\\), SampleName \\(col30\\), Body_Site \\(col41\\) # First let''s see what ScientificName says for metagenome entries comm -12 /tmp/ambig_accessions.txt /tmp/hits_accessions.txt grep -f /tmp/overlap.txt \"\"c:/Users/qqjes/Documents/GitHub/pvs_in_logan/files/all_hits_info.list\"\")",
       "Read(//c/Users/qqjes/Documents/GitHub/pvs_in_logan/**)",
       "Bash(curl:*)",
-      "WebFetch(domain:eutils.ncbi.nlm.nih.gov)"
+      "WebFetch(domain:eutils.ncbi.nlm.nih.gov)",
+      "Bash(grep -v \"^README.md$\")",
+      "Bash(grep -v \"^.gitattributes$\")",
+      "Bash(grep -v ^desktop.ini$)",
+      "Bash(mv \"files/im_stupid.domtbl\" \"files/L1_BI_hmmer_iter1.domtbl\")",
+      "Bash(mv \"files/im_stupid_2.domtbl\" \"files/L1_BI_hmmer_iter2.domtbl\")",
+      "Bash(mv \"files/who_puts_vlookup_man.list\" \"files/hits_library_biosample.list\")"
     ]
   }
 }

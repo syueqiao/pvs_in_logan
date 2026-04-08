@@ -12,8 +12,8 @@ This directory contains all input data files for the pvs_in_logan pipeline. File
 | `feb_7_pv_fil_form_L1_BI.domtbl` | ~161 MB | HMMER domain hits for L1 B/I region models | `logan_3.R` |
 | `all_logan.domtbl` | - | HMMER domain hits for all Logan contigs (accessory genes) | `logan_3.R` |
 | `all_pr_need_hmmer.pep.domtbl` | ~394 MB | HMMER domain hits for pathracer protein sequences | `logan_3.R` |
-| `im_stupid.domtbl` | ~30 MB | HMMER hits for first clustering iteration | - |
-| `im_stupid_2.domtbl` | ~30 MB | HMMER hits for second clustering iteration | `logan_3_novelty.R` |
+| `L1_BI_hmmer_iter1.domtbl` | ~30 MB | HMMER hits for first clustering iteration | - |
+| `L1_BI_hmmer_iter2.domtbl` | ~30 MB | HMMER hits for second clustering iteration | `logan_3_novelty.R` |
 | `pv_only_sto_sto.domtbl` | ~382 MB | HMMER hits for PV-only Stockholm alignment | - |
 
 ## USEARCH Cluster Files (.uc)
@@ -89,7 +89,7 @@ This directory contains all input data files for the pvs_in_logan pipeline. File
 | File | Description | Used by |
 |------|-------------|---------|
 | `geo_data_annotation_for_all_biosamps.txt` | Geographic + biosample annotations | `map_gen_for_pub.R`, `polygon_analyses.R` |
-| `who_puts_vlookup_man.list` | Manual VLOOKUP for biosample-to-geo mapping | `map_gen_for_pub.R`, `polygon_analyses.R` |
+| `hits_library_biosample.list` | Biosample-to-library geographic mapping | `map_gen_for_pub.R`, `polygon_analyses.R` |
 | `grids_sf.gpkg` | GeoPackage with grid geometries for spatial analysis | `polygon_analyses.R` |
 | `all_known_geo.tsv` | Known geographic locations for validated sequences | - |
 | `cluster_number_key_for_geo.tsv` | Cluster number to geographic/taxonomic mapping | `polygon_analyses.R` |

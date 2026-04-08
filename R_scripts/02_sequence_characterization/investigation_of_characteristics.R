@@ -173,8 +173,7 @@ all_ncbi_pv_sto_sto_L1_envcoords_envaa$nuc_to <- all_ncbi_pv_sto_sto_L1_envcoord
 write.table(select(all_ncbi_pv_sto_sto_L1_envcoords_envaa, query_acc, nuc_from, nuc_to), "outputs/all_ncbi_pv_sto_sto_L1_envcoords_p1.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 
-#essentially redo this for the new output
-#im sorry its SO ugly
+#redo for the new output
 updated_ncbi_all <- hmmsearch_clean("files/updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting
 updated_ncbi_all$contig_orf <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", updated_ncbi_all$query_acc)

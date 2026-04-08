@@ -1,0 +1,38 @@
+# Python virtual environment
+pvs/
+
+# R session files
+.RData
+.Rhistory
+.Rproj.user/
+
+# OS files
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Archive folders (kept locally, not synced)
+files/files_archive/
+outputs/outputs_archive/
+
+# Large data files — too big for GitHub (see ZENODO_FILES.md)
+# HMMER domain tables
+files/feb_7_pv_fil_form.aa.domtbl
+files/all_pr_need_hmmer.pep.domtbl
+files/feb_7_pv_fil_form_L1_BI.domtbl
+files/pv_all_L1.domtbl
+files/mega_results.domtbl
+files/all_logan.domtbl
+files/L1_BI_hmmer_iter2.domtbl
+
+# Clustering files
+files/pvdb2_v1_sort_clusters.uc
+
+# BLAST results
+files/all_full_l1s_logan_and_pr_blastn.tsv
+
+# Other large files
+files/L1_kfa.tab
+files/alignment_ncbi_centroids_and_pr.table
+files/L1_library_metadata.txt
+outputs/2026.01.13.biomes_joined_sampling.gpkg

@@ -1,13 +1,12 @@
 #logan3
-#i love tidyverse
 library(tidyverse)
 library(ggplot2)
 #function to parse the domtbl output
-source("00_utilities/hmmsearch_utils.R")
+source("R_scripts/00_utilities/hmmsearch_utils.R")
 
 #all clustered at 90% nuceltodie, transalted to amino acid, then searched w./ the jrHMM
 #next, tabulate which are "full"
-all_1100_clustered <- hmmsearch_clean("files/im_stupid_2.domtbl")
+all_1100_clustered <- hmmsearch_clean("files/L1_BI_hmmer_iter2.domtbl")
 
 all_1100_clustered$contig <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", all_1100_clustered$query_acc)
 all_1100_clustered$library <- sub("_.*", "\\1", all_1100_clustered$contig)
@@ -99,14 +98,12 @@ blastn_results_fil_sliced_less_90_nt <- unique(blastn_results_fil_sliced_90$V1)
 length(unique(blastn_results_fil_sliced_less_90_nt))
 
 
-# write.table(all_seq_geo_less_90_nt, "all_seq_geo_less_90_nt_ugh.txt", quote = F, col.names = F, row.names = F)
 
 hist(blastn_results_fil_sliced_90$V9)
 
 
 #create list of the ones that were hit, in general
 hit_list <- unique(blastn_results_fil$V1)
-# write.table(hit_list, "all_seq_geo_hit_list.txt", quote = F, col.names = F, row.names = F)
 
 #look for low conf hits that were not represented in either novel already, or other filter set
 blastn_results_fil_low_conf_hits <- filter(blastn_results_fil_low_conf, !V1 %in% blastn_results_fil_sliced_less_90_nt)
@@ -116,7 +113,6 @@ blastn_results_fil_low_conf_hits_all_list <- unique(blastn_results_fil_low_conf_
 
 length(unique(blastn_results_fil_low_conf_hits_all$V1))
 
-# write.table(all_seq_geo_fil_low_conf_hits_list, "all_seq_geo_fil_low_conf_hits_list_ugh.txt", quote = F, col.names = F, row.names = F)
 #group all the ones with hits that are novel
 all_hit_novel <- bind_rows(blastn_results_fil_low_conf_hits_all, blastn_results_fil_sliced_90)
 length(unique(all_hit_novel$V1))
@@ -154,6 +150,8 @@ alignments_fil <- alignments %>%
 length(unique(alignments_fil$V1))
 length(unique(alignments_fil$V5))
 
-#summary of 343 NCBI PVs not recovered in Logan
+#summary of 346 NCBI PVs not recovered in Logan
 ncbi_missing_summary <- read.table("outputs/ncbi_pvs_not_in_logan_summary.tsv",
                                    sep = "\t", header = T, quote = "")
+
+sero_hits <- filter(ncbi_missing_summary, miss_reason == "zero_hits")
