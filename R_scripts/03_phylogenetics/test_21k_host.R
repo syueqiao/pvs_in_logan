@@ -1196,7 +1196,7 @@ seq_by_type <- all_uc_sequences %>%
 cat("\n========== Full L1 sequences by library type and novelty status ==========\n")
 cat("Total sequences:", nrow(seq_by_type), "\n\n")
 
-all_uc_sequences
+length(unique(seq_by_type$library))
 
 seq_type_table <- seq_by_type %>%
   count(lib_type, status) %>%
@@ -1764,3 +1764,215 @@ check <- new_table_expanded %>%
             by = c("member_library" = "V1_clean")) %>%
   select(member_library, member_host_group, original_metadata)
 table(check$original_metadata)
+
+# =====================================================================
+# ========= COMPREHENSIVE METADATA OUTPUT: 21k + tree PVs ============
+# =====================================================================
+# Combines per-sequence metadata (all full-length L1s from the 21k libraries)
+# with NCBI tree PV reference metadata into a single output file.
+
+# --- Part 1: All Logan/pathracer sequences with full library annotation ---
+seq_metadata <- all_uc_sequences %>%
+  filter(!(library == "SRR6976994" & cluster_number %in% srr6976994_centroid_clusters)) %>%
+  # Cluster-level info
+  left_join(
+    all_clusters_summary %>%
+      dplyr::select(cluster_number, centroid, centroid_library,
+                    status, ncbi_host, n_members) %>%
+      rename(cluster_status = status, cluster_ncbi_host = ncbi_host,
+             cluster_size = n_members),
+    by = "cluster_number"
+  ) %>%
+  # Library-level: full annotation from libraries_final
+  left_join(
+    libraries_final %>%
+      dplyr::select(V1_clean, original_metadata, host_group, host_confidence,
+                    biosample_organism, manual_host,
+                    biosample_host, biosample_organism_field,
+                    biosample_isolation_source, biosample_title),
+    by = c("library" = "V1_clean")
+  ) %>%
+  # Apply manual fixes
+  mutate(
+    host_group = if_else(grepl("^SRR270786", library), "Human", host_group),
+    host_group = if_else(grepl("^SRR24184635", library), "Amphibian", host_group)
+  ) %>%
+  # Library source from SRA metadata
+  left_join(
+    sra_metadata %>% dplyr::select(Run, LibrarySource) %>% distinct(),
+    by = c("library" = "Run")
+  ) %>%
+  # BioProject
+  left_join(lib_bioproject, by = c("library" = "member_library")) %>%
+  # Geo coordinates
+  left_join(geo_for_join, by = c("library" = "Run")) %>%
+  # For known clusters: best NCBI match from alignment_envs.table
+  left_join(
+    new_table_fil %>%
+      dplyr::select(V5_norm, V1, V9) %>%
+      rename(ncbi_ref_accession = V1, ncbi_pct_identity = V9) %>%
+      distinct(V5_norm, .keep_all = TRUE),
+    by = c("sequence" = "V5_norm")
+  ) %>%
+  mutate(data_source = "logan") %>%
+  dplyr::select(
+    data_source, sequence, cluster_number, centroid, centroid_library, library,
+    cluster_status, cluster_ncbi_host, cluster_size,
+    original_metadata, host_group, host_confidence,
+    biosample_organism, manual_host,
+    biosample_host, biosample_organism_field, biosample_isolation_source, biosample_title,
+    LibrarySource, member_bioproject,
+    geo_source, longitude, latitude,
+    ncbi_ref_accession, ncbi_pct_identity
+  )
+
+# --- Part 2: NCBI tree PV reference sequences ---
+tree_pv_metadata <- addtl_tip_plus_new_manual %>%
+  filter(status == "ncbi") %>%
+  transmute(
+    data_source = "ncbi_tree",
+    sequence = V1,
+    cluster_number = NA_integer_,
+    centroid = NA_character_,
+    centroid_library = NA_character_,
+    library = NA_character_,
+    cluster_status = "ncbi_reference",
+    cluster_ncbi_host = generalization,
+    cluster_size = NA_integer_,
+    original_metadata = NA_character_,
+    host_group = broader_gen,
+    host_confidence = "ncbi_reference",
+    biosample_organism = NA_character_,
+    manual_host = NA_character_,
+    biosample_host = NA_character_,
+    biosample_organism_field = NA_character_,
+    biosample_isolation_source = NA_character_,
+    biosample_title = NA_character_,
+    LibrarySource = NA_character_,
+    member_bioproject = NA_character_,
+    geo_source = NA_character_,
+    longitude = NA_real_,
+    latitude = NA_real_,
+    ncbi_ref_accession = sub("_1$", "", V1),
+    ncbi_pct_identity = NA_real_
+  )
+
+# --- Combine and add tree membership flag ---
+combined_metadata <- bind_rows(seq_metadata, tree_pv_metadata)
+
+# all_tree_metadata$label contains all tip labels from the phylogenetic tree
+# (from L1_based_trees_and_annotation.R); dots were replaced with underscores
+tree_tip_labels <- as.character(all_tree_metadata$label)
+
+combined_metadata <- combined_metadata %>%
+  mutate(in_tree = gsub("\\.", "_", as.character(sequence)) %in% tree_tip_labels)
+
+cat("\n========== Combined metadata output ==========\n")
+cat("Logan sequences:     ", sum(combined_metadata$data_source == "logan"), "\n")
+cat("NCBI tree references:", sum(combined_metadata$data_source == "ncbi_tree"), "\n")
+cat("In tree:             ", sum(combined_metadata$in_tree), "\n")
+cat("Total rows:          ", nrow(combined_metadata), "\n")
+cat("Columns:             ", ncol(combined_metadata), "\n")
+cat("===============================================\n")
+
+write.table(combined_metadata, "outputs/all_pvs_combined_metadata.tsv",
+            sep = "\t", quote = FALSE, row.names = FALSE)
+cat("Saved: outputs/all_pvs_combined_metadata.tsv\n")
+
+head(novel_members)
+
+# =====================================================================
+# ====== Count species associated with novel PVs (from combined_metadata)
+# =====================================================================
+# Excludes:
+#   - metagenomes / environmental / uncultured samples
+#   - arthropods (insects, arachnids, crustaceans, etc.)
+#   - genus-only entries (no species epithet, e.g. "Homo sp.")
+
+# Regexes for things to exclude from `original_metadata`
+metagenome_pattern <- regex(
+  "metagenom|uncultured|environmental sample|environmental swab",
+  ignore_case = TRUE
+)
+
+arthropod_pattern <- regex(paste(
+  "arthropod", "insecta\\b", "arachnid", "crustace", "myriapod", "hexapod",
+  # common orders/groups
+  "coleoptera", "hymenoptera", "diptera", "lepidoptera", "hemiptera",
+  "orthoptera", "odonata", "ephemeroptera", "trichoptera", "blattodea",
+  "siphonaptera", "phthiraptera", "neuroptera", "mantodea", "thysanoptera",
+  "isoptera", "psocoptera", "dermaptera", "bombyx", "saccharomyces", "chlamydia",
+  # common names
+  "\\bbeetle", "\\bant\\b", "\\bants\\b", "\\bbee\\b", "\\bbees\\b", "\\bwasp",
+  "\\bfly\\b", "\\bflies\\b", "mosquito", "midge", "\\bmoth\\b", "butterfly",
+  "butterflies", "aphid", "termite", "cockroach", "grasshopper", "cricket",
+  "locust", "weevil", "\\btick\\b", "\\bticks\\b", "\\bmite\\b", "\\bmites\\b",
+  "spider", "scorpion", "\\bcrab\\b", "shrimp", "lobster", "crayfish",
+  "barnacle", "copepod", "amphipod", "isopod", "millipede", "centipede",
+  "drosophila", "anopheles", "aedes", "culex", "apis mellifera", "bombus",
+  "ixodes", "rhipicephalus", "varroa",
+  sep = "|"
+), ignore_case = TRUE)
+
+# Genus-only / non-species qualifiers in the second word slot
+non_species_epithet <- c("sp", "sp.", "spp", "spp.", "cf", "cf.", "aff",
+                         "aff.", "nr", "nr.", "indet", "indet.", "x", "sub")
+
+# Start with all novel-PV rows that have non-empty original_metadata,
+# then peel off each exclusion step so we can inspect what's being dropped.
+novel_all <- combined_metadata %>%
+  filter(cluster_status == "novel",
+         !is.na(original_metadata),
+         original_metadata != "")
+
+# Step 1: flag metagenomes
+novel_all <- novel_all %>%
+  mutate(is_metagenome = str_detect(original_metadata, metagenome_pattern))
+dropped_metagenome <- novel_all %>% filter(is_metagenome)
+
+# Step 2: of the rest, flag arthropods
+novel_remaining <- novel_all %>% filter(!is_metagenome) %>%
+  mutate(is_arthropod = str_detect(original_metadata, arthropod_pattern))
+dropped_arthropod <- novel_remaining %>% filter(is_arthropod)
+
+# Step 3: of the rest, try to extract a binomial
+novel_binomial <- novel_remaining %>% filter(!is_arthropod) %>%
+  mutate(
+    genus   = str_extract(original_metadata, "^[A-Z][a-z]+"),
+    epithet = str_extract(original_metadata, "(?<=^[A-Z][a-z]{1,40} )[a-z]+\\.?"),
+    is_genus_only = is.na(genus) | is.na(epithet) |
+                    (tolower(epithet) %in% non_species_epithet) |
+                    (!is.na(epithet) & nchar(epithet) < 3)
+  )
+dropped_genus_only <- novel_binomial %>% filter(is_genus_only)
+
+# Final kept set
+novel_species_df <- novel_binomial %>%
+  filter(!is_genus_only) %>%
+  mutate(species = paste(genus, epithet))
+
+n_unique_species   <- n_distinct(novel_species_df$species)
+n_novel_rows_kept  <- nrow(novel_species_df)
+n_novel_rows_total <- nrow(novel_all)
+
+cat("\n========== Species hosting novel PVs ==========\n")
+cat("Novel-PV rows (with original_metadata):", n_novel_rows_total, "\n")
+cat("  - dropped: metagenome/uncultured:    ", nrow(dropped_metagenome), "\n")
+cat("  - dropped: arthropod:                ", nrow(dropped_arthropod), "\n")
+cat("  - dropped: genus-only / unparseable: ", nrow(dropped_genus_only), "\n")
+cat("Novel-PV rows kept:                    ", n_novel_rows_kept, "\n")
+cat("Unique host species (binomial):        ", n_unique_species, "\n")
+cat("===============================================\n")
+
+cat("\nTop 20 kept species by # novel-PV rows:\n")
+print(novel_species_df %>% count(species, sort = TRUE) %>% head(20))
+
+# --- Show what was filtered out (unique original_metadata values) ---
+cat("\n----- DROPPED: metagenome/uncultured -----\n")
+print(dropped_metagenome %>% count(original_metadata, sort = TRUE), n = Inf)
+
+cat("\n----- DROPPED: arthropod -----\n")
+print(dropped_arthropod %>% count(original_metadata, sort = TRUE), n = Inf)
+
+cat("\n----- DROPPED: genus-only / unparseable -----\n")
+print(dropped_genus_only %>% count(original_metadata, sort = TRUE), n = Inf)

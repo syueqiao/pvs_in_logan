@@ -36,7 +36,7 @@ pv2_L1_sto_sto_uniq_tab_full <- pv2_L1_sto_sto_uniq_tab %>%
   filter(if_all(ncbi_and_pave_L1_I:ncbi_and_pave_L1_GH, ~ .x > 0))
 
 pv2_L1_sto_sto_uniq_partial <- filter(pv2_L1_sto_sto_uniq, !query_acc %in% pv2_L1_sto_sto_uniq_tab_full$query_acc)
-
+a <- filter(pv2_L1_sto_sto_uniq, library == "SRR22231265")
 # write.table(unique(pv2_L1_sto_sto_uniq$library), "pv2_L1_sto_sto_libs.txt", quote = FALSE, col.names = FALSE, row.names = F)
 
 pv2_L1_sto_sto_uniq_partial_tab <- pv2_L1_sto_sto_uniq_partial %>%

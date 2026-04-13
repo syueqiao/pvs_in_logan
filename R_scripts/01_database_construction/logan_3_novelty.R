@@ -75,7 +75,7 @@ ggsave("outputs/qcov_distribution.png", width = 10, height =10, units = "cm", li
 
 
 #
-evals fil 
+#evals fil 
 blastn_results_fil <- dplyr::filter(blastn_results, V10 < 0.00001)
 
 hist(blastn_results_fil$qcov)
@@ -143,9 +143,9 @@ alignments_qcov_only_fail <- alignments %>%
   filter(!duplicated(V1))
 
 alignments_fil <- alignments %>%
-  dplyr::filter(qcov > 0.7) %>%
+  dplyr::filter(qcov > 0.5) %>%
   dplyr::filter(V10 < 0.00001) %>%
-  dplyr::filter(V9 >= 90)
+  dplyr::filter(V9 < 90)
 
 length(unique(alignments_fil$V1))
 length(unique(alignments_fil$V5))

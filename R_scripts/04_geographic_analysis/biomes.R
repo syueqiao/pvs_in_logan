@@ -46,7 +46,7 @@ water <- bind_rows(dplyr::select(ocean_polygons, geometry, featurecla_ocean), dp
 #the 2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
 # The 2017 EcoRegions shapefile can be downloaded at https://ecoregions.appspot.com/
 # Place Ecoregions2017.shp (and associated .dbf, .prj, .shx) in the files/ directory
-my_shapefile_2 <- read_sf("files/Ecoregions2017.shp")
+my_shapefile_2 <- read_sf("C:/Users/qqjes/Documents/rnalab_2024/pv_project/Ecoregions2017.shp")
 # my_shapefile_fw <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 # my_shapefile_fw_2 <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 
@@ -88,7 +88,7 @@ biome_summary <- grid_sf %>%
   ) %>%
   arrange(desc(area_km2))
 
-print(biome_summary)
+# print(biome_summary)
 
 biome_summary$biome_name[is.na(biome_summary$biome_name)] <- "Terrestrial Other"
 
@@ -771,3 +771,67 @@ geom_text(aes(label = ifelse(discovery_ratio == 0, "0", formatC(discovery_ratio,
 summed_biomes_colored_long_plot_sampling
 
 ggsave("outputs/2026.03.06.ordered_ratios.png", summed_biomes_colored_long_plot_sampling, width = 20, height = 10, units = "cm", limitsize = F, bg = 'transparent')
+
+
+# =====================================================================
+# ===== Proportion of NOVEL PV types per biome (sampling-count order)
+# =====================================================================
+# Per-biome novel fraction = novel / (novel + known), with biomes ordered
+# the same way as the sampling count plot (biome_count_order, ascending).
+
+novel_fraction_df <- summed_biomes_colored %>%
+  st_drop_geometry() %>%
+  dplyr::select(biome_name, known, novel, biomes_color) %>%
+  mutate(
+    total = as.numeric(known) + as.numeric(novel),
+    novel_fraction = ifelse(total > 0, as.numeric(novel) / total, 0)
+  )
+
+# Bring in any biomes that exist in the sampling order but are missing here
+# (e.g. Alkaline Lake / Reservoir with zero PVs) so the y-axis matches
+missing_biomes <- setdiff(biome_count_order, novel_fraction_df$biome_name)
+if (length(missing_biomes) > 0) {
+  filler <- data.frame(
+    biome_name     = missing_biomes,
+    known          = 0,
+    novel          = 0,
+    biomes_color   = biomes_color_key$biomes_color[match(missing_biomes, biomes_color_key$biomes_list)],
+    total          = 0,
+    novel_fraction = 0
+  )
+  novel_fraction_df <- bind_rows(novel_fraction_df, filler)
+}
+
+novel_fraction_df <- novel_fraction_df %>%
+  mutate(biome_name = factor(biome_name, levels = biome_count_order)) %>%
+  filter(!is.na(biome_name)) %>%
+  arrange(biome_name)
+
+cat("\n=== Novel PV proportion per biome (sampling-count order) ===\n")
+print(novel_fraction_df %>% dplyr::select(biome_name, known, novel, total, novel_fraction))
+
+novel_fraction_plot <- ggplot(
+    data = novel_fraction_df,
+    aes(x = biome_name, y = novel_fraction, fill = biomes_color)
+  ) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = ifelse(novel_fraction == 0, "0",
+                               formatC(novel_fraction, format = "f", digits = 3))),
+            hjust = -0.1, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend',
+                      labels = novel_fraction_df$biome_name,
+                      breaks = novel_fraction_df$biomes_color) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.25)),
+                     labels = scales::percent_format(accuracy = 0.1)) +
+  coord_flip(clip = "off") +
+  theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.border = element_blank(),
+        legend.position = 'none')
+
+novel_fraction_plot
+
+ggsave("outputs/2026.04.10.novel_fraction_per_biome_ordered.png",
+       novel_fraction_plot, width = 20, height = 10, units = "cm",
+       limitsize = FALSE, bg = 'transparent')

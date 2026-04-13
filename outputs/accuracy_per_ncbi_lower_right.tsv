@@ -1,9 +1,9 @@
-V1	ncbi_host_broad	ncbi_host_specific	n_members	n_concordant	pct_concordant	flag
-AB626705.1_54_1229	Bovine	Bovine	20	3	0.15	low_accuracy
-EU796884.1_147_1331	Feline	Feline	26	10	0.384615384615385	low_accuracy
-CS077205.1_45_1235	Human	Human	67	32	0.477611940298507	low_accuracy
-HW350049.1_129_1310	Human	Human	64	30	0.46875	low_accuracy
-M32305.1_60_1277	Human	Human	12	4	0.333333333333333	low_accuracy
-X70829.1_102_1310	Human	Human	93	20	0.21505376344086	low_accuracy
-MH777222.1_96_1295	Human	Human	20	3	0.15	low_accuracy
-MK377489.1_141_1334	Other	Porcine	99	0	0	low_accuracy
+V1	ncbi_host_broad	ncbi_host_specific	n_members	n_concordant	pct_concordant	flag	quadrant
+CS077205.1_45_1235	Human	Human	67	32	0.477611940298507	low_accuracy	LR (many, low concordance)
+HW350049.1_129_1310	Human	Human	64	30	0.46875	low_accuracy	LR (many, low concordance)
+M32305.1_60_1277	Human	Human	12	4	0.333333333333333	low_accuracy	LR (many, low concordance)
+X70829.1_102_1310	Human	Human	93	20	0.21505376344086	low_accuracy	LR (many, low concordance)
+MH777222.1_96_1295	Human	Human	20	3	0.15	low_accuracy	LR (many, low concordance)
+AB626705.1_54_1229	Bovine	Bovine	20	3	0.15	low_accuracy	LR (many, low concordance)
+EU796884.1_147_1331	Feline	Feline	26	10	0.384615384615385	low_accuracy	LR (many, low concordance)
+MK377489.1_141_1334	Other	Porcine	99	0	0	low_accuracy	LR (many, low concordance)

@@ -373,9 +373,9 @@ biosamp_data_anno %>%
   xlab("") +
   ylab("") + theme_bw()
 
-  
-pango_subset <- tree_subset(final_tree, "SRR25256564_207500_ka_f_17.658_L_207500_L_207500__246-1421_1",
- levels_back = 3)
+
+pango_subset <- tree_subset(final_tree, "SRR25256564_207500_ka_f_17_658_L_207500_L_207500__246_1421_1", levels_back = 4)
+
 pango_subset <- ggtree(pango_subset)
 pango_subset$data$label <- gsub("Edges.*", "", pango_subset$data$label)
 pango_subset$data$label <- gsub("ka_f.*", "", pango_subset$data$label)
@@ -384,17 +384,18 @@ pango_subset$data$status <- ifelse(grepl("[E|S|D][R][R]", pango_subset$data$labe
 # rhino_tree$data <- left_join(rhino_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
 # rhino_tree$data$x10 <- iconv(rhino_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
 
-pango1 <- pango_subset + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+pango1 <- pango_subset + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) +
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "8")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "8")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
-  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
-  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
-  theme(legend.position= "none", text = element_text(family = "Noto Sans"), plot.margin = margin(5, 80, 5, 5, unit = "mm")) + coord_cartesian(clip = "off")
+  geom_tiplab(aes(subset = (node != "8")),color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "8")), color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_nodelab(aes(label = label), size = 2.5, nudge_y = 0.6, family = "Noto Sans", color = "grey40") +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"),
+        plot.margin = margin(5, 60, 5, 5, unit = "mm")) +
+  coord_cartesian(clip = "off")
 
 pango1
 
-ggsave("outputs/pango1_subtree.jpg", pango1, width = 30, height =10, units = "cm", limitsize = F)
+ggsave("outputs/2026.04.13.pango1_subtree.jpg", pango1, width = 35, height = 10, units = "cm", limitsize = F)
 
 pae_data <- fromJSON("files/fold_pango_srr25256564_207500_full_data_0.json")
 pae_matrix <- pae_data$pae
@@ -440,7 +441,7 @@ ggplot(rhino_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
 
 ggsave("rhino_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
-rhino_subset <- tree_subset(final_tree, "SRR10902309_46767_ka_f_48-102_L_46767_L_46767__126-1310_1",
+rhino_subset <- tree_subset(final_tree, "SRR10902309_46767_ka_f_48_102_L_46767_L_46767__126_1310_1",
  levels_back = 2)
 rhino_tree <- ggtree(rhino_subset)
 rhino_tree$data$label <- gsub("Edges.*", "", rhino_tree$data$label)
@@ -450,22 +451,23 @@ rhino_tree$data$status <- ifelse(grepl("[E|S|D][R][R]", rhino_tree$data$label), 
 # rhino_tree$data <- left_join(rhino_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
 # rhino_tree$data$x10 <- iconv(rhino_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
 
-rhino1 <- rhino_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+rhino1 <- rhino_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) +
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "7")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "7")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
-  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
-  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
-  theme(legend.position= "none", text = element_text(family = "Noto Sans"))
+  geom_tiplab(aes(subset = (node != "4")),color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "4")), color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_nodelab(aes(label = label), size = 2.5, nudge_x = 0.01, family = "Noto Sans", color = "grey40") +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"),
+        plot.margin = margin(5, 60, 5, 5, unit = "mm")) +
+  coord_cartesian(clip = "off")
 
 rhino1
 
 rhino2 <- gheatmap(rhino1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 1,  color = NA) +
-  scale_fill_manual(breaks=addtl_ano_tree_broad_vals$broader_gen, 
-                    values=addtl_ano_tree_broad_vals$color_values, name="genotype") + 
+  scale_fill_manual(breaks=addtl_ano_tree_broad_vals$broader_gen,
+                    values=addtl_ano_tree_broad_vals$color_values, name="genotype") +
   theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
 
-ggsave("outputs/rhino2_subtree.jpg", rhino2, width = 25, height =10, units = "cm", limitsize = F)
+ggsave("outputs/2026.04.13.rhino1_subtree.jpg", rhino1, width = 30, height = 10, units = "cm", limitsize = F)
 
 pae_data <- fromJSON("files/fold_rhino_srr10902309_46767_full_data_0.json")
 pae_matrix <- pae_data$pae
@@ -560,7 +562,7 @@ ggplot(zard_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, lab
 
 ggsave("outputs/zard_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
-zard_subset <- tree_subset(final_tree, "SRR22028468_199653_ka_f_18.451_L_19965", levels_back = 1)
+zard_subset <- tree_subset(final_tree, "SRR22028468_199653_ka_f_18_451_L_199653_L_199653__69_1301_1", levels_back = 1)
 zard_tree <- ggtree(zard_subset)
 zard_tree$data$label <- gsub("Edges.*", "", zard_tree$data$label)
 zard_tree$data$label <- gsub("ka_f.*", "", zard_tree$data$label)
@@ -569,21 +571,22 @@ zard_tree$data$status <- ifelse(grepl("[E|S|D][R][R]", zard_tree$data$label), "n
 # zard_tree$data <- left_join(zard_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
 # zard_tree$data$x10 <- iconv(zard_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
 
-zard1 <- zard_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+zard1 <- zard_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) +
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "11")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "11")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
-  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
-  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
-  theme(legend.position= "none", text = element_text(family = "Noto Sans"))
+  geom_tiplab(aes(subset = (node != "11")),color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "11")), color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_nodelab(aes(label = label), size = 2.5, nudge_x = 0.02, family = "Noto Sans", color = "grey40") +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"),
+        plot.margin = margin(5, 60, 5, 5, unit = "mm")) +
+  coord_cartesian(clip = "off")
 
 zard1
 
-zard2 <- gheatmap(zard1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 1,  color = NA) +
-  scale_fill_manual(breaks=addtl_ano_tree_broad_vals$broader_gen, 
-                    values=addtl_ano_tree_broad_vals$color_values, name="genotype") + theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
+# zard2 <- gheatmap(zard1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 1,  color = NA) +
+#   scale_fill_manual(breaks=addtl_ano_tree_broad_vals$broader_gen,
+#                     values=addtl_ano_tree_broad_vals$color_values, name="genotype") + theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
 
-ggsave("zard2_subtree.jpg", zard2, width = 25, height =10, units = "cm", limitsize = F)
+ggsave("outputs/2026.04.13.zard1_subtree.jpg", zard1, width = 30, height = 10, units = "cm", limitsize = F)
 
 pae_data <- fromJSON("files/fold_legless_zard_srr22028468_199653_full_data_0.json")
 pae_matrix <- pae_data$pae
@@ -728,7 +731,7 @@ ggplot() +
 
 
 
-human_subset <- tree_subset(final_tree, "SRR13789839_2669_ka_f_16.185___138-134", levels_back = 4)
+human_subset <- tree_subset(final_tree, "SRR13789839_2669_ka_f_16_185__138_1343_1", levels_back =2)
 human_tree <- ggtree(human_subset)
 human_tree$data$label <- gsub("Edges.*", "", human_tree$data$label)
 human_tree$data$label <- gsub("ka_f.*", "", human_tree$data$label)
@@ -737,21 +740,22 @@ human_tree$data$status <- ifelse(grepl("[E|S|D][R][R]", human_tree$data$label), 
 # human_tree$data <- left_join(human_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
 # human_tree$data$x10 <- iconv(human_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
 
-human1 <- human_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+human1 <- human_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) +
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "8")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "8")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
-  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
-  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
-  theme(legend.position= "none", text = element_text(family = "Noto Sans"))
+  geom_tiplab(aes(subset = (node != "3")),color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "3")), color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_nodelab(aes(label = label), size = 2.5, nudge_x = 0.005, family = "Noto Sans", color = "grey40") +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"),
+        plot.margin = margin(5, 60, 5, 5, unit = "mm")) +
+  coord_cartesian(clip = "off")
 
-human1 
+human1
 
 human2 <- gheatmap(human1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 0.5,  color = NA) +
-  scale_fill_manual(breaks=addtl_ano_tree_broad$broader_gen, 
+  scale_fill_manual(breaks=addtl_ano_tree_broad$broader_gen,
                      values=addtl_ano_tree_broad_vals$color_values, name="genotype") + theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
 
-ggsave("human2_subtree.jpg", human2, width = 25, height =10, units = "cm", limitsize = F)
+ggsave("outputs/2026.04.13.human1_subtree.jpg", human1, width = 30, height = 10, units = "cm", limitsize = F)
 
 
 pae_data <- fromJSON("files/fold_human_srr13789839_2669_full_data_0.json")
@@ -851,7 +855,7 @@ ggplot() +
 
 
 
-salmon_subset <- tree_subset(final_tree, "SRR20078264_4021_ka_f_10.293_L_4021_L_", levels_back = 2)
+salmon_subset <- tree_subset(final_tree, "SRR20078264_4021_ka_f_10_293_L_4021_L_4021__66_1346_1", levels_back = 2)
 salmon_tree <- ggtree(salmon_subset)
 salmon_tree$data$label <- gsub("Edges.*", "", salmon_tree$data$label)
 salmon_tree$data$label <- gsub("ka_f.*", "", salmon_tree$data$label)
@@ -860,21 +864,22 @@ salmon_tree$data$status <- ifelse(grepl("[E|S|D][R][R]", salmon_tree$data$label)
 # salmon_tree$data <- left_join(salmon_tree$data, all_genus_curated_thin, by = c("label" = "V1_2"))
 # salmon_tree$data$x10 <- iconv(salmon_tree$data$x10, from = "UTF-8", to = "ASCII", sub = "")
 
-salmon1 <- salmon_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) + 
+salmon1 <- salmon_tree + geom_aline(aes(color = status), linetype = "solid", linewidth = 0.5, position = position_nudge(x = -0.003)) +
   scale_color_manual(values = c("grey","#4646d4")) +
-  geom_tiplab(aes(subset = (node != "8")),color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
-  geom_tiplab(aes(subset = (node == "8")), color = "black",size = 5, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
-  # geom_text(aes(label=label), hjust=-0.5, size = 2, color = "black") +
-  # geom_nodelab(label = ncbi_and_novel_tree$node.label, geom = 'text', size = 1.5) +
-  theme(legend.position= "none", text = element_text(family = "Noto Sans"))
+  geom_tiplab(aes(subset = (node != "5")),color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans") +
+  geom_tiplab(aes(subset = (node == "5")), color = "black",size = 4, hjust = 0, align= T, linetype = "blank", family = "Noto Sans", fontface = 'bold', nudge_x = 0.0001) +
+  geom_nodelab(aes(label = label), size = 2.5, nudge_x = 0.01, family = "Noto Sans", color = "grey40") +
+  theme(legend.position= "none", text = element_text(family = "Noto Sans"),
+        plot.margin = margin(5, 60, 5, 5, unit = "mm")) +
+  coord_cartesian(clip = "off")
 
-salmon1 
+salmon1
 
 salmon2 <- gheatmap(salmon1, addtl_ano_tree_broad, width=0.05, font.size=0,  offset = 1,  color = NA) +
-  scale_fill_manual(breaks=addtl_ano_tree_broad$broader_gen, 
+  scale_fill_manual(breaks=addtl_ano_tree_broad$broader_gen,
                     values=addtl_ano_tree_broad_vals$color_values, name="genotype") + theme(legend.position = 'right', text = element_text(family = "Noto Sans"))
 
-ggsave("salmon2_subtree.jpg", salmon2, width = 25, height =10, units = "cm", limitsize = F)
+ggsave("outputs/2026.04.13.salmon1_subtree.jpg", salmon1, width = 30, height = 10, units = "cm", limitsize = F)
 
 pae_data <- fromJSON("files/fold_salmon_srr20078264_4021_full_data_0.json")
 pae_matrix <- pae_data$pae
