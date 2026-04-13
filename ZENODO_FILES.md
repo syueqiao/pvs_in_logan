@@ -1,11 +1,11 @@
-# Large Data Files for Zenodo Deposit
+# Large Data Files
 
-These files are required to reproduce the analysis but are too large for GitHub (>10MB).
-They should be deposited in a Zenodo repository and downloaded into the appropriate directories before running the pipeline.
+All large data files required for this analysis are tracked via **Git LFS**.
+No separate Zenodo download is needed — cloning the repository with `git lfs pull` will retrieve them.
 
-## files/ directory
+## Git LFS-tracked files
 
-### HMMER domain tables (output of `hmmsearch`)
+### HMMER domain tables (`files/`)
 
 | File | Size | Description |
 |------|------|-------------|
@@ -17,7 +17,7 @@ They should be deposited in a Zenodo repository and downloaded into the appropri
 | `all_logan.domtbl` | 23 MB | HMMER search of all Logan contigs |
 | `L1_BI_hmmer_iter2.domtbl` | 30 MB | Iteration 2 HMMER search for L1 B/I domains |
 
-### Clustering and alignment files
+### Clustering and alignment files (`files/`)
 
 | File | Size | Description |
 |------|------|-------------|
@@ -25,14 +25,13 @@ They should be deposited in a Zenodo repository and downloaded into the appropri
 | `all_full_l1s_logan_and_pr_blastn.tsv` | 47 MB | BLASTn results: full-length L1s against NCBI nt |
 | `alignment_ncbi_centroids_and_pr.table` | 21 MB | Alignment table: NCBI centroids + Pathracer sequences |
 
-### Metadata and other large files
+### Metadata (`files/`)
 
 | File | Size | Description |
 |------|------|-------------|
-| `L1_kfa.tab` | 41 MB | Contig names and lengths with ka:f coverage values |
 | `L1_library_metadata.txt` | 14 MB | SRA library metadata for all L1-containing libraries |
 
-## outputs/ directory
+### Outputs (`outputs/`)
 
 | File | Size | Description |
 |------|------|-------------|
@@ -40,6 +39,6 @@ They should be deposited in a Zenodo repository and downloaded into the appropri
 
 ## Reproduction instructions
 
-1. Download the Zenodo archive and extract it in the repository root
-2. Verify all files listed above are present in their respective directories
+1. Clone the repository: `git clone <repo-url>`
+2. Pull LFS files: `git lfs pull`
 3. Follow the run order described in `CLAUDE.md` and subdirectory READMEs

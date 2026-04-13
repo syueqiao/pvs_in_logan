@@ -90,6 +90,9 @@ feb_7_pv_L1_BI_mat <- feb_7_pv_L1_BI %>%
   count(query_acc, pfam) %>%
   spread(pfam, n, fill = 0)
 
+feb_7_pv_L1_BI_mat$library <- sub("_.*", "\\1", feb_7_pv_L1_BI_mat$query_acc)
+
+check <- filter(feb_7_pv_L1_BI, library == "SRR17534297")
 #filter for those that have all regions hit :)
 feb_7_pv_L1_BI_mat_all <- feb_7_pv_L1_BI_mat %>%
   filter(if_all(ncbi_and_novel_L1_B:ncbi_and_novel_L1_I, ~ .x > 0))
@@ -398,17 +401,3 @@ sum(!news$in_uc)   # how many missing
 
 head(news$acc)
 head(clustering_ncbi_ids)
-
-#check ka.f to length relationship
-kaf_length <- read.table("files/L1_kfa.tab", header = F, fill = T)
-kaf_length$coverage <- as.numeric(sub(".*ka:f:([0-9.]+)_.*", "\\1", kaf_length$V1))
-
-kaf_plot <- ggplot(kaf_length, aes(x = coverage, y = V2)) +
- geom_hex(bins = 60) +
-  scale_fill_continuous(type = "viridis") +  
-  scale_y_log10() +
-  scale_x_log10() +
-  theme_bw() +
-  labs(x = 'ka_f', y = "contig_length")
-
-ggsave("outputs/kaf_plot.png", kaf_plot)

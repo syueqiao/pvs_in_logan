@@ -36,8 +36,10 @@ final_tree <- read.tree("files/2026.04.01.tree_seqs_1375.treefile")
 
 # Remove SRR6976994 tips (simple repeats)
 drop_tips <- final_tree$tip.label[grepl("^SRR6976994", final_tree$tip.label)]
-final_tree <- drop.tip(final_tree, drop_tips)
+check_tips <- final_tree$tip.label[grepl("^SRR20078264", final_tree$tip.label)]
 
+final_tree <- drop.tip(final_tree, drop_tips)
+view(final_tree)
 tree <- ggtree(final_tree)
 # view(tree$data)
 tree_tips <- filter(tree$data, isTip == T)
