@@ -347,8 +347,7 @@ sum(ncbi_tax_counts$Recorded.PVs) - 485
 write.table(agg_tax_counts, "outputs/host_table_ncbi_agg.txt", quote = F, col.names = F, row.names = F, sep = "\t")
 
 ##
-#essentially redo this for the new output
-#im sorry its SO ugly
+#redo for the new output
 updated_ncbi_all <- hmmsearch_clean("files/updated_ncbi_all.domtbl")
 #reparse some stuff based on new contig formatting
 updated_ncbi_all$contig_orf <- sub("([A-Za-z0-9]+_[A-Za-z0-9]+).*", "\\1", updated_ncbi_all$query_acc)

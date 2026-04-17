@@ -1,17 +1,11 @@
-Scripts here are used to understand the geographic and biome-based distribution of PVs. This folder has run order dependencies: 
+Scripts for geographic and biome-based distribution analysis of PVs. These scripts have run-order dependencies.
 
-Claude:
-```
-1. **poolygons.R** (run first)
-   - Creates: `grid_sf`, `world`, `data_wide`, `giant_geo_table_grid_id_geometry`
-   - Outputs: `grids_sf.gpkg`
-   - **Note**: Line 17 and 22 reference `all_pvs_mapping_binned` and `all_pvs_mapping`, which is generated in `map_gen_for_pub.R`
+**Run order:**
 
-2. **geo_analysis.R** (depends on poolygons.R)
-   - Requires: `giant_geo_table_grid_id_geometry`, `grid_sf`, `world`, `data_wide`
-
-3. **biomes.R** (depends on poolygons.R)
-   - Reads: `grids_sf.gpkg` (output from poolygons.R)
-   - Requires: `data_wide`, `grid_sf`, `world`
-```
-I apologize for how interconnected things are!
+1. `geo_setup.R` — Shared data loading (world map, grid). Sourced by other scripts.
+2. `map_gen_for_pub.R` — Novelty classification with geographic coordinates; generates publication-ready distribution maps. Creates `all_pvs_mapping`, `all_novels`, `known_pvs`.
+3. `polygon_analyses.R` — Spatial grid intersection and species proportions. Creates `grid_sf`, `data_wide`, `giant_geo_table_grid_id_geometry`. Depends on `map_gen_for_pub.R`.
+4. `geo_analysis.R` — Geographic resampling statistics. Depends on `polygon_analyses.R`.
+5. `novelty_significance_maps.R` — Significance overlay maps. Depends on `geo_analysis.R`.
+6. `biomes.R` — Biome/ecology analysis using WWF ecoregions. Depends on `polygon_analyses.R` and `geo_analysis.R`. Requires `Ecoregions2017.shp` in `files/` (download from https://ecoregions.appspot.com/).
+7. `biomes_stats_test.R` — Statistical testing for biome associations.

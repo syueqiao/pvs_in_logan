@@ -1,0 +1,19 @@
+# Python virtual environment
+pvs/
+
+# R session files
+.RData
+.Rhistory
+.Rproj.user/
+
+# OS files
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Archive folders (kept locally, not synced)
+files/files_archive/
+outputs/outputs_archive/
+
+# Large data files not used by any script
+files/L1_kfa.tab

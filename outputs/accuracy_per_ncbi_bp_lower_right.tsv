@@ -1,0 +1,7 @@
+V1	ncbi_host_broad	ncbi_host_specific	n_bioprojects	n_concordant	pct_concordant	flag
+EU796884.1_147_1331	Feline	Feline	10	4	0.4	low_accuracy
+AB201226.1_129_1310	Human	Human	17	8	0.470588235294118	low_accuracy
+HW350049.1_129_1310	Human	Human	23	10	0.434782608695652	low_accuracy
+HW350050.1_63_1271	Human	Human	44	19	0.431818181818182	low_accuracy
+AB211993.1_387_1553	Human	Human	19	7	0.368421052631579	low_accuracy
+MK377489.1_141_1334	Other	Porcine	27	0	0	low_accuracy

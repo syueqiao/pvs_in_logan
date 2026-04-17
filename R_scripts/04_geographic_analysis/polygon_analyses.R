@@ -3,6 +3,7 @@ source("R_scripts/04_geographic_analysis/geo_setup.R")
 library(iNEXT)
 library(ggplot2)
 library(raster)
+library(RColorBrewer)
 
 # Load from environment (if map_gen_for_pub.R was run) or from saved RDS
 if (!exists("all_pvs_mapping")) {
@@ -26,7 +27,7 @@ if (!exists("all_novels")) {
 # cluster_number_key_for_geo is now generated from st_intersects below (after grid intersection)
 
 
-all_hits_library_biosample <- read.table("files/who_puts_vlookup_man.list", sep = "\t", header = T, fill = T)
+all_hits_library_biosample <- read.table("files/hits_library_biosample.list", sep = "\t", header = T, fill = T)
 all_pvs_mapping <- left_join(all_pvs_mapping, all_hits_library_biosample, by = c("Run"))
 
 
@@ -50,21 +51,6 @@ all_pvs_mapping_clean <- all_pvs_mapping_clean[!duplicated(all_pvs_mapping_clean
 library(tmap)
 library(terra)
 
-# --- Visualization ---
-# ggplot() +
-#   geom_sf(data = grid_sf, fill = NA, color = "steelblue", size = 0.05) +
-#   theme_minimal() +
-#   labs(title = "50km Equal Area Grid (Terra Method)",
-#        subtitle = "Correctly densified to avoid vertical line collapse")
-# 
-# # grid <- st_make_grid(cellsize = c(50000, 50000), crs = "ESRI:54009")
-# 
-# ggplot() +
-#   geom_sf(data = grid_sf) +
-#   coord_sf(crs = "ESRI:54009")
-# # Dataframe with latlong coordinates:
-
-# all_pvs_mapping
 wkb_all = structure((all_pvs_mapping_clean$V4.y), class = "WKB")
 all_pvs_mapping_clean$geometry <- st_as_sfc(wkb_all, EWKB = TRUE) %>% st_transform("ESRI:54009")
 

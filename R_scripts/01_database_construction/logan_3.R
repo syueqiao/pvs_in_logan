@@ -1,5 +1,4 @@
 #logan3
-#i love tidyverse
 library(tidyverse)
 library(ggplot2)
 #function to parse the domtbl output
@@ -30,9 +29,9 @@ ggplot(feb_7_pv, aes(x = qlen)) +
   annotation_logticks(sides = "b")
 
 #make "superfamily" for some of the categories
-feb_7_pv_oo <- unique(feb_7_pv[c("query_acc", "pfam")])
+feb_7_pv_unique_hits <- unique(feb_7_pv[c("query_acc", "pfam")])
  
-feb_7_pv_count <- feb_7_pv_oo %>%
+feb_7_pv_count <- feb_7_pv_unique_hits %>%
   count(pfam) %>%
   group_by(pfam)
 
@@ -91,6 +90,9 @@ feb_7_pv_L1_BI_mat <- feb_7_pv_L1_BI %>%
   count(query_acc, pfam) %>%
   spread(pfam, n, fill = 0)
 
+feb_7_pv_L1_BI_mat$library <- sub("_.*", "\\1", feb_7_pv_L1_BI_mat$query_acc)
+
+check <- filter(feb_7_pv_L1_BI, library == "SRR17534297")
 #filter for those that have all regions hit :)
 feb_7_pv_L1_BI_mat_all <- feb_7_pv_L1_BI_mat %>%
   filter(if_all(ncbi_and_novel_L1_B:ncbi_and_novel_L1_I, ~ .x > 0))
@@ -159,15 +161,6 @@ lib_sums <- feb_7_pv_L1_BI_lib_logi_4[c(1, 8)]
 
 feb_7_pv_L1_BI_partials_sums <- left_join(feb_7_pv_L1_BI_partials, lib_sums, by = "library")
 
-#running this produces a lot of files!
-# write_file_func_2 <- function(lib){
-#   library_filtered <- filter(feb_7_pv_L1_BI_partials_sums, library == lib)
-#   write.table(unique(library_filtered$query_acc), paste("outputs/2024.02.19.subgraph/", lib, "_list.txt", sep = ""), quote = FALSE, col.names = FALSE, row.names = FALSE)
-# }
-
-#test func
-#write_file_func("SRR25663671")
-
 feb_7_pv_L1_BI_lib_logi_4_list <- feb_7_pv_L1_BI_lib_logi_4$library
 
 for (i in feb_7_pv_L1_BI_lib_logi_4_list){
@@ -199,7 +192,7 @@ feb_7_L1_nuc_hmmer_env_less_90_nt <- unique(feb_7_L1_nuc_hmmer_env_sliced_90$V1)
 length(unique(feb_7_L1_nuc_hmmer_env_less_90_nt))
 
 
-write.table(feb_7_L1_nuc_hmmer_env_less_90_nt, "outputs/feb_7_L1_nuc_hmmer_env_less_90_nt_ugh.txt", quote = FALSE, col.names = FALSE, row.names = FALSE)
+write.table(feb_7_L1_nuc_hmmer_env_less_90_nt, "outputs/feb_7_L1_nuc_hmmer_env_less_90_nt.txt", quote = FALSE, col.names = FALSE, row.names = FALSE)
 
 hist(feb_7_L1_nuc_hmmer_env_sliced_90$V9)
 
@@ -220,7 +213,7 @@ feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list <- unique(feb_7_L1_nuc_hmmer_env_f
 
 length(unique(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits$V1))
 
-write.table(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list, "outputs/feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list_ugh.txt", quote = FALSE, col.names = FALSE, row.names = FALSE)
+write.table(feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list, "outputs/feb_7_L1_nuc_hmmer_env_fil_low_conf_hits_list.txt", quote = FALSE, col.names = FALSE, row.names = FALSE)
 
 ##
 sra_metadata <- read.table("files/lib_source_big.txt", sep = "\t", fill = TRUE, header = FALSE)
@@ -352,3 +345,59 @@ all_pr_addt_orf_e_5_mat_pa_acc <- select(all_pr_addt_orf_e_5_mat_pa, contig, E1,
 #for the "multi" models, if one hit is confident then it is good enough as present
 hist(filter(all_pr_addt_orf_e_5, pfam == "E6")$score_full, breaks = 50)
 
+#work backwards
+clustering <- read.table("files/pvdb2_v1_sort_clusters.uc")
+clustering_3 <- filter(clustering, V2 == "3")
+# How many clusters contain at least one NCBI sequence?
+clustering %>%
+  filter(V1 %in% c("S", "H")) %>%
+  mutate(seq_id = V9,
+         is_ncbi = !grepl("^[SED]RR", seq_id)) %>%
+  group_by(V2) %>%
+  summarise(has_ncbi = any(is_ncbi)) %>%
+  summarise(n_clusters_with_ncbi = sum(has_ncbi),
+            total_clusters = n())
+
+clustering %>%
+  filter(V1 %in% c("S", "H"), V2 == 3) %>%
+  select(V1, V2, V9, V10)
+
+clustering %>%
+  filter(V1 %in% c("S", "H", "C")) %>%
+  mutate(is_ncbi = !grepl("[SED]RR", V9)) %>%
+  group_by(V2) %>%
+  summarise(has_ncbi = any(is_ncbi)) %>%
+  summarise(n_clusters_with_ncbi = sum(has_ncbi),
+            total_clusters = n())
+
+clustering %>%
+  filter(V1 %in% c("S", "H", "C")) %>%
+  mutate(is_ncbi = !grepl("[SED]RR\\d+", V9)) %>%
+  group_by(V2) %>%
+  summarise(has_ncbi = any(is_ncbi)) %>%
+  summarise(n_clusters_with_ncbi = sum(has_ncbi),
+            total_clusters = n())
+
+news <- read.table("files/new_seq.txt")
+
+news <- read.table("files/new_seq.txt")
+
+# Strip version suffix for matching
+news$acc <- gsub("\\..*", "", news$V1)
+
+# Check which are in the UC file
+clustering_ncbi_ids <- clustering %>%
+  filter(V1 %in% c("S", "H"), !grepl("[SED]RR[0-9]", V9)) %>%
+  mutate(acc = sub(".*:", "", V9)) %>%
+  pull(acc)
+
+news$in_uc <- news$acc %in% trimws(clustering_ncbi_ids)
+sum(news$in_uc)
+
+news$in_uc <- news$acc %in% clustering_ncbi_ids
+
+sum(news$in_uc)    # how many found
+sum(!news$in_uc)   # how many missing
+
+head(news$acc)
+head(clustering_ncbi_ids)

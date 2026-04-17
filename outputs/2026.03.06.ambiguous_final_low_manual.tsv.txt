@@ -1,0 +1,645 @@
+V1_clean	V3_clean	host_group	host_confidence	biosample_organism	needs_review	resolution_status	manual_add
+ERR10228868	metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR10228871	metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR10228882	metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11513000	metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11513016	metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835784	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835785	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835786	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835851	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835852	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835853	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835854	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835863	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835864	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835865	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835866	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835887	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835888	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835889	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835890	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835913	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835931	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835932	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835933	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11835934	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836006	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836051	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836052	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836053	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836054	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836068	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836069	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836070	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836143	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836145	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR11836146	eye metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR1192687	mixed sample	Other	low	NA	TRUE	unresolved	Neisseria gonorrhoeae
+ERR1192706	mixed sample	Other	low	NA	TRUE	unresolved	Neisseria gonorrhoeae
+ERR1192720	mixed sample	Other	low	NA	TRUE	unresolved	Neisseria gonorrhoeae
+ERR1192739	mixed sample	Other	low	NA	TRUE	unresolved	Neisseria gonorrhoeae
+ERR1192755	mixed sample	Other	low	NA	TRUE	unresolved	Neisseria gonorrhoeae
+ERR1301447	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301474	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301521	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301530	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301537	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301610	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301619	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301851	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301936	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1301973	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1302043	viral metagenome	Bat	low	NA	TRUE	unresolved	Bat
+ERR1332584	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332587	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332589	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332590	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332591	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332593	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332594	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332595	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332596	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332597	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332598	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332599	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332600	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332601	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332602	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332603	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332604	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332605	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332606	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332607	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332609	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332615	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1332636	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR1363905	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363909	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363918	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363919	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363925	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363928	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363931	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363934	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363939	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363941	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363942	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1363951	unidentified	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1713411	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1726032	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1726033	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1726035	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1788733	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR1992807	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+ERR1992808	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+ERR1992809	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+ERR2014384	metagenome	Human	low	NA	TRUE	unresolved	Vaginal fluid
+ERR2014385	metagenome	Human	low	NA	TRUE	unresolved	Vaginal fluid
+ERR2185279	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+ERR233428	unidentified	Other	low	NA	TRUE	unresolved	Unknown
+ERR2486109	Metagenome	Other	low	NA	TRUE	unresolved	Mountain metagenome
+ERR2538355	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538362	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538374	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538390	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538395	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538405	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538418	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538419	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538431	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538448	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538455	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538463	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538465	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538466	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538470	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538474	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538475	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538476	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538478	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538483	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538485	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538488	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538491	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538492	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538498	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538499	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538500	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538507	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538517	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538518	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538521	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538524	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2538525	skin metagenome	Human	low	NA	TRUE	unresolved	Human
+ERR2592283	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	Wasterwater metagenome
+ERR2607598	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	
+ERR2607599	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	
+ERR2607602	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	
+ERR2696419	synthetic metagenome	Metagenome	low	NA	TRUE	unresolved	Synthetic
+ERR2696420	synthetic metagenome	Metagenome	low	NA	TRUE	unresolved	Synthetic
+ERR2867995	viral metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3209762	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209763	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209766	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209767	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209772	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209775	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209778	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209780	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209788	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209793	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209794	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209795	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209796	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209800	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209801	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209810	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209811	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209814	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209817	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209818	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209820	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209823	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209834	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209835	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209855	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209859	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209874	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209878	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209880	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209926	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209929	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209947	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209976	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209982	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209995	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3209999	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210031	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210032	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210038	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210053	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210092	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210094	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3210109	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3230153	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+ERR3500861	metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+ERR3515869	sediment metagenome	Metagenome	low	NA	TRUE	unresolved	Environmental metagenome
+ERR3527882	metagenome	Human	low	NA	TRUE	unresolved	Vaginal metagenome
+ERR3527906	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3527907	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3527926	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593800	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593802	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593803	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593809	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593810	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593811	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593813	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593814	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593816	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593817	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593819	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593821	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593822	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593823	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593824	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593825	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593826	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593868	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593982	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3593998	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594003	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594004	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594005	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594006	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594007	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594009	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594011	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594019	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594021	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594022	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3594026	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR3674500	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674510	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674516	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674518	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674526	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674534	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674536	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674537	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674538	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674540	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674544	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674549	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674551	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674555	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674557	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674564	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674565	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674566	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3674568	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675724	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675734	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675740	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675742	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675750	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675758	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675760	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675761	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675762	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675764	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675768	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675773	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675775	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675779	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675781	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675788	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675789	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675790	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3675792	metagenome	Metagenome	low	NA	TRUE	unresolved	Hospital metagenome
+ERR3974427	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974428	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974429	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974430	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974436	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974438	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974439	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974441	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974442	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974444	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974445	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974446	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974447	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974452	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974458	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974459	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974462	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974465	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974469	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974470	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974472	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974473	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974475	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974478	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974481	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974496	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974498	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974499	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974501	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974502	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974504	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974505	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974516	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR3974517	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4333989	gut metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR4605113	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4605124	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4605133	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4605167	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4605178	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4605202	skin metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR4701600	dust metagenome	Metagenome	low	NA	TRUE	unresolved	Dust metagenome
+ERR5083227	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5083310	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084169	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084170	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084183	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084185	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084186	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084187	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084190	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084191	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084192	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084193	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084324	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084327	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084328	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084329	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084330	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084341	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084343	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084345	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084348	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084349	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084352	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084354	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084358	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084359	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084360	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084361	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084370	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084373	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5084374	metagenome	Human	low	NA	TRUE	unresolved	Human skin microbiome
+ERR5094902	feces metagenome	Ray-finned fish	low	NA	TRUE	unresolved	Oncorhynchus mykiss feces
+ERR5169900	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR5173216	metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+ERR5173219	metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+ERR5740692	food metagenome	Metagenome	low	NA	TRUE	unresolved	food metagenome
+ERR598947	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome
+ERR599205	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome
+ERR599223	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome
+ERR7528793	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528797	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528798	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528804	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528815	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528825	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR7528838	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR8610075	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR8610128	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+ERR976829	metagenome	Human	low	NA	TRUE	unresolved	Human gut metagenome
+SRR10002704	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002720	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002722	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002734	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002740	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002804	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002844	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002857	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002895	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002896	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10002950	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR10342252	insect gut metagenome	Fly	low	NA	TRUE	unresolved	Drosophila melanogaster
+SRR10613511	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR11177064	metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR11177077	metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR11177103	metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR11743100	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR11790208	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR11866717	oil production facility metagenome	Metagenome	low	NA	TRUE	unresolved	oil production facility metagenome
+SRR12886461	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR12893619	metagenome	Metagenome	low	NA	TRUE	unresolved	Surface metagenome
+SRR12893757	metagenome	Metagenome	low	NA	TRUE	unresolved	Surface metagenome
+SRR12893826	metagenome	Metagenome	low	NA	TRUE	unresolved	Surface metagenome
+SRR12983556	aquatic metagenome	Metagenome	low	NA	TRUE	unresolved	aquatic metagenome
+SRR13008576	aquatic metagenome	Metagenome	low	NA	TRUE	unresolved	aquatic metagenome
+SRR13008580	aquatic metagenome	Metagenome	low	NA	TRUE	unresolved	aquatic metagenome
+SRR13008586	aquatic metagenome	Metagenome	low	NA	TRUE	unresolved	aquatic metagenome
+SRR13152112	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR13503349	air metagenome	Metagenome	low	NA	TRUE	unresolved	Air metagenome
+SRR13838921	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838922	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838923	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838924	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838925	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838926	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838927	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838928	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838929	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838930	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838931	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838932	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838933	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838934	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838935	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838936	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838937	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838938	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838939	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838940	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838941	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838942	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838943	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838944	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838945	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR13838946	soil metagenome	Metagenome	low	NA	TRUE	unresolved	Soil metagenome
+SRR14611555	food metagenome	Metagenome	low	NA	TRUE	unresolved	food metagenome
+SRR14611556	food metagenome	Metagenome	low	NA	TRUE	unresolved	food metagenome
+SRR14684783	metagenome	Rodent	low	NA	TRUE	unresolved	Mus musuculus
+SRR14825529	metagenome	Rodent	low	NA	TRUE	unresolved	Mus musuculus
+SRR15442200	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442201	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442302	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442303	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442379	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442414	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442527	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442643	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442644	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442814	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442815	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442839	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442889	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442890	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442929	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442930	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15442956	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR15558219	metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys sinensis
+SRR15558220	metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys sinensis
+SRR15558221	metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys sinensis
+SRR15558243	metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys sinensis
+SRR15558255	metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys sinensis
+SRR15719349	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719350	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719351	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719352	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719354	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719355	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719356	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719357	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719358	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719359	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719360	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15719361	cold seep metagenome	Metagenome	low	NA	TRUE	unresolved	cold seep metagenome
+SRR15989768	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome
+SRR15989772	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome
+SRR17140443	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140447	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140449	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140452	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140454	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140469	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140478	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140483	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140489	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17140495	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR17300518	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300526	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300547	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300548	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300549	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300551	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300552	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300553	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300559	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300576	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300577	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300580	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300584	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300594	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300627	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300628	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300636	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300638	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300652	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300657	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17300662	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR17497053	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497055	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497056	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497057	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497058	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497059	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497066	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497067	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17497108	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Hystrix brachyura
+SRR17497109	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Hystrix brachyura
+SRR17497110	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Hystrix brachyura
+SRR17497120	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Hystrix brachyura
+SRR17509915	whole organism metagenome	Carnivore	low	NA	TRUE	unresolved	Paguma larvata
+SRR17509916	whole organism metagenome	Carnivore	low	NA	TRUE	unresolved	Paguma larvata
+SRR17509923	whole organism metagenome	Carnivore	low	NA	TRUE	unresolved	Paguma larvata
+SRR17509961	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17509962	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Myocastor coypus
+SRR17509971	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys pruinosus
+SRR17509972	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Rhizomys pruinosus
+SRR17509984	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Hystrix brachyura
+SRR18474643	gut metagenome	Crayfish	low	NA	TRUE	unresolved	Procambarus clarkii
+SRR18577026	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577035	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577042	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577045	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577049	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577058	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577065	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18577068	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR18883118	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883121	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883126	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883131	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883132	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883134	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883135	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR18883138	medical device metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR19742209	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR19742211	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR19742214	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR20718572	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR20718602	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR20718604	metagenome	Metagenome	low	NA	TRUE	unresolved	Glacier metagenome
+SRR20819489	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR20819490	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR20819493	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR20819494	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR20819497	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR20819516	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR21284443	viral metagenome	Non-human Primate	low	NA	TRUE	unresolved	Varecia variegata
+SRR21284445	viral metagenome	Non-human Primate	low	NA	TRUE	unresolved	Varecia variegata
+SRR21290505	feces metagenome	Porcine	low	NA	TRUE	unresolved	Piglet feces metagenome
+SRR2146184	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+SRR2146185	synthetic metagenome	Other	low	NA	TRUE	unresolved	Synthetic
+SRR21920472	metagenome	Human	low	NA	TRUE	unresolved	Human feces metagenome
+SRR21920473	metagenome	Human	low	NA	TRUE	unresolved	Human feces metagenome
+SRR22799502	gut metagenome	Equine	low	NA	TRUE	unresolved	Equus asinus
+SRR23999404	feces metagenome	Metagenome	low	NA	TRUE	unresolved	Unknown feces metagenome
+SRR24713843	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714037	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714183	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714194	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714232	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714307	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714333	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714360	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714427	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714519	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714546	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714568	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714599	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24714674	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715361	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715472	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715506	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715595	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715700	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715728	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715857	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715943	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715964	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715981	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24715989	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716035	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716056	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716073	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716098	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716128	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716173	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR24716184	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR25010649	sediment metagenome	Metagenome	low	NA	TRUE	unresolved	sediment metagenome
+SRR25728098	algae metagenome	Metagenome	low	NA	TRUE	unresolved	algae metagenome
+SRR26176340	whole organism metagenome	Rodent	low	NA	TRUE	unresolved	Apodemus sylvaticus
+SRR26190450	whole organism metagenome	Fly	low	NA	TRUE	unresolved	Drosophilids
+SRR26324875	viral metagenome	Non-human Primate	low	NA	TRUE	unresolved	Varecia rubra
+SRR26458503	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR26458508	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR26458630	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR26458635	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR26638130	hospital metagenome	Metagenome	low	NA	TRUE	unresolved	hospital metagenome
+SRR26638132	hospital metagenome	Metagenome	low	NA	TRUE	unresolved	hospital metagenome
+SRR26638141	hospital metagenome	Metagenome	low	NA	TRUE	unresolved	hospital metagenome
+SRR26901926	brine metagenome	Metagenome	low	NA	TRUE	unresolved	brine metagenome
+SRR27128292	museum specimen metagenome	Metagenome	low	NA	TRUE	unresolved	museum specimen metagenome
+SRR3545919	urban metagenome	Metagenome	low	NA	TRUE	unresolved	urban metagenome
+SRR3546371	urban metagenome	Metagenome	low	NA	TRUE	unresolved	urban metagenome
+SRR466335	organismal metagenomes	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR5189789	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR5366571	ciliate metagenome	Other	low	NA	TRUE	unresolved	Ciliate
+SRR5420276	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420277	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420282	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420286	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420291	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420292	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5420297	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5487653	groundwater metagenome	Metagenome	low	NA	TRUE	unresolved	Metagenome
+SRR5832142	viral metagenome	Ray-finned Fish	low	NA	TRUE	unresolved	Melanogrammus aeglefinus
+SRR5853136	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5853139	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR5918392	viral metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5918393	viral metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5918394	viral metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967354	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967355	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967357	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967358	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967360	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967361	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967362	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967363	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR5967364	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR6518401	wastewater metagenome	Metagenome	low	NA	TRUE	unresolved	wasterwater metagenome
+SRR6757613	skin metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR6757665	skin metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR6757671	skin metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR6757682	skin metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR6757686	skin metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR7122315	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR7122317	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR7122324	viral metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR7122327	viral metagenome	Porcine	low	NA	TRUE	unresolved	Sus scrofa
+SRR7122329	viral metagenome	Bovine	low	NA	TRUE	unresolved	Bos taurus
+SRR7122331	viral metagenome	Bovine	low	NA	TRUE	unresolved	Bos taurus
+SRR7122334	viral metagenome	Bovine	low	NA	TRUE	unresolved	Bos taurus
+SRR7122338	viral metagenome	Amphibian	low	NA	TRUE	unresolved	Ambystoma mexicanum
+SRR7122340	viral metagenome	Rodent	low	NA	TRUE	unresolved	Mus musculus
+SRR7122346	viral metagenome	Rodent	low	NA	TRUE	unresolved	Apodemus sylvaticus
+SRR7122349	viral metagenome	Human	low	NA	TRUE	unresolved	Human brain
+SRR7122364	viral metagenome	Ray-finned Fish	low	NA	TRUE	unresolved	Oncorhynchus mykiss
+SRR7122365	viral metagenome	Rodent	low	NA	TRUE	unresolved	Mus musculus
+SRR7122366	viral metagenome	Ray-finned Fish	low	NA	TRUE	unresolved	Lutjanus campechanus
+SRR7122368	viral metagenome	Rodent	low	NA	TRUE	unresolved	Mus musculus
+SRR7122384	viral metagenome	Rodent	low	NA	TRUE	unresolved	Mus musculus
+SRR7774477	fossil metagenome	Metagenome	low	NA	TRUE	unresolved	fossil metagenome
+SRR7949667	marine sediment metagenome	Metagenome	low	NA	TRUE	unresolved	marine sediment metagenome
+SRR7963489	riverine metagenome	Metagenome	low	NA	TRUE	unresolved	riverine metagenome
+SRR8071852	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR8071859	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR8071870	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR8071880	indoor metagenome	Metagenome	low	NA	TRUE	unresolved	indoor metagenome
+SRR8188224	dust metagenome	Metagenome	low	NA	TRUE	unresolved	dust metagenome
+SRR8663619	air metagenome	Metagenome	low	NA	TRUE	unresolved	air metagenome
+SRR8822468	metagenome	Metagenome	low	NA	TRUE	unresolved	groundwater metagenome
+SRR8996931	aquatic metagenome	Metagenome	low	NA	TRUE	unresolved	aquatic metagenome
+SRR9179401	metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR9179458	metagenome	Human	low	NA	TRUE	unresolved	Human metagenome
+SRR9643229	marine metagenome	Metagenome	low	NA	TRUE	unresolved	marine metagenome

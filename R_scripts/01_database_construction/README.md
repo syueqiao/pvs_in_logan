@@ -1,1 +1,6 @@
-`logan_3.R` does most of the heavy lifting for the analysis of raw Logan outputs. Inputs are located in the files/ directory. Only some outputs generated in the outputs/ directory, but should be reproducible if run locally.
+Scripts for constructing and iterating on the papillomavirus database from Logan outputs.
+
+- `logan_3.R` — Core pipeline: HMMER filtering, L1 B/I domain identification, novelty search, contig characterization, and coverage analysis.
+- `logan_3_novelty.R` — Updated novelty search using blastn against clustered centroids; identifies novel PV clusters at <90% nucleotide identity.
+
+Both scripts source `00_utilities/hmmsearch_utils.R` for HMMER output parsing.

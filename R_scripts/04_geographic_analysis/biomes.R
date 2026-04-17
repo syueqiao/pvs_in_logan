@@ -44,6 +44,8 @@ water <- bind_rows(dplyr::select(ocean_polygons, geometry, featurecla_ocean), dp
 
 # my_shapefile <- read_sf("Global_200_Terrestrial.shp")
 #the 2017 EcoRegions can be downloaded at https://ecoregions.appspot.com/
+# The 2017 EcoRegions shapefile can be downloaded at https://ecoregions.appspot.com/
+# Place Ecoregions2017.shp (and associated .dbf, .prj, .shx) in the files/ directory
 my_shapefile_2 <- read_sf("C:/Users/qqjes/Documents/rnalab_2024/pv_project/Ecoregions2017.shp")
 # my_shapefile_fw <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
 # my_shapefile_fw_2 <- st_as_sf(read_sf("Global_200_Marine.shp")) %>% st_transform("ESRI:54009")
@@ -62,7 +64,7 @@ all_cats$area_biome <- coalesce(all_cats$BIOME_NAME, all_cats$featurecla_ocean, 
 all_cats$area <- parse_number(as.character(all_cats$area))
 
 sf_use_s2(FALSE)
-#calculate the area, but in a hacky way or else it takes too long 
+#calculate the area using simplified geometries for performance
 # Create centroids of your grid cells
 grid_centroids <- st_centroid(grid_sf)
 
@@ -86,7 +88,7 @@ biome_summary <- grid_sf %>%
   ) %>%
   arrange(desc(area_km2))
 
-print(biome_summary)
+# print(biome_summary)
 
 biome_summary$biome_name[is.na(biome_summary$biome_name)] <- "Terrestrial Other"
 
@@ -138,18 +140,6 @@ long$variable <- relevel(long$variable, 'novel')
 test_graph <- ggplot(data=long, aes(x=fct_reorder(biome_name, as.numeric(value)), y=as.numeric(value), fill=variable)) +
   geom_bar(stat="identity") + coord_flip()
 
-
-
-
-# marine_list <- my_shapefile_aqua$G200_REGIO
-# fw_list <- my_shapefile_aqua_2$G200_REGIO
-# 
-# biomes_joined_aqua_guess_nz <- biomes_joined_aqua_guess
-# biomes_joined_aqua_guess_nz <- biomes_joined_aqua_guess_nz %>%
-#   mutate(
-#     color = ifelse(plot_cat %in% marine_list, "#489690", ifelse(plot_cat %in% fw_list, "#6E96D0", ifelse(plot_cat == "Ocean", "#09BEE9", NA)))
-#   )
-
 summed_biomes_colored <- left_join(summed_biomes, biomes_color_key, by = c("biome_name" = "biomes_list"))
 summed_biomes_colored$proportions <- summed_biomes_colored$novel/summed_biomes_colored$known
 
@@ -166,11 +156,6 @@ summed_biomes_colored_props <- ggplot(data=summed_biomes_colored,
 
 ggsave("outputs/2026.01.13summed_biomes_colored_props.png", summed_biomes_colored_props, width = 30, height = 20, units = "cm", limitsize = F ,bg='transparent')
 
-
-# biomes_joined_aqua_guess_nz_color_2 <- biomes_joined_aqua_guess_nz_color_2 %>%
-#   mutate(
-#     plot_cat = ifelse(plot_cat %in% marine_list, "Marine", ifelse(plot_cat %in% fw_list, "Freshwater", plot_cat))
-#   )
 
 summed_biomes_colored_long <- summed_biomes_colored %>%
   pivot_longer(
@@ -203,18 +188,6 @@ theme_bw() + coord_flip() + theme(text = element_text(family = "Noto Sans"))  +
 summed_biomes_colored_long_plot
 
 ggsave("outputs/2026.01.13.summed_biomes_colored_long_plot.png", summed_biomes_colored_long_plot, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
-
-
-# summed_biomes_colored_long_plot_zoom <- summed_biomes_colored_long_plot + 
-#   coord_flip(ylim = c(0, 10)) +
-#   labs(title = "Zoomed View (0-10)")  +
-#   theme_bw() +theme(text = element_text(family = "Noto Sans"))  +
-#   theme(axis.title = element_blank(),
-#         axis.ticks.y = element_blank(),
-#         panel.border = element_blank()) 
-# 
-# ggsave("summed_biomes_colored_long_plot_zoom.png", summed_biomes_colored_long_plot_zoom, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
-# 
 
 
 psh__pv <- ggplot(data = st_buffer(st_as_sf(summed_biomes_colored_long), 50000), aes(color = NA, fill = biomes_color)) + 
@@ -305,11 +278,6 @@ head(biomes_joined_sampling)
 
 biomes_joined_sampling_nz_color <- left_join(biomes_joined_sampling_nz, biomes_color_key, by = c("biome_name" = "biomes_list"))
 
-# biomes_joined_aqua_sampling_guess_nz_color_2 <- biomes_joined_aqua_sampling_guess_nz_color_2 %>%
-#   mutate(
-#     plot_cat = ifelse(plot_cat %in% marine_list, "Marine", ifelse(plot_cat %in% fw_list, "Freshwater", plot_cat))
-#   )
-
 psh <- ggplot(data = biomes_joined_sampling_nz_color, aes(color = NA, fill = biomes_color)) + 
   geom_sf(data = world, fill = 'grey95', color = 'grey90') +
   geom_sf(color = "transparent", aes(geometry = geometry)) +
@@ -330,10 +298,10 @@ summed_biomes_sampling <- dplyr::select(biomes_joined_sampling_nz_color, biome_n
   group_by(biome_name) %>%
   summarize(freq_count = sum(Freq, na.rm = TRUE))
 
-aa <- ggplot(data=summed_biomes_sampling, aes(x=fct_reorder(biome_name, as.numeric(freq_count)), y=as.numeric(freq_count))) +
+biome_freq_plot <- ggplot(data=summed_biomes_sampling, aes(x=fct_reorder(biome_name, as.numeric(freq_count)), y=as.numeric(freq_count))) +
   geom_bar(stat="identity") + coord_flip()
 
-aa
+biome_freq_plot
 
 summed_biomes_sampling_color <- left_join(summed_biomes_sampling, biomes_color_key, by = c("biome_name" = "biomes_list"))
 
@@ -353,22 +321,9 @@ summed_biomes_colored_long_plot_sampling <- ggplot(data=summed_biomes_sampling_c
 summed_biomes_colored_long_plot_sampling
 
 ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 20, height = 10, units = "cm", limitsize = F, bg='transparent')
-
-# summed_biomes_colored_long_plot_zoom_sampling <- summed_biomes_colored_long_plot_sampling + 
-#   coord_flip(ylim = c(0, 5000)) +
-#   labs(title = "Zoomed View (0-10)")  +
-#   theme_bw() +theme(text = element_text(family = "Noto Sans"))  +
-#   theme(axis.title = element_blank(),
-#         axis.ticks.y = element_blank(),
-#         panel.border = element_blank())
-# 
-# summed_biomes_colored_long_plot_zoom_sampling
-# 
-# ggsave("summed_biomes_colored_long_plot_zoom.png", summed_biomes_colored_long_plot_zoom, width = 40, height = 20, units = "cm", limitsize = F,bg='transparent')
-
+ggsave("outputs/2026.03.24.summed_biomes_colored_long_plot_sampling.png", summed_biomes_colored_long_plot_sampling, width = 15, height = 8, units = "cm", limitsize = F, bg='transparent')
 
 ##normalize
-# long$plot_cat <- gsub("Salween River|Gulf of Alaska Coastal Rivers", "Terrestrial Other", long$plot_cat)
 
 
 long_normalized <- left_join(long, summed_biomes_sampling, by = "biome_name")
@@ -475,14 +430,16 @@ summed_biomes_colored_long_plot_sampling_pv_ordered <- ggplot(data=filter(summed
   geom_text(aes(label = scales::comma(as.numeric(sumz))), hjust = -0.1, size = 3, fontface = 'bold') +
   scale_fill_identity(guide='legend', labels=summed_biomes_sampling_color$biome_name, breaks=summed_biomes_sampling_color$biomes_color) +
   coord_flip(clip = "off") + theme_bw() + theme(text = element_text(family = "Noto Sans"))  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.5))) +
   theme(axis.title = element_blank(),
         axis.ticks.y = element_blank(),
-        panel.border = element_blank()) 
+        panel.border = element_blank(), legend.position = 'none') 
 
 summed_biomes_colored_long_plot_sampling_pv_ordered
 sum(as.numeric(summed_biomes_sampling_color_pv_ordered$value), na.rm = T)
 
 ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling_pv_ordered.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 30, height = 10, units = "cm", limitsize = F,bg='transparent')
+ggsave("outputs/2026.02.18.summed_biomes_colored_long_plot_sampling_pv_ordered_short.png", summed_biomes_colored_long_plot_sampling_pv_ordered, width = 15, height = 8, units = "cm", limitsize = F,bg='transparent')
 
 
 summed_biomes_colored_long_plot_sampling_pv_ordered_grey <- ggplot(data=filter(summed_biomes_sampling_color_pv_ordered, !is.na(proportions.x)), aes(x=biome_name, y=as.numeric(sumz), fill =biomes_color.x)) +
@@ -792,3 +749,89 @@ long_noinsdc_normalized_plot <- ggplot(data = long_noinsdc_normalized,
 
 ggsave("outputs/2026.02.18.long_noinsdc_normalized_plot.png", long_noinsdc_normalized_plot, width = 30, height = 20, units = "cm", limitsize = F, bg = 'transparent')
 
+##final additional panel
+
+proportions_df <- left_join(summed_biomes_sampling_color, summed_biomes_sampling_color_pv_ordered, by = c("biome_name"))
+proportions_df$discovery_ratio <- as.numeric(proportions_df$sumz)/proportions_df$freq_count
+
+proportions_df <- proportions_df %>%
+  mutate(biome_name = factor(biome_name, levels = biome_count_order))
+
+proportions_df <- unique(dplyr::select(proportions_df, biome_name, discovery_ratio, biomes_color))
+
+summed_biomes_colored_long_plot_sampling <- ggplot(data=proportions_df, aes(x=biome_name, y=as.numeric(discovery_ratio), fill =biomes_color)) +
+geom_bar(stat="identity") +
+geom_text(aes(label = ifelse(discovery_ratio == 0, "0", formatC(discovery_ratio, format = "e", digits = 1)),
+          hjust = 0, size = 3, fontface = 'bold'), hjust = 0, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend', labels = summed_biomes_colored_long_plot_sampling$biome_name, breaks = summed_biomes_colored_long_plot_sampling$biomes_color) +
+  coord_flip() + theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.5)))+
+  theme(axis.title = element_blank(), axis.ticks.y = element_blank(), panel.border = element_blank())
+
+summed_biomes_colored_long_plot_sampling
+
+ggsave("outputs/2026.03.06.ordered_ratios.png", summed_biomes_colored_long_plot_sampling, width = 20, height = 10, units = "cm", limitsize = F, bg = 'transparent')
+
+
+# =====================================================================
+# ===== Proportion of NOVEL PV types per biome (sampling-count order)
+# =====================================================================
+# Per-biome novel fraction = novel / (novel + known), with biomes ordered
+# the same way as the sampling count plot (biome_count_order, ascending).
+
+novel_fraction_df <- summed_biomes_colored %>%
+  st_drop_geometry() %>%
+  dplyr::select(biome_name, known, novel, biomes_color) %>%
+  mutate(
+    total = as.numeric(known) + as.numeric(novel),
+    novel_fraction = ifelse(total > 0, as.numeric(novel) / total, 0)
+  )
+
+# Bring in any biomes that exist in the sampling order but are missing here
+# (e.g. Alkaline Lake / Reservoir with zero PVs) so the y-axis matches
+missing_biomes <- setdiff(biome_count_order, novel_fraction_df$biome_name)
+if (length(missing_biomes) > 0) {
+  filler <- data.frame(
+    biome_name     = missing_biomes,
+    known          = 0,
+    novel          = 0,
+    biomes_color   = biomes_color_key$biomes_color[match(missing_biomes, biomes_color_key$biomes_list)],
+    total          = 0,
+    novel_fraction = 0
+  )
+  novel_fraction_df <- bind_rows(novel_fraction_df, filler)
+}
+
+novel_fraction_df <- novel_fraction_df %>%
+  mutate(biome_name = factor(biome_name, levels = biome_count_order)) %>%
+  filter(!is.na(biome_name)) %>%
+  arrange(biome_name)
+
+cat("\n=== Novel PV proportion per biome (sampling-count order) ===\n")
+print(novel_fraction_df %>% dplyr::select(biome_name, known, novel, total, novel_fraction))
+
+novel_fraction_plot <- ggplot(
+    data = novel_fraction_df,
+    aes(x = biome_name, y = novel_fraction, fill = biomes_color)
+  ) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = ifelse(novel_fraction == 0, "0",
+                               formatC(novel_fraction, format = "f", digits = 3))),
+            hjust = -0.1, size = 3, fontface = 'bold') +
+  scale_fill_identity(guide = 'legend',
+                      labels = novel_fraction_df$biome_name,
+                      breaks = novel_fraction_df$biomes_color) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.25)),
+                     labels = scales::percent_format(accuracy = 0.1)) +
+  coord_flip(clip = "off") +
+  theme_bw() + theme(text = element_text(family = "Noto Sans")) +
+  theme(axis.title = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.border = element_blank(),
+        legend.position = 'none')
+
+novel_fraction_plot
+
+ggsave("outputs/2026.04.10.novel_fraction_per_biome_ordered.png",
+       novel_fraction_plot, width = 20, height = 10, units = "cm",
+       limitsize = FALSE, bg = 'transparent')

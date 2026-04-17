@@ -25,7 +25,6 @@ all_seq_geo_less_90_nt <- unique(all_seq_geo_sliced_90$V1)
 length(unique(all_seq_geo_less_90_nt))
 
 
-# write.table(all_seq_geo_less_90_nt, "all_seq_geo_less_90_nt_ugh.txt", quote = F, col.names = F, row.names = F)
 
 hist(all_seq_geo_sliced_90$V9)
 
@@ -36,7 +35,6 @@ length(unique(all_seq_geo$V1))
 
 #create list of the ones that were hit, in general
 hit_list <- unique(all_seq_geo_fil$V1)
-# write.table(hit_list, "all_seq_geo_hit_list.txt", quote = F, col.names = F, row.names = F)
 
 #look for low conf hits that were not represented in either novel already, or other filter set
 all_seq_geo_fil_low_conf_hits <- filter(all_seq_geo_fil_low_conf, !V1 %in% all_seq_geo_less_90_nt)
@@ -47,10 +45,8 @@ all_seq_geo_fil_low_conf_hits_list <- unique(all_seq_geo_fil_low_conf_hits$V1)
 
 length(unique(all_seq_geo_fil_low_conf_hits$V1))
 
-# write.table(all_seq_geo_fil_low_conf_hits_list, "all_seq_geo_fil_low_conf_hits_list_ugh.txt", quote = F, col.names = F, row.names = F)
 #group all the ones with hits that are novel
 all_hit_novel <- bind_rows(all_seq_geo_fil_low_conf_hits, all_seq_geo_sliced_90)
-# write.table(all_hit_novel, "all_hit_novel.txt", quote = F, col.names = F, row.names = F)
 length(unique(all_hit_novel$V1))
 
 ####read in geo data and full list of hits
@@ -78,7 +74,7 @@ length(unique(all_novels$V1))
 geo_data_annotation_for_all_biosamps <- read.csv("files/geo_data_annotation_for_all_biosamps.txt", header = F)
 
 
-all_hits_library_biosample <- read.table("files/who_puts_vlookup_man.list", sep = "\t", header = T, fill = T)
+all_hits_library_biosample <- read.table("files/hits_library_biosample.list", sep = "\t", header = T, fill = T)
 
 
 geo_data <- left_join(geo_data_annotation_for_all_biosamps, all_hits_library_biosample, by = c("V1" = "BioSample"))
