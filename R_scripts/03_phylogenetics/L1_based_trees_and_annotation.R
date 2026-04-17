@@ -153,7 +153,7 @@ df_wide_updated <- pivot_wider(
 )
 
                          
-write.table(df_wide, "outputs/all_organism_group_assignments_broad.tsv", sep = '\t', quote = F, row.names = F, col.names = F)
+write.table(df_wide, "outputs/all_organigeo_for_joinsm_group_assignments_broad.tsv", sep = '\t', quote = F, row.names = F, col.names = F)
 
 
 addtl_tip_novel <- subset(addtl_tip_plus_new_manual, grepl("[SED][R]{2}", addtl_tip_plus_new_manual$V1))

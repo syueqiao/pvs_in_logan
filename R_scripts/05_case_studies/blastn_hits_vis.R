@@ -7,10 +7,18 @@ library(gggenes)
 
 plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
 
-  # Auto-detect: if most ORFs have start < end, flip all so arrows
-  # point right on the reversed x-axis (need start > end for that)
-  if (sum(gene_df$start < gene_df$end) > sum(gene_df$start > gene_df$end)) {
-    gene_df <- gene_df %>% mutate(tmp = start, start = end, end = tmp) %>% select(-tmp)
+  # Orient the contig so the PV genome reads 5'->3' left-to-right.
+  # If most ORFs are encoded on the reverse strand of the contig
+  # (start > end in native contig coords), reverse-complement the
+  # contig so all ORFs become forward-strand and arrows point right.
+  # After this step all ORFs have start < end and the canonical PV
+  # reading direction (..., L2, L1, URR, E6, E7, E1, E2, ...) runs L->R.
+  if (sum(gene_df$start > gene_df$end) > sum(gene_df$start < gene_df$end)) {
+    gene_df <- gene_df %>%
+      mutate(new_start = genome_length - start + 1,
+             new_end   = genome_length - end   + 1,
+             start = new_start, end = new_end) %>%
+      select(-new_start, -new_end)
   }
 
   gene_layer <- gene_df %>%
@@ -90,9 +98,9 @@ plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
                fill = "white", label.size = 0.2, label.padding = unit(2, "pt"),
                color = "grey30") +
     scale_fill_manual(values = color_match_genes) +
-    scale_x_reverse(expand = expansion(mult = 0.08)) +
-    # Title as text annotation just above gene labels
-    annotate("text", x = genome_length, y = 1.50,
+    scale_x_continuous(expand = expansion(mult = 0.08)) +
+    # Title anchored at the left edge of the genome (x = 1 on normal axis)
+    annotate("text", x = 1, y = 1.50,
              label = paste0(contig_id, ": ", title_label, "  (",
                             format(genome_length, big.mark = ","), " nt)"),
              hjust = 0, fontface = "bold", family = "Noto Sans", size = 5) +
@@ -113,7 +121,7 @@ plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
 }
 
 # =====================================================================
-# --- Pangolin PV: SRR25256522_663139 ---
+# --- Pangolin PV: SRR25256564_207500 ---
 # =====================================================================
 pangolin_blast <- tribble(
   ~gene,  ~start, ~end,  ~top_hit,                                       ~accession,       ~evalue,   ~pct_id, ~coverage,
@@ -126,7 +134,7 @@ pangolin_blast <- tribble(
 
 pangolin_map <- plot_genome_map(
   pangolin_blast,
-  contig_id    = "SRR25256522_663139",
+  contig_id    = "SRR25256564_207500",
   title_label  = "White-bellied pangolin PV",
   genome_length = 7200
 )

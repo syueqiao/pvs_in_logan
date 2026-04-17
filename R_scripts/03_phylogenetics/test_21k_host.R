@@ -695,7 +695,6 @@ if (length(still_missing) > 0) {
 bioproject_api_2 <- readRDS("outputs/bioproject_api_cache.rds")
 
 check_table <- filter(new_table_expanded, V1 == "X70829.1_102_1310")
-check_table <- headnew_table_expanded, V1 == "X70829.1_102_1310")
 
 
 accuracy_per_ncbi <- new_table_expanded %>%
@@ -1976,3 +1975,888 @@ print(dropped_arthropod %>% count(original_metadata, sort = TRUE), n = Inf)
 
 cat("\n----- DROPPED: genus-only / unparseable -----\n")
 print(dropped_genus_only %>% count(original_metadata, sort = TRUE), n = Inf)
+
+# =====================================================================
+# ====== Taxonomic demarcation: new species, genera, families? ========
+# =====================================================================
+# PaVE / ICTV thresholds (based on L1 ORF nucleotide identity):
+#   Same species:  >= 90% nt identity
+#   Same genus:    >= 60% nt identity (but < 90% = new species)
+#   New genus:      < 60% nt identity to any known PV
+#   Very distant:   < 45% nt identity (putative novel higher-rank taxon)
+#
+# Data sources for best % nt identity per cluster:
+#   1) alignment_envs.table — NCBI PV refs aligned to Logan centroids
+#   2) blastn_hits_centroids.tsv — Logan centroids BLASTn vs NCBI nt
+# Both already loaded above as `new_table` and `blastn_results`.
+# Here we relax the identity filter to capture ALL hits (any %).
+
+# --- Source 1: alignment_envs.table (best hit per Logan centroid) ---
+# new_table is already loaded at line ~549; reuse it with relaxed filters
+alignment_best <- new_table %>%
+  filter(qcov > 0.7, V10 < 1e-4) %>%   # match novelty search qcov threshold
+  group_by(V5) %>%
+  slice_max(n = 1, V9) %>%
+  ungroup() %>%
+  distinct(V5, .keep_all = TRUE) %>%
+  transmute(
+    sequence = V5,
+    aln_best_pct_id = V9,
+    aln_best_ref = V1,
+    aln_best_hit_name = NA_character_  # this table has no species name column
+  )
+
+# --- Source 2: blastn_hits_centroids.tsv (best hit per centroid) ---
+blastn_best <- blastn_results %>%
+  filter(qcov > 0.7, V10 < 1e-4) %>%   # match novelty search qcov threshold
+  group_by(V1) %>%
+  slice_max(n = 1, V9) %>%
+  ungroup() %>%
+  distinct(V1, .keep_all = TRUE) %>%
+  transmute(
+    sequence = V1,
+    blastn_best_pct_id = V9,
+    blastn_best_ref = V5,
+    blastn_best_hit_name = V12
+  )
+
+# --- Merge: best identity from either source per centroid ---
+# Get centroid names from all_clusters_summary, excluding SRR6976994 repeat artifacts
+cluster_centroids <- all_clusters_summary %>%
+  filter(!cluster_number %in% srr6976994_centroid_clusters) %>%
+  dplyr::select(cluster_number, centroid, status, host_group)
+
+# Normalize centroid names to match alignment_envs.table V5 format
+cluster_centroids <- cluster_centroids %>%
+  mutate(centroid_norm = normalize_v5(centroid))
+
+# Join both hit sources
+cluster_taxonomy <- cluster_centroids %>%
+  left_join(alignment_best, by = c("centroid_norm" = "sequence")) %>%
+  left_join(blastn_best, by = c("centroid" = "sequence")) %>%
+  mutate(
+    # Take the best identity from either source
+    best_pct_id = pmax(aln_best_pct_id, blastn_best_pct_id, na.rm = TRUE),
+    best_hit_name = case_when(
+      !is.na(blastn_best_pct_id) & (is.na(aln_best_pct_id) | blastn_best_pct_id >= aln_best_pct_id) ~ blastn_best_hit_name,
+      !is.na(aln_best_pct_id) ~ aln_best_ref,
+      TRUE ~ NA_character_
+    ),
+    # PaVE taxonomic classification based on L1 nt identity
+    taxonomy_level = case_when(
+      is.na(best_pct_id)       ~ "no_hit",         # no detectable homology
+      best_pct_id < 45         ~ "very_distant",    # putative novel higher-rank taxon
+      best_pct_id < 60         ~ "putative_new_genus",
+      best_pct_id < 90         ~ "new_species",     # same genus, new species
+      TRUE                     ~ "known_species"    # >= 90%, same species
+    )
+  )
+
+# --- Report ---
+cat("\n=====================================================================\n")
+cat("====== TAXONOMIC DEMARCATION (PaVE L1 nt identity thresholds) ======\n")
+cat("=====================================================================\n")
+cat("Thresholds: known species >= 90% | new species 60-90% | new genus < 60% | very distant < 45%\n\n")
+
+tax_summary <- cluster_taxonomy %>%
+  mutate(taxonomy_level = factor(taxonomy_level,
+    levels = c("known_species", "new_species", "putative_new_genus", "very_distant", "no_hit"))) %>%
+  count(taxonomy_level, .drop = FALSE)
+
+print(tax_summary)
+
+cat("\n--- Breakdown by novelty status ---\n")
+print(table(cluster_taxonomy$status, cluster_taxonomy$taxonomy_level, useNA = "ifany"))
+
+cat("\n--- Putative new genus candidates (< 60% nt identity to any known PV) ---\n")
+new_genus_candidates <- cluster_taxonomy %>%
+  filter(taxonomy_level %in% c("putative_new_genus", "very_distant")) %>%
+  dplyr::select(cluster_number, centroid, host_group, best_pct_id, best_hit_name, taxonomy_level) %>%
+  arrange(best_pct_id)
+cat("Count:", nrow(new_genus_candidates), "\n")
+print(new_genus_candidates, n = 50)
+
+cat("\n--- No detectable homology (no blastn/alignment hit at all) ---\n")
+no_hit_clusters <- cluster_taxonomy %>%
+  filter(taxonomy_level == "no_hit") %>%
+  dplyr::select(cluster_number, centroid, host_group, status)
+cat("Count:", nrow(no_hit_clusters), "\n")
+cat("These clusters had no BLASTn or alignment hit with qcov > 0.5 and e-value < 1e-4.\n")
+cat("They may represent novel genera or more distant lineages.\n")
+print(no_hit_clusters, n = 50)
+
+cat("\n--- Identity distribution for novel clusters ---\n")
+novel_identity <- cluster_taxonomy %>%
+  filter(status == "novel") %>%
+  pull(best_pct_id)
+cat("Novel clusters with a detectable hit:", sum(!is.na(novel_identity)), "of", length(novel_identity), "\n")
+if (sum(!is.na(novel_identity)) > 0) {
+  cat("  Min identity:    ", min(novel_identity, na.rm = TRUE), "%\n")
+  cat("  Median identity: ", median(novel_identity, na.rm = TRUE), "%\n")
+  cat("  Mean identity:   ", round(mean(novel_identity, na.rm = TRUE), 1), "%\n")
+  cat("  Max identity:    ", max(novel_identity, na.rm = TRUE), "%\n")
+  cat("  < 60% (new genus):", sum(novel_identity < 60, na.rm = TRUE), "\n")
+  cat("  < 45% (very dist):", sum(novel_identity < 45, na.rm = TRUE), "\n")
+}
+
+# Save full table
+write.table(cluster_taxonomy %>%
+  dplyr::select(cluster_number, centroid, host_group, status,
+                aln_best_pct_id, blastn_best_pct_id, best_pct_id,
+                best_hit_name, taxonomy_level),
+  "outputs/2026.04.13.cluster_taxonomy_demarcation.tsv",
+  sep = "\t", quote = FALSE, row.names = FALSE)
+cat("\nSaved: outputs/2026.04.13.cluster_taxonomy_demarcation.tsv\n")
+
+hist(cluster_taxonomy$best_pct_id[!is.na(cluster_taxonomy$best_pct_id)], breaks = 30)
+
+# Write no-hit centroid IDs for re-running blastn with -task blastn
+# Only include novel clusters — ncbi_virus/blastn clusters may appear as "no_hit"
+# due to name mismatches on the join, but they already have known matches
+no_hit_centroids <- cluster_taxonomy %>%
+  filter(taxonomy_level == "no_hit", status == "novel") %>%
+  pull(centroid)
+write.table(no_hit_centroids, "outputs/no_hit_centroid_ids.list",
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+cat("Wrote", length(no_hit_centroids), "no-hit centroid IDs to outputs/no_hit_centroid_ids.list\n")
+cat("Extract with: seqkit grep -f outputs/no_hit_centroid_ids.list all_novels_final_for_tree.nuc > outputs/no_hit_centroids.nuc\n")
+cat("Then run:     blastn -task blastn -query outputs/no_hit_centroids.nuc -db /home/rnalab/shared/blastnt/nt -outfmt '6 qseqid qstart qend qlen sseqid sstart send slen pident evalue bitscore stitle' -evalue 1e-4 -num_threads 8 -max_target_seqs 5 -out outputs/no_hit_centroids_blastn_task.tsv\n")
+
+no_hit_centroids_blastn <- read.table("files/no_hit_centroids_blastn_task.tsv", sep = "\t")
+colnames(no_hit_centroids_blastn) <- c("qseqid", "qstart", "qend", "qlen",
+                                        "sseqid", "sstart", "send", "slen",
+                                        "pident", "evalue", "bitscore", "stitle")
+
+# Compute qcov and get best hit per query (highest % identity, reasonable qcov)
+no_hit_centroids_blastn$qcov <- abs(no_hit_centroids_blastn$qstart - no_hit_centroids_blastn$qend) / no_hit_centroids_blastn$qlen
+
+# Distribution of qcov across all reblast hits (best hit per query)
+no_hit_blastn_best_unfiltered <- no_hit_centroids_blastn %>%
+  filter(evalue < 1e-5) %>%
+  group_by(qseqid) %>%
+  slice_max(n = 1, pident) %>%
+  ungroup() %>%
+  distinct(qseqid, .keep_all = TRUE)
+
+hist(no_hit_blastn_best_unfiltered$qcov, breaks = 30,
+     main = "Query coverage distribution (reblast, best hit per query, evalue < 1e-5)",
+     xlab = "Query coverage")
+abline(v = 0.7, col = "red", lty = 2)
+abline(v = 0.5, col = "blue", lty = 2)
+legend("topleft", legend = c("qcov = 0.7", "qcov = 0.5"), col = c("red", "blue"), lty = 2)
+
+no_hit_blastn_best <- no_hit_centroids_blastn %>%
+  filter(qcov > 0.5, evalue < 1e-5) %>%
+  group_by(qseqid) %>%
+  slice_max(n = 1, pident) %>%
+  ungroup() %>%
+  distinct(qseqid, .keep_all = TRUE)
+
+# Identify which no-hit centroids still have zero hits
+no_hit_novel_centroids <- cluster_taxonomy %>%
+  filter(taxonomy_level == "no_hit", status == "novel",
+         !cluster_number %in% srr6976994_centroid_clusters) %>%
+  pull(centroid)
+still_no_hit <- setdiff(gsub("_:", "__", no_hit_novel_centroids), no_hit_blastn_best$qseqid)
+
+# Update cluster_taxonomy with new blastn results
+# Remove reblast columns if re-running this block
+cluster_taxonomy <- cluster_taxonomy %>%
+  dplyr::select(-any_of(c("reblast_pct_id", "reblast_hit_name",
+                           "final_best_pct_id", "final_best_hit", "taxonomy_final"))) %>%
+  # Normalize centroid names: _: vs __ difference between cluster summary and FASTA
+  mutate(centroid_join = gsub("_:", "__", centroid)) %>%
+  left_join(
+    no_hit_blastn_best %>%
+      transmute(centroid_join = qseqid,
+                reblast_pct_id = pident,
+                reblast_hit_name = stitle),
+    by = "centroid_join"
+  ) %>%
+  dplyr::select(-centroid_join) %>%
+  mutate(
+    # Final best identity: original blastn/alignment > reblast > NA
+    final_best_pct_id = case_when(
+      !is.na(best_pct_id)      ~ best_pct_id,
+      !is.na(reblast_pct_id)   ~ reblast_pct_id,
+      TRUE                     ~ NA_real_
+    ),
+    final_best_hit = case_when(
+      !is.na(best_pct_id)      ~ best_hit_name,
+      !is.na(reblast_pct_id)   ~ reblast_hit_name,
+      TRUE                     ~ NA_character_
+    ),
+    # Final PaVE classification
+    taxonomy_final = case_when(
+      cluster_number %in% srr6976994_centroid_clusters ~ "excluded_repeat",
+      is.na(final_best_pct_id) ~ "no_hit",
+      final_best_pct_id < 45   ~ "very_distant",
+      final_best_pct_id < 60   ~ "putative_new_genus",
+      final_best_pct_id < 90   ~ "new_species",
+      TRUE                     ~ "known_species"
+    )
+  )
+
+# --- Final report ---
+cat("\n=====================================================================\n")
+cat("====== FINAL TAXONOMY (with -task blastn reblast of no-hit) ========\n")
+cat("=====================================================================\n")
+cat("PaVE L1 nt identity: known >= 90% | new species 60-90% | new genus < 60% | very distant < 45%\n\n")
+
+tax_final <- cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat") %>%
+  mutate(taxonomy_final = factor(taxonomy_final,
+    levels = c("known_species", "new_species", "putative_new_genus", "very_distant", "no_hit"))) %>%
+  count(taxonomy_final, .drop = FALSE)
+print(tax_final)
+
+cat("\n--- Breakdown by original novelty status ---\n")
+
+print(table(
+  cluster_taxonomy %>% filter(taxonomy_final != "excluded_repeat") %>% pull(status),
+  cluster_taxonomy %>% filter(taxonomy_final != "excluded_repeat") %>% pull(taxonomy_final),
+  useNA = "ifany"
+))
+
+cat("\n--- Previously no-hit centroids: reblast results ---\n")
+cat("Had a hit with -task blastn:", nrow(no_hit_blastn_best), "\n")
+cat("Still no hit:               ", length(still_no_hit), "\n")
+
+cat("\n--- Reblast identity distribution ---\n")
+cat("  Min:   ", min(no_hit_blastn_best$pident), "%\n")
+cat("  Median:", median(no_hit_blastn_best$pident), "%\n")
+cat("  Mean:  ", round(mean(no_hit_blastn_best$pident), 1), "%\n")
+cat("  Max:   ", max(no_hit_blastn_best$pident), "%\n")
+
+cat("\n--- Putative new genera (< 60% nt identity) ---\n")
+new_genera <- cluster_taxonomy %>%
+  filter(taxonomy_final %in% c("putative_new_genus", "very_distant"),
+         taxonomy_final != "excluded_repeat") %>%
+  dplyr::select(cluster_number, centroid, host_group, status,
+                final_best_pct_id, final_best_hit, taxonomy_final) %>%
+  arrange(final_best_pct_id)
+cat("Count:", nrow(new_genera), "\n")
+print(new_genera, n = 60)
+
+cat("\n--- Still no hit even with -task blastn ---\n")
+no_hit_final <- cluster_taxonomy %>%
+  filter(taxonomy_final == "no_hit", status == "novel") %>%
+  dplyr::select(cluster_number, centroid, host_group, status)
+cat("Count:", nrow(no_hit_final), "\n")
+print(no_hit_final, n = 30)
+
+hist(no_hit_blastn_best$pident, breaks = 30,
+     main = "Reblast (-task blastn) % identity for previously no-hit clusters",
+     xlab = "% nucleotide identity")
+
+# Save final table
+write.table(cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat") %>%
+  dplyr::select(cluster_number, centroid, host_group, status,
+                best_pct_id, reblast_pct_id, final_best_pct_id,
+                final_best_hit, taxonomy_level, taxonomy_final),
+  "outputs/2026.04.14.cluster_taxonomy_final.tsv",
+  sep = "\t", quote = FALSE, row.names = FALSE)
+cat("\nSaved: outputs/2026.04.14.cluster_taxonomy_final.tsv\n")
+
+## --- Histogram: % identity distribution across all 1097 centroids ---
+# Bin the hits in 5% increments, and add a separate bar for "no hit" (<50% proxy)
+ordered_gen_colors <- c(
+  "Human" = "#D44746", "Non-human Primate" = "#F0B2B2",
+  "Rodent" = "#D4B046", "Cetacean" = "#175F67",
+  "Bovine" = "#8C46D4", "Pinnipeds" = "#E146D4",
+  "Cervine" = "#882020", "Canine" = "#44C8D6",
+  "Feline" = "#A3E4EB", "Equine" = "#941888",
+  "Pangolin" = "#F0E0B2", "Bat" = "#C099E7",
+  "Avian" = "#3092D4", "Reptile" = "#C9E349",
+  "Amphibian" = "#53741D", "Ray-finned Fish" = "#9BBED1",
+  "Other" = "#CCCCCC", "Porcine" = "#ffb44a"
+)
+
+hist_data <- cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat") %>%
+  mutate(
+    pid_bin = case_when(
+      is.na(final_best_pct_id) ~ "<50% (no hit)",
+      final_best_pct_id >= 95  ~ "95-100",
+      final_best_pct_id >= 90  ~ "90-95",
+      final_best_pct_id >= 85  ~ "85-90",
+      final_best_pct_id >= 80  ~ "80-85",
+      final_best_pct_id >= 75  ~ "75-80",
+      final_best_pct_id >= 70  ~ "70-75",
+      final_best_pct_id >= 65  ~ "65-70",
+      final_best_pct_id >= 60  ~ "60-65",
+      final_best_pct_id >= 55  ~ "55-60",
+      final_best_pct_id >= 50  ~ "50-55",
+      TRUE                     ~ "<50% (no hit)"
+    )
+  ) %>%
+  # Collapse any host_group without an assigned color into "Other"
+  mutate(host_plot = ifelse(is.na(host_group) | host_group == "" |
+                               !host_group %in% names(ordered_gen_colors),
+                             "Other", host_group)) %>%
+  count(pid_bin, host_plot)
+
+# Bin ordering: no-hit on the far left, then a gap, then numerical bins low-to-high
+bin_order <- c("<50% (no hit)", " ", "50-55", "55-60", "60-65", "65-70",
+               "70-75", "75-80", "80-85", "85-90", "90-95", "95-100")
+# Order host_plot by total count across all bins (largest at bottom of stack)
+host_order <- hist_data %>%
+  group_by(host_plot) %>%
+  summarise(total_n = sum(n), .groups = "drop") %>%
+  arrange(desc(total_n)) %>%
+  pull(host_plot)
+# Put "Other" at the very bottom regardless
+host_order <- c(setdiff(host_order, "Other"), "Other")
+
+hist_data <- hist_data %>%
+  bind_rows(tibble(pid_bin = " ", host_plot = "Other", n = 0)) %>%
+  mutate(pid_bin = factor(pid_bin, levels = bin_order),
+         host_plot = factor(host_plot, levels = rev(host_order)))
+# rev() because ggplot stacks from bottom up using reverse factor order
+
+# Totals per bin for labels
+bin_totals <- hist_data %>%
+  group_by(pid_bin) %>%
+  summarise(total = sum(n), .groups = "drop")
+
+## --- Version 1: stacked histogram, stacks ordered by total count ---
+p_hist <- ggplot(hist_data, aes(x = pid_bin, y = n, fill = host_plot)) +
+  geom_col(color = NA, linewidth = 0) +
+  geom_text(data = bin_totals,
+            aes(x = pid_bin, y = total, label = ifelse(total > 0, total, "")),
+            inherit.aes = FALSE, vjust = -0.3, size = 3.5) +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    breaks = host_order) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)",
+       y = "Number of centroid clusters",
+       fill = "Host group",
+       title = paste0("L1 nt identity distribution for ",
+                      sum(bin_totals$total), " centroid clusters")) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        plot.title = element_text(size = 12),
+        legend.position = "right")
+
+ggsave("outputs/2026.04.15.centroid_pct_identity_histogram.png",
+       p_hist, width = 22, height = 20, units = "cm", dpi = 300)
+print(p_hist)
+
+## --- Version 2: faceted, one panel per host group ---
+# Drop the gap bar for the facet version — it doesn't make sense per-panel
+hist_facet <- hist_data %>%
+  filter(pid_bin != " ", n > 0 | pid_bin == "<50% (no hit)")
+
+# Only facet on hosts that actually have data
+hosts_with_data <- hist_facet %>%
+  group_by(host_plot) %>%
+  summarise(total = sum(n), .groups = "drop") %>%
+  filter(total > 0) %>%
+  arrange(desc(total)) %>%
+  pull(host_plot) %>%
+  as.character()
+
+hist_facet <- hist_facet %>%
+  filter(host_plot %in% hosts_with_data) %>%
+  mutate(host_plot = factor(host_plot, levels = hosts_with_data))
+
+p_hist_facet <- ggplot(hist_facet, aes(x = pid_bin, y = n, fill = host_plot)) +
+  geom_col(color = "black", linewidth = 0.2) +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    guide = "none") +
+  facet_wrap(~ host_plot, scales = "free_y", ncol = 4) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)",
+       y = "Number of centroid clusters",
+       title = "L1 nt identity distribution per host group") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        strip.text = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size = 12))
+
+ggsave("outputs/2026.04.15.centroid_pct_identity_histogram_faceted.png",
+       p_hist_facet, width = 28, height = 18, units = "cm", dpi = 300)
+print(p_hist_facet)
+
+## --- Version 3: grouped (dodged) bars, one bar per host per bin ---
+hist_dodge <- hist_data %>%
+  filter(pid_bin != " ", host_plot %in% hosts_with_data) %>%
+  mutate(host_plot = factor(host_plot, levels = hosts_with_data))
+
+p_hist_dodge <- ggplot(hist_dodge, aes(x = pid_bin, y = n, fill = host_plot)) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0.1),
+           color = "black", linewidth = 0.2) +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    breaks = hosts_with_data) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)",
+       y = "Number of centroid clusters",
+       fill = "Host group",
+       title = "L1 nt identity distribution, grouped by host") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        plot.title = element_text(size = 12),
+        legend.position = "right")
+
+ggsave("outputs/2026.04.15.centroid_pct_identity_histogram_dodged.png",
+       p_hist_dodge, width = 32, height = 14, units = "cm", dpi = 300)
+print(p_hist_dodge)
+
+## --- Version 4: proportional stacked (100%) - host composition per bin ---
+hist_prop <- hist_data %>% filter(pid_bin != " ")
+
+p_hist_prop <- ggplot(hist_prop, aes(x = pid_bin, y = n, fill = host_plot)) +
+  geom_col(color = "white", linewidth = 0.3, position = "fill") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    breaks = host_order) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)",
+       y = "Proportion of centroid clusters",
+       fill = "Host group",
+       title = "Host composition per identity bin") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        plot.title = element_text(size = 12),
+        legend.position = "right")
+
+ggsave("outputs/2026.04.15.centroid_pct_identity_histogram_proportional.png",
+       p_hist_prop, width = 22, height = 12, units = "cm", dpi = 300)
+print(p_hist_prop)
+
+## --- Enrichment table: obs/exp by host x identity bin ---
+host_totals_h <- hist_data %>%
+  filter(pid_bin != " ") %>%
+  group_by(host_plot) %>%
+  summarise(host_total = sum(n), .groups = "drop") %>%
+  mutate(host_freq = host_total / sum(host_total))
+
+bin_totals_h <- hist_data %>%
+  filter(pid_bin != " ") %>%
+  group_by(pid_bin) %>%
+  summarise(bin_total = sum(n), .groups = "drop")
+
+enrichment <- hist_data %>%
+  filter(pid_bin != " ") %>%
+  left_join(host_totals_h, by = "host_plot") %>%
+  left_join(bin_totals_h, by = "pid_bin") %>%
+  mutate(expected = round(bin_total * host_freq, 2),
+         obs_exp_ratio = round(n / expected, 2),
+         pct_of_bin = round(100 * n / bin_total, 1)) %>%
+  dplyr::select(pid_bin, host_plot, n, pct_of_bin, expected, obs_exp_ratio) %>%
+  arrange(pid_bin, desc(obs_exp_ratio))
+
+# Per-cell Fisher's exact test: is this host enriched/depleted in this bin?
+# 2x2 table: (host in bin, host not in bin) vs (other hosts in bin, other hosts not in bin)
+grand_total <- sum(host_totals_h$host_total)
+
+enrichment <- enrichment %>%
+  left_join(host_totals_h %>% dplyr::select(host_plot, host_total),
+            by = "host_plot") %>%
+  left_join(bin_totals_h, by = "pid_bin") %>%
+  rowwise() %>%
+  mutate(
+    a = n,                                                 # this host, this bin
+    b = host_total - n,                                    # this host, other bins
+    c_ = bin_total - n,                                    # other hosts, this bin
+    d = grand_total - host_total - bin_total + n,          # other hosts, other bins
+    p_value = tryCatch(
+      fisher.test(matrix(c(a, b, c_, d), nrow = 2))$p.value,
+      error = function(e) NA_real_
+    )
+  ) %>%
+  ungroup() %>%
+  mutate(p_adj_bh = p.adjust(p_value, method = "BH"),
+         sig = case_when(
+           is.na(p_adj_bh) ~ "",
+           p_adj_bh < 0.001 ~ "***",
+           p_adj_bh < 0.01  ~ "**",
+           p_adj_bh < 0.05  ~ "*",
+           TRUE             ~ "ns"
+         )) %>%
+  dplyr::select(pid_bin, host_plot, n, pct_of_bin, expected, obs_exp_ratio,
+                p_value, p_adj_bh, sig) %>%
+  mutate(p_value = signif(p_value, 3),
+         p_adj_bh = signif(p_adj_bh, 3))
+
+cat("\n--- Host enrichment by identity bin (Fisher's exact, BH-adjusted) ---\n")
+cat("obs/exp > 1 = overrepresented; sig: *** <0.001, ** <0.01, * <0.05\n")
+print(enrichment, n = 200)
+
+write.table(enrichment, "outputs/2026.04.15.host_enrichment_by_identity.tsv",
+            sep = "\t", quote = FALSE, row.names = FALSE)
+
+# Focused: only significant enrichments (p_adj < 0.05, obs/exp > 1)
+cat("\n--- Significant overrepresentations (p_adj < 0.05, obs/exp > 1) ---\n")
+enrichment %>%
+  filter(!is.na(p_adj_bh), p_adj_bh < 0.05, obs_exp_ratio > 1) %>%
+  arrange(pid_bin, desc(obs_exp_ratio)) %>%
+  print(n = 100)
+
+## --- Enrichment heatmap: log2(obs/exp) with significance asterisks ---
+enrich_plot <- enrichment %>%
+  mutate(log2_oe = log2(pmax(obs_exp_ratio, 0.01)),  # avoid log(0)
+         log2_oe = ifelse(is.infinite(log2_oe), NA, log2_oe),
+         # Cap at +/- 3 for color scale so extremes don't wash out the rest
+         log2_oe_cap = pmin(pmax(log2_oe, -3), 3),
+         cell_label = paste0(n, "\n", sig))
+
+p_enrich <- ggplot(enrich_plot, aes(x = pid_bin, y = host_plot, fill = log2_oe_cap)) +
+  geom_tile(color = "white", linewidth = 0.4) +
+  geom_text(aes(label = cell_label), size = 2.8, lineheight = 0.9) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B",
+                       midpoint = 0, limits = c(-3, 3),
+                       name = "log2(obs/exp)",
+                       breaks = c(-3, -1.5, 0, 1.5, 3),
+                       labels = c("<= -3", "-1.5", "0", "1.5", ">= 3")) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)",
+       y = "Host group",
+       title = "Host enrichment per identity bin",
+       subtitle = "Cell: count + Fisher's significance (*** <0.001, ** <0.01, * <0.05)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        axis.text.y = element_text(size = 10),
+        panel.grid = element_blank(),
+        plot.title = element_text(size = 12),
+        plot.subtitle = element_text(size = 9))
+
+ggsave("outputs/2026.04.15.host_enrichment_heatmap.png",
+       p_enrich, width = 24, height = 14, units = "cm", dpi = 300)
+print(p_enrich)
+
+## --- Per-host % identity distributions: ridge + boxplot ---
+# Prepare data - use 60 as placeholder for no-hit so they plot on the left
+per_host <- cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat") %>%
+  mutate(host_plot = ifelse(is.na(host_group) | host_group == "" |
+                               !host_group %in% names(ordered_gen_colors),
+                             "Other", host_group),
+         pid_for_plot = ifelse(is.na(final_best_pct_id), 60, final_best_pct_id),
+         is_no_hit = is.na(final_best_pct_id))
+
+# Order hosts by median identity (no-hit counts as 40, so these float to bottom)
+host_median_order <- per_host %>%
+  group_by(host_plot) %>%
+  summarise(med_pid = median(pid_for_plot), .groups = "drop") %>%
+  arrange(med_pid) %>%
+  pull(host_plot)
+
+per_host <- per_host %>%
+  mutate(host_plot = factor(host_plot, levels = host_median_order))
+
+# Version A: Ridge plot
+if (!requireNamespace("geomtextpath", quietly = TRUE)) install.packages("geomtextpath")
+library(ggridges)
+library(geomtextpath)
+
+# Build significance-star annotations for ridges: one star-set per significantly
+# enriched (host x bin) cell (p_adj < 0.05, obs/exp > 1). Place at bin midpoint,
+# slightly above each host's ridge baseline.
+bin_midpoints <- c(
+  " "      = 40,
+  "50-55"  = 52.5, "55-60" = 57.5, "60-65" = 62.5, "65-70" = 67.5,
+  "70-75"  = 72.5, "75-80" = 77.5, "80-85" = 82.5, "85-90" = 87.5,
+  "90-95"  = 92.5, "95-100" = 97.5
+)
+
+sig_stars <- enrichment %>%
+  filter(!is.na(p_adj_bh), p_adj_bh < 0.05, obs_exp_ratio > 1,
+         host_plot %in% host_median_order) %>%
+  mutate(x_pos = bin_midpoints[as.character(pid_bin)],
+         y_pos = as.numeric(factor(host_plot, levels = host_median_order)) - 0.15,
+         star  = case_when(p_adj_bh < 0.001 ~ "***",
+                           p_adj_bh < 0.01  ~ "**",
+                           TRUE             ~ "*"))
+
+sig_stars$x_pos <- replace_na(sig_stars$x_pos, 62.5)
+sig_stars <- left_join(sig_stars, (rownames_to_column(as.data.frame(ordered_gen_colors))), by=c("host_plot" = "rowname"))
+enrichment_agg <- aggregate(enrichment$n, by=list(Category=enrichment$host_plot), FUN=sum)
+enrichment_agg <- left_join(enrichment_agg, select(sig_stars, host_plot, x_pos, y_pos), by = c("Category" = "host_plot"))
+
+enrichment_agg <- enrichment_agg %>%
+  mutate(y_pos = as.numeric(factor(Category, levels = host_median_order)) - 0.15)
+enrichment_agg$x_label <- paste0("n = ", enrichment_agg$x)
+
+bin_edges <- c(65, 70, 75, 80, 85, 90, 95, 100)
+
+p_ridge <- ggplot(per_host, aes(x = pid_for_plot, y = host_plot, fill = host_plot)) +
+  # faint gridlines at every 5% bin edge to make bins visually distinct
+  geom_vline(xintercept = bin_edges, color = "grey85", linewidth = 0.3) +
+  geom_density_ridges(alpha = 0.8, scale = 1, rel_min_height = 0.01,
+                      quantile_lines = TRUE, quantiles = 2, linewidth = 0.3) +
+  geom_vline(xintercept = 90, color = "grey40", linetype = "dashed") +
+  geom_text(data = sig_stars,
+            aes(x = x_pos, y = y_pos, label = star, color = ordered_gen_colors),
+            inherit.aes = FALSE,
+            size = 3.2, fontface = "bold", nudge_y = 0.03)+
+            scale_color_identity() +
+  geom_text(data = enrichment_agg,
+            aes(x = 115, y = y_pos, label = x_label),
+            inherit.aes = FALSE,
+            size = 3.2)+
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    guide = "none") +
+  scale_x_continuous(breaks = c(60, 70, 80, 90, 100),
+                     labels = c("no hit", 70, 80, 90, 100)) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)", y = NULL,
+       title = "L1 nt identity distribution per host group",
+       subtitle = "Stars: Fisher's enrichment (p_adj<0.05, obs/exp>1) at that bin. Dashed lines: 60% / 90% thresholds.") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 12),
+        plot.subtitle = element_text(size = 9),
+        panel.grid.minor = element_blank())
+
+ggsave("outputs/2026.04.15.host_pct_identity_ridgeplot.png",
+       p_ridge, width = 22, height = 30, units = "cm", dpi = 300)
+print(p_ridge)
+#########
+library(dplyr)
+# bins: 1% from 60-100, separate no-hit bin
+bin_edges_main <- seq(60, 100, by = 5)
+bin_edges_nohit <- c(51, 55)  # no-hit bin shifted left to keep gap
+bin_edges_all <- c(bin_edges_nohit, bin_edges_main)
+
+# remap no-hit values (40 placeholder in pid_for_plot) to 53 for the separated bin
+per_host <- per_host %>%
+  mutate(pid_plot = ifelse(is.na(final_best_pct_id) | pid_for_plot == 40,
+                           53, pid_for_plot))
+
+# recompute hist_data with new bins
+hist_data <- per_host %>%
+  mutate(bin = cut(pid_plot, breaks = bin_edges_all, right = FALSE, include.lowest = TRUE)) %>%
+  group_by(host_plot, bin) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  group_by(host_plot) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup() %>%
+  mutate(bin_mid = (as.numeric(sub("\\[|\\(", "", sub(",.*", "", as.character(bin)))) +
+                    as.numeric(sub(".*,", "", sub("\\]|\\)", "", as.character(bin))))) / 2)
+
+# recompute medians
+medians <- per_host %>%
+  group_by(host_plot) %>%
+  summarise(med = median(pid_plot), .groups = "drop") %>%
+  mutate(med_bin = cut(med, breaks = bin_edges_all, right = FALSE, include.lowest = TRUE))
+
+hist_data <- hist_data %>%
+  left_join(medians %>% select(host_plot, med_bin), by = "host_plot") %>%
+  mutate(is_median_bin = bin == med_bin)
+
+host_order <- medians %>% arrange(med) %>% pull(host_plot)
+hist_data <- hist_data %>%
+  mutate(host_plot = factor(host_plot, levels = host_order))
+
+# y positions — multiply by row_spacing (> 1) to pad gaps between host rows
+row_spacing <- 1.3
+y_lookup <- data.frame(
+  host_plot = factor(host_order, levels = host_order),
+  y_base = seq_along(host_order) * row_spacing
+)
+
+hist_data2 <- hist_data %>%
+  left_join(y_lookup, by = "host_plot") %>%
+  mutate(ymin = y_base,
+         ymax = y_base + prop / max(prop, na.rm = TRUE) * 0.8)
+
+top3_labels <- hist_data2 %>%
+  filter(n > 0) %>%
+  group_by(host_plot) %>%
+  slice_max(n, n = 3, with_ties = FALSE) %>%
+  ungroup()
+
+# Significance stars for the histogram: map enrichment bins -> histogram bin_mids,
+# then attach to the matching bar's ymax so stars sit just above the bar top.
+bin_mid_from_pid_bin <- c(
+  "<50% (no hit)" = 53,
+  "60-65"  = 62.5, "65-70" = 67.5, "70-75" = 72.5, "75-80" = 77.5,
+  "80-85"  = 82.5, "85-90" = 87.5, "90-95" = 92.5, "95-100" = 97.5
+)
+
+sig_stars_hist <- enrichment %>%
+  filter(!is.na(p_adj_bh), p_adj_bh < 0.05, obs_exp_ratio > 1,
+         host_plot %in% host_order) %>%
+  mutate(bin_mid = bin_mid_from_pid_bin[as.character(pid_bin)],
+         star = case_when(p_adj_bh < 0.001 ~ "***",
+                          p_adj_bh < 0.01  ~ "**",
+                          TRUE             ~ "*")) %>%
+  filter(!is.na(bin_mid)) %>%
+  inner_join(hist_data2 %>% dplyr::select(host_plot, bin_mid, ymax),
+             by = c("host_plot", "bin_mid")) %>%
+  mutate(host_plot = factor(host_plot, levels = host_order))
+
+# plot
+p_hist <- ggplot(hist_data2) +
+  geom_vline(xintercept = seq(60, 100, by = 5), color = "grey75", linewidth = 0.1) +
+  geom_vline(xintercept = 90, color = "grey40", linetype = "dashed") +
+  geom_rect(aes(xmin = bin_mid - 2.1, xmax = bin_mid + 2.1,
+                ymin = ymin, ymax = ymax,
+                fill = host_plot, alpha = is_median_bin),
+            color = "white", linewidth = 0.1) +
+  geom_text(data = top3_labels,
+            aes(x = bin_mid, y = ymax, label = n),
+            size = 1.2, vjust = -0.3) +
+  geom_text(data = sig_stars_hist,
+            aes(x = bin_mid, y = ymax, label = star),
+            size = 1.2, vjust = -1.3, fontface = "bold", color = "grey60") +
+  geom_text(data = y_lookup %>%
+              left_join(hist_data %>% group_by(host_plot) %>% summarise(total = sum(n)),
+                        by = "host_plot"),
+            aes(x = 102, y = y_base + 0.4, label = paste0("n = ", total)),
+            size = 1.8, hjust = 0) +
+  # baseline shifted slightly below bar bottoms so short bars stay visible
+  geom_segment(data = y_lookup,
+               aes(x = 51, xend = 55, y = y_base - 0.02, yend = y_base - 0.02),
+               color = "black", linewidth = 0.2) +
+  geom_segment(data = y_lookup,
+               aes(x = 56, xend = 101, y = y_base - 0.02, yend = y_base - 0.02),
+               color = "black", linewidth = 0.2) +
+  geom_segment(data = y_lookup,
+               aes(x = 56, y = y_base - 0.08, xend = 56, yend = y_base + 0.85),
+               color = "black", linewidth = 0.2) +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80", guide = "none") +
+  scale_alpha_manual(values = c("TRUE" = 1, "FALSE" = 0.45), guide = "none") +
+    scale_x_continuous(breaks = c(53, 60, 70, 80, 90, 100),
+                     labels = c("no hit", 60, 70, 80, 90, 100),
+                     limits = c(50, 108)) +
+  coord_cartesian(clip = "off") +
+  scale_y_continuous(breaks = y_lookup$y_base + 0.4,
+                     labels = y_lookup$host_plot,
+                     expand = expansion(add = 0.5)) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)", y = NULL,
+       title = "L1 nt identity distribution per host group") +
+ theme_minimal(base_size = 7) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(hjust = 1),
+        plot.margin = margin(5, 40, 5, 5))
+
+print(p_hist)
+
+
+
+ggsave("outputs/2026.04.15.host_pct_identity_histplot.png",
+       p_hist, width = 8, height = 10, units = "cm", dpi = 600)
+# Version B: Box + jitter plot
+p_box <- ggplot(per_host, aes(x = pid_for_plot, y = host_plot, fill = host_plot)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.6, linewidth = 0.3) +
+  geom_jitter(aes(color = is_no_hit), height = 0.25, size = 0.8, alpha = 0.6) +
+  geom_vline(xintercept = 50, color = "grey40", linetype = "dashed") +
+  geom_vline(xintercept = 90, color = "grey40", linetype = "dashed") +
+  scale_fill_manual(values = ordered_gen_colors, na.value = "grey80",
+                    guide = "none") +
+  scale_color_manual(values = c("FALSE" = "grey30", "TRUE" = "red"),
+                     labels = c("has hit", "no hit"), name = NULL) +
+  scale_x_continuous(breaks = c(50, 60, 70, 80, 90, 100),
+                     labels = c("no hit", 60, 70, 80, 90, 100)) +
+  labs(x = "Best L1 nt identity to NCBI nt (%)", y = NULL,
+       title = "L1 nt identity per cluster, by host group",
+       subtitle = "Red dots: no-hit clusters (plotted at x = 40). Dashed lines: 60% and 90% thresholds.") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 12),
+        plot.subtitle = element_text(size = 9),
+        legend.position = "bottom",
+        panel.grid.minor = element_blank())
+
+ggsave("outputs/2026.04.15.host_pct_identity_boxplot.png",
+       p_box, width = 22, height = 14, units = "cm", dpi = 300)
+print(p_box)
+
+# Wide composition matrix: % of each bin by host
+pct_matrix <- hist_data %>%
+  filter(pid_bin != " ") %>%
+  left_join(bin_totals_h, by = "pid_bin") %>%
+  mutate(pct = round(100 * n / bin_total, 1)) %>%
+  dplyr::select(pid_bin, host_plot, pct) %>%
+  tidyr::pivot_wider(names_from = pid_bin, values_from = pct, values_fill = 0)
+
+cat("\n--- Host composition (%) per identity bin ---\n")
+print(pct_matrix, n = 100)
+
+cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat",
+         is.na(host_group) | host_group == "") %>%
+  dplyr::select(cluster_number, centroid, host_group, status, final_best_pct_id, final_best_hit)
+
+## --- Human-associated no-hit / very divergent clusters ---
+human_divergent <- cluster_taxonomy %>%
+  filter(taxonomy_final != "excluded_repeat",
+         host_group == "Human",
+         is.na(final_best_pct_id) | final_best_pct_id < 70) %>%
+  dplyr::select(cluster_number, centroid, host_group, status,
+                final_best_pct_id, final_best_hit, taxonomy_final) %>%
+  arrange(final_best_pct_id)
+
+cat("\n--- Human-associated divergent/no-hit clusters ---\n")
+cat("Count:", nrow(human_divergent), "\n")
+print(human_divergent, n = 50)
+
+write.table(human_divergent,
+            "outputs/2026.04.15.human_divergent_clusters.tsv",
+            sep = "\t", quote = FALSE, row.names = FALSE)
+
+## --- Export final no-hit centroid IDs for 60% clustering ---
+# These are the sequences that remain unresolved after both megablast and -task blastn.
+# To count new genera, cluster them at 60% nt identity.
+no_hit_final_ids <- cluster_taxonomy %>%
+  filter(taxonomy_final == "no_hit", status == "novel") %>%
+  pull(centroid) %>%
+  gsub("_:", "__", .)  # normalize to match FASTA headers
+write.table(no_hit_final_ids, "outputs/no_hit_final_centroid_ids.list",
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+cat("\nWrote", length(no_hit_final_ids), "final no-hit centroid IDs\n")
+cat("Extract with: seqkit grep -f outputs/no_hit_final_centroid_ids.list files/all_novels_final_for_tree.nuc > outputs/no_hit_final_centroids.nuc\n")
+cat("Then cluster: usearch -cluster_fast outputs/no_hit_final_centroids.nuc -id 0.60 -centroids outputs/no_hit_final_genus_centroids.nuc -uc files/no_hit_final_genus_clusters.uc\n")
+
+## --- 60% nt identity clustering of final no-hit centroids ---
+# Each cluster = one putative new genus.
+no_hit_genus_clusters <- read.table("files/no_hit_final_genus_clusters.uc", sep = "\t",
+                                     quote = "", fill = TRUE)
+colnames(no_hit_genus_clusters) <- c("type", "cluster_num", "length", "pct_id",
+                                      "strand", "col6", "col7", "col8", "query", "target")
+
+# S = centroid (seed), H = hit (member), C = cluster summary
+cluster_seeds <- no_hit_genus_clusters %>% filter(type == "S")
+cluster_hits  <- no_hit_genus_clusters %>% filter(type == "H")
+cluster_summary <- no_hit_genus_clusters %>% filter(type == "C")
+
+# Cluster size distribution
+cluster_sizes <- cluster_summary %>%
+  dplyr::select(cluster_num, size = length) %>%
+  arrange(desc(size))
+
+cat("\n=====================================================================\n")
+cat("====== 60% NT IDENTITY CLUSTERING OF NO-HIT CENTROIDS =============\n")
+cat("=====================================================================\n")
+cat("Total sequences clustered:", nrow(cluster_seeds) + nrow(cluster_hits), "\n")
+cat("Number of clusters (putative new genera):", nrow(cluster_seeds), "\n")
+cat("\nCluster size distribution:\n")
+print(table(cluster_sizes$size))
+
+cat("\nSingleton clusters (unique genus-level lineages):",
+    sum(cluster_sizes$size == 1), "\n")
+cat("Multi-member clusters (genus with multiple new species):",
+    sum(cluster_sizes$size > 1), "\n")
+
+cat("\nWithin-cluster identity range (H records):\n")
+cat("  Min:   ", min(cluster_hits$pct_id), "%\n")
+cat("  Median:", median(cluster_hits$pct_id), "%\n")
+cat("  Max:   ", max(cluster_hits$pct_id), "%\n")
+
+cat("\nSince -task blastn detects homology down to ~50% nt identity,\n")
+cat("these", nrow(cluster_seeds), "clusters represent putative new genera at < 50% identity to known PVs.\n")
+
+# What does the reblast file actually contain?
+length(unique(no_hit_centroids_blastn$qseqid))
+
+# How many are _ka_f_ format vs Pathracer format?
+sum(grepl("_ka_f_", unique(no_hit_centroids_blastn$qseqid)))
+sum(grepl("Score=", unique(no_hit_centroids_blastn$qseqid)))
+
+# And in the no-hit centroids?
+no_hit_cents <- cluster_taxonomy$centroid[cluster_taxonomy$taxonomy_level == "no_hit"]
+sum(grepl("_ka_f_", no_hit_cents))
+sum(grepl("Score=", no_hit_cents))
+
+# Compare a few directly
+head(intersect(no_hit_centroids_blastn$qseqid, no_hit_cents), 3)
+head(setdiff(no_hit_cents[grepl("_ka_f_", no_hit_cents)], no_hit_centroids_blastn$qseqid), 3)
+head(no_hit_centroids_blastn$qseqid[grepl("_ka_f_", no_hit_centroids_blastn$qseqid)], 3)
+
+print(p_hist)
