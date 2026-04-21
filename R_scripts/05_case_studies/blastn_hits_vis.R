@@ -6,7 +6,15 @@ library(gggenes)
 # =====================================================================
 
 plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
+was_flipped <- sum(gene_df$start > gene_df$end) > sum(gene_df$start < gene_df$end)
 
+ if (was_flipped) {
+    gene_df <- gene_df %>%
+      mutate(new_start = genome_length - start + 1,
+             new_end   = genome_length - end   + 1,
+             start = new_start, end = new_end) %>%
+      select(-new_start, -new_end)
+  }
   # Orient the contig so the PV genome reads 5'->3' left-to-right.
   # If most ORFs are encoded on the reverse strand of the contig
   # (start > end in native contig coords), reverse-complement the
@@ -82,6 +90,14 @@ plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
   )
 
   p <- ggplot(gene_layer, aes(xmin = start, xmax = end, y = molecule, fill = gene, forward = TRUE)) +
+  geom_segment(aes(x = 1, xend = genome_length, y = molecule, yend = molecule),
+               inherit.aes = FALSE,
+               data = data.frame(molecule = contig_id, genome_length = genome_length),
+               color = "grey60", linewidth = 0.5) +
+               geom_segment(data = data.frame(molecule = contig_id, genome_length = genome_length),
+               aes(x = 1, xend = genome_length, y = -Inf, yend = -Inf),
+               inherit.aes = FALSE,
+               color = "grey70", linewidth = 0.3) +
     geom_gene_arrow(arrowhead_height = unit(5, "mm"), arrowhead_width = unit(2, "mm"),
                     arrow_body_height = unit(5, "mm"), colour = "white", alpha = 0.8) +
     geom_text(data = gene_label_df,
@@ -98,7 +114,20 @@ plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
                fill = "white", label.size = 0.2, label.padding = unit(2, "pt"),
                color = "grey30") +
     scale_fill_manual(values = color_match_genes) +
-    scale_x_continuous(expand = expansion(mult = 0.08)) +
+    scale_x_continuous(
+    expand = expansion(mult = 0.08),
+    breaks = if (was_flipped) {
+      original_breaks <- seq(0, genome_length, by = 1000)
+      genome_length - original_breaks + 1
+    } else {
+      seq(0, genome_length, by = 1000)
+    },
+    labels = if (was_flipped) {
+      function(x) format(round(genome_length - x + 1), big.mark = ",")
+    } else {
+      function(x) format(round(x), big.mark = ",")
+    }
+  ) +
     # Title anchored at the left edge of the genome (x = 1 on normal axis)
     annotate("text", x = 1, y = 1.50,
              label = paste0(contig_id, ": ", title_label, "  (",
@@ -115,7 +144,7 @@ plot_genome_map <- function(gene_df, contig_id, title_label, genome_length) {
           axis.title = element_blank(),
           panel.grid = element_blank(),
           panel.border = element_blank(),
-          axis.line.x = element_line(color = "grey70", linewidth = 0.3))
+          axis.line.x = element_blank())
 
   return(p)
 }
