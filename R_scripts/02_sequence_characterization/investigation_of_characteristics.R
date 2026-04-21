@@ -5,9 +5,6 @@ all_ncbi_pv_sto_sto_fr_split <- split(all_ncbi_pv_sto_sto, all_ncbi_pv_sto_sto$d
 
 all_ncbi_pv_sto_sto_fr_split_contigs <- purrr::reduce(all_ncbi_pv_sto_sto_fr_split, dplyr::inner_join, by = 'contig')
 
-#get contigs that are common between the two split dfs
-fw_rev_contigs <- unique(all_ncbi_pv_sto_sto_fr_split$contig)
-
 #start with forward contigs and start of regions
 func1 <- function(x) head(x,1)   # if duplicate, use first value
 all_ncbi_pv_sto_sto_order_start_fw <- aggregate(all_ncbi_pv_sto_sto_fr_split$fw[c("envcoord_from")], by=list(contig=all_ncbi_pv_sto_sto_fr_split$fw$contig,pfam=all_ncbi_pv_sto_sto_fr_split$fw$pfam), func1)

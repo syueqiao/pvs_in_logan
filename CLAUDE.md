@@ -16,7 +16,6 @@ This repository documents a **papillomavirus (PV) discovery and characterization
 pvs_in_logan/
 ├── CLAUDE.md                          # This file - AI assistant guide
 ├── README.md                          # Project overview
-├── R_SCRIPTS_ANALYSIS.md              # Detailed R scripts analysis report
 ├── R_scripts/                         # All R analysis scripts
 │   ├── TO_DO.md                       # Bug tracker and checklist
 │   ├── 00_utilities/
@@ -25,20 +24,27 @@ pvs_in_logan/
 │   │   ├── logan_3.R                  # Feb 7 PV analysis, novelty search, full L1 ID
 │   │   └── logan_3_novelty.R          # Updated novelty search with blastn centroids
 │   ├── 02_sequence_characterization/
-│   │   ├── investigation_of_characteristics.R  # L1 domain inversion/coverage analysis
+│   │   ├── fetch_missing_library_source.R     # Batch ENA API query for missing library metadata
+│   │   ├── investigation_of_characteristics.R # L1 domain inversion/coverage analysis
 │   │   ├── L1_pathracer_mining.R      # Pathracer pipeline setup
 │   │   ├── ncbi_L1_character.R        # NCBI L1 characterization
 │   │   ├── pathracer_fullness_hmm.R   # Pathracer output analysis
 │   │   ├── pilot_pr_test.R            # Pathracer pilot testing
+│   │   ├── pv_gene_proportions_by_library.R   # PV gene proportions by SRA library type
 │   │   └── vert_counts.R             # Vertebrate PV counts analysis
 │   ├── 03_phylogenetics/
-│   │   └── L1_based_trees_and_annotation.R  # Main tree viz, annotation, host classification
+│   │   ├── L1_based_trees_and_annotation.R  # Main tree viz, annotation, host classification
+│   │   └── test_21k_host.R           # Host metadata resolution, novelty classification, enrichment
 │   ├── 04_geographic_analysis/
 │   │   ├── biomes.R                   # Biome/ecology analysis (WWF ecoregions)
+│   │   ├── biomes_stats_test.R        # Moran's I, Getis-Ord Gi* hotspot analysis
 │   │   ├── geo_analysis.R             # Geographic resampling analysis
+│   │   ├── geo_setup.R               # Shared geographic data loading (world map, grid)
 │   │   ├── map_gen_for_pub.R          # Publication-ready maps and novelty search
+│   │   ├── novelty_significance_maps.R # Novelty proportion significance overlay maps
 │   │   └── polygon_analyses.R         # Spatial mapping (sf/terra), grid analysis
 │   └── 05_case_studies/
+│       ├── blastn_hits_vis.R          # BLASTn hit visualization and gene maps
 │       └── gene_maps_for_pub.R        # Case study gene maps (pangolin, rhino, etc.)
 ├── files/                             # Input data files
 │   ├── *.txt, *.tsv, *.csv           # Metadata, annotations, accession lists
@@ -143,21 +149,28 @@ library(jsonlite)            # JSON parsing (AlphaFold data)
 - `investigation_of_characteristics.R` - L1 domain inversion analysis, domain coverage, missing B/I domain detection
 - `ncbi_L1_character.R` - Characterize NCBI L1 sequences, verify domain order
 - `vert_counts.R` - Vertebrate PV counts vs sequencing depth analysis
+- `pv_gene_proportions_by_library.R` - PV gene (E/L) proportions weighted by ka.f across SRA library types; chi-squared test for DNA vs RNA composition
+- `fetch_missing_library_source.R` - Batch queries ENA Portal API to fill gaps in library source metadata
 - `L1_pathracer_mining.R`, `pathracer_fullness_hmm.R`, `pilot_pr_test.R` - Pathracer-related analysis
 
 ### Phase 4: Phylogenetics (`03_phylogenetics/`)
 - `L1_based_trees_and_annotation.R` - **Main tree visualization and annotation**: gheatmap override, host classification, geographic mapping, novelty status, library source analysis, ENA/NCBI metadata lookup, circular tree layout
+- `test_21k_host.R` - Library-level host metadata resolution, three-way novelty classification (ncbi_virus/blastn/novel), host enrichment analysis with Fisher's exact tests, ridge plots, histograms, and master table generation
 
 ### Phase 5: Geographic Analysis (`04_geographic_analysis/`)
 Scripts have **run-order dependencies** (see TO_DO.md for details):
-1. `map_gen_for_pub.R` -> creates `all_pvs_mapping`, `all_novels`, `known_pvs`
-2. `polygon_analyses.R` -> creates `grid_sf`, `world`, `data_wide`, reads `my_sf_data.gpkg`
-3. `geo_analysis.R` -> requires objects from polygon_analyses.R
-4. `biomes.R` -> requires objects from polygon_analyses.R + geo_analysis.R
-5. `vert_counts.R` - standalone
+1. `geo_setup.R` - Shared data loading (world map, grid); sourced by other scripts
+2. `map_gen_for_pub.R` -> creates `all_pvs_mapping`, `all_novels`, `known_pvs`
+3. `polygon_analyses.R` -> creates `grid_sf`, `world`, `data_wide`, reads `my_sf_data.gpkg`
+4. `geo_analysis.R` -> requires objects from polygon_analyses.R
+5. `novelty_significance_maps.R` -> novelty proportion map with SRA sampling density and significance borders
+6. `biomes.R` -> requires objects from polygon_analyses.R + geo_analysis.R
+7. `biomes_stats_test.R` -> Moran's I spatial autocorrelation, Getis-Ord Gi* hotspot analysis
+8. `vert_counts.R` - standalone
 
 ### Phase 6: Case Studies (`05_case_studies/`)
 - `gene_maps_for_pub.R` - Gene map visualizations for pangolin, rhinoceros, lizard, human, and salmon PV case studies. Uses AlphaFold JSON data for structural confidence.
+- `blastn_hits_vis.R` - BLASTn hit visualization with gene map rendering for novel contigs
 
 ## Key Analysis Parameters
 
