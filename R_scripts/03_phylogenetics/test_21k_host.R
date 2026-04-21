@@ -696,6 +696,9 @@ bioproject_api_2 <- readRDS("outputs/bioproject_api_cache.rds")
 
 check_table <- filter(new_table_expanded, V1 == "X70829.1_102_1310")
 
+Anopheles <- filter(check_table, grepl("Plasmodium",member_original_metadata))
+
+view(Anopheles)
 
 accuracy_per_ncbi <- new_table_expanded %>%
   filter(!is.na(ncbi_host_broad), !is.na(member_host_group)) %>%
