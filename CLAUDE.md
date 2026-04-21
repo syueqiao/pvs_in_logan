@@ -182,7 +182,7 @@ Scripts have **run-order dependencies** (see TO_DO.md for details):
 | Diamond e-value | 10^-10 | High-confidence Logan hits |
 | BLAST e-value | 10^-4 | Novelty search threshold |
 | Novelty cutoff | < 90% | Nucleotide identity to NCBI nt |
-| Bootstrap | 1000 | IQtree replicates |
+| Bootstrap | 10000 | IQtree replicates |
 
 ## Conventions for AI Assistants
 
