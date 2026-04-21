@@ -4,6 +4,9 @@ library(jsonlite)
 library(treeio)
 library(gggibbous)
 
+# Dependencies: requires L1_based_trees_and_annotation.R to be run first.
+# Uses: final_tree, addtl_ano_tree_broad, addtl_ano_tree_broad_vals,
+#       biosamp_data_anno, all_genus_curated_thin, custom gheatmap(), tree_subset()
 
 ########Subset tree objects by related nodes########
 #'
@@ -439,7 +442,7 @@ ggplot(rhino_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10))
 
-ggsave("rhino_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/rhino_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 rhino_subset <- tree_subset(final_tree, "SRR10902309_46767_ka_f_48_102_L_46767_L_46767__126_1310_1",
  levels_back = 2)
@@ -609,7 +612,7 @@ pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)
   theme(text = element_text(family="Noto Sans", size = 10)) +
   coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
 
-ggsave("zard_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/zard_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 vnm_outer <- gadm("VNM", level = 0, path = tempdir())
 vnm_inner <- gadm("VNM", level = 1, path = tempdir())
@@ -678,7 +681,7 @@ ggplot(human_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, la
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10)) + scale_x_reverse()
 
-ggsave("human_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/human_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 usa_outer <- gadm("USA", level = 0, path = tempdir())
 usa_conn <- gadm("USA", level = 1, path = tempdir())
@@ -779,7 +782,7 @@ pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)
   theme(text = element_text(family="Noto Sans", size = 10)) +
   coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
 
-ggsave("human_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/human_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 
 ##################################################SALMON###########################################
@@ -803,7 +806,7 @@ ggplot(salmon_contig, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10))
 
-ggsave("salmon_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/salmon_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 usa_outer <- gadm("USA", level = 0, path = tempdir())
 usa_conn <- gadm("USA", level = 1, path = tempdir())
@@ -902,7 +905,7 @@ pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)
   theme(text = element_text(family="Noto Sans", size = 10)) +
   coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
 
-ggsave("salmon_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/salmon_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 
 ##################################################END CASE STUDIES###########################################
@@ -935,7 +938,7 @@ pae <- ggplot(data = pae_df, aes(x = Residue_i, y = Residue_j, fill = PAE_Error)
   theme(text = element_text(family="Noto Sans", size = 10)) +
   coord_fixed() + scale_x_continuous(expand = c(0, 0)) + scale_y_reverse(expand = c(0,0)) # Ensures the tiles are square
 
-ggsave("pango_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/pango_pae.png", pae, width = 10, height = 10, units = "cm", limitsize = F)
 
 
 
@@ -962,6 +965,6 @@ ggplot(generic_pv, aes(xmin = start, xmax = end, y = molecule, fill = gene, labe
   guides(fill=guide_legend(title="Gene")) +
   theme_genes() + theme(text = element_text(family="Noto Sans", size = 10))
 
-ggsave("generic_map.png", width = 20, height = 10, units = "cm", limitsize = F)
+ggsave("outputs/generic_map.png", width = 20, height = 10, units = "cm", limitsize = F)
 
 

@@ -45,7 +45,7 @@ ggplot(vert3_nums_info, aes(x=X2)) +
 
 vert3_nums_info_50k <- filter(vert3_nums_info, X3 < 50000)
 vert3_nums_info_50k_list[,2] <- str_match(vert3_nums_info_50k$other, "/\\s*(.*?)\\s*_")
-write.table(vert3_nums_info_50k_list[,2], "50k_under.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(vert3_nums_info_50k_list[,2], "outputs/50k_under.txt", sep = "\t", col.names = F, row.names = F, quote = F)
 
 pr_run1 <- hmmsearch_clean("all_pr_outputs.domtbl")
 pr_run1$library <- word(pr_run1$query_acc, 2, sep="newfolder\\/")
@@ -112,7 +112,7 @@ B <- hmmsearch_clean("B_test_sense.dtbl")
 
 samp <- sample(nrow(pr_run2_tab_fives),500)
 samps <- pr_run2_tab_fives[samp,]
-write.table(pr_run2_tab_fives$query_acc, "fives.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run2_tab_fives$query_acc, "outputs/fives.txt", sep = "\t", col.names = F, row.names = F, quote = F)
 
 
 ##clustered
@@ -146,9 +146,9 @@ pr_run3_tab_fulls$library <- gsub("\\..*","",pr_run3_tab_fulls$library)
 length(unique(pr_run3_tab_fulls$library))
 length(unique(pr_run3_tab_fulls$query_acc))
 
-write.table(pr_run3_tab_fives$query_acc, "fives_clust.txt", sep = "\t", col.names = F, row.names = F, quote = F)
-write.table(pr_run3_tab_fives, "fives_clust_bookkeping.txt", sep = "\t", col.names = F, row.names = F, quote = F)
-write.table(pr_run3_tab_fulls$query_acc, "full_clust_pr_pilot.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run3_tab_fives$query_acc, "outputs/fives_clust.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run3_tab_fives, "outputs/fives_clust_bookkeping.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run3_tab_fulls$query_acc, "outputs/full_clust_pr_pilot.txt", sep = "\t", col.names = F, row.names = F, quote = F)
 
 
 #graph from B - CD
@@ -245,9 +245,9 @@ pr_run5_tab_fulls$library <- gsub("\\..*","",pr_run5_tab_fulls$library)
 length(unique(pr_run5_tab_fulls$library))
 length(unique(pr_run5_tab_fulls$query_acc))
 
-write.table(pr_run5_tab_fives$query_acc, "fives_clust.txt", sep = "\t", col.names = F, row.names = F, quote = F)
-write.table(pr_run5_tab_fives, "fives_clust_bookkeping.txt", sep = "\t", col.names = F, row.names = F, quote = F)
-write.table(pr_run5_tab_fulls$query_acc, "full_clust_pr_pilot.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run5_tab_fives$query_acc, "outputs/fives_clust.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run5_tab_fives, "outputs/fives_clust_bookkeping.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+write.table(pr_run5_tab_fulls$query_acc, "outputs/full_clust_pr_pilot.txt", sep = "\t", col.names = F, row.names = F, quote = F)
 
 
 #graph from B - CD

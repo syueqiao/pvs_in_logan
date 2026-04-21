@@ -41,7 +41,7 @@ The following scripts were **deleted** and replaced by consolidated versions:
 - [x] **03_phylogenetics/L1_based_trees_and_annotation.R:42** - `all_genus_curated_thin` is used but never defined or read in. Must be loaded from another script or a file.
 - [x] **03_phylogenetics/L1_based_trees_and_annotation.R:893** - `all_pr_addt_orf_e_5_mat_pa_acc` is used but never defined. Must come from a prior script (likely sequence characterization).
 - [x] **03_phylogenetics/L1_based_trees_and_annotation.R:1007-1012** - `output_df` and `file_name` are undefined. This `dates` plot code block appears to be leftover fragment code - remove or define the variables.
-- [ ] **05_case_studies/gene_maps_for_pub.R** - Multiple variables depend on `L1_based_trees_and_annotation.R` being run first: `final_tree`, `addtl_ano_tree_broad`, `addtl_ano_tree_broad_vals`, `biosamp_data_anno`, `all_genus_curated_thin`, `gheatmap()`, `tree_subset()`. Add a comment documenting this dependency.
+- [x] **05_case_studies/gene_maps_for_pub.R** - Multiple variables depend on `L1_based_trees_and_annotation.R` being run first: `final_tree`, `addtl_ano_tree_broad`, `addtl_ano_tree_broad_vals`, `biosamp_data_anno`, `all_genus_curated_thin`, `gheatmap()`, `tree_subset()`. Add a comment documenting this dependency.
 
 ### File Path Issues
 
@@ -58,9 +58,9 @@ The following scripts were **deleted** and replaced by consolidated versions:
 
 ## Non-Critical Bugs / Logic Issues
 
-- [ ] **02_sequence_characterization/investigation_of_characteristics.R:9** - `fw_rev_contigs <- unique(all_ncbi_pv_sto_sto_fr_split$contig)` - accessing `$contig` on a list of data frames (result of `split()`). Should probably be accessing a specific element e.g. `$fw$contig` or using `lapply`.
+- [x] **02_sequence_characterization/investigation_of_characteristics.R:9** - `fw_rev_contigs <- unique(all_ncbi_pv_sto_sto_fr_split$contig)` - accessing `$contig` on a list of data frames (result of `split()`). Removed — dead code, variable was never used downstream.
 - [x] **04_geographic_analysis/polygon_analyses.R** - Added `library(RColorBrewer)` for `brewer.pal()`
-- [ ] **03_phylogenetics/L1_based_trees_and_annotation.R:988** - `geom_point(aes(x = lat_lon.X[1], y = lat_lon.X[2]...))` - likely should be `lat_lon.X` and `lat_lon.Y` columns, not indexing into X twice
+- [x] **03_phylogenetics/L1_based_trees_and_annotation.R:988** - `geom_point(aes(x = lat_lon.X[1], y = lat_lon.X[2]...))` - code block was removed in prior cleanup (file is now 776 lines)
 
 ---
 
@@ -69,7 +69,7 @@ The following scripts were **deleted** and replaced by consolidated versions:
 These packages are used but not declared with `library()` in the scripts that need them:
 
 - [x] **05_case_studies/gene_maps_for_pub.R** - Added `library(gggibbous)` for `geom_moon()`
-- [ ] **04_geographic_analysis/polygon_analyses.R** - Missing `library(ggpmisc)` for `stat_poly_eq()` (line 827)
+- [x] **04_geographic_analysis/polygon_analyses.R** - `library(ggpmisc)` now present (line 203)
 - [x] **03_phylogenetics/L1_based_trees_and_annotation.R** - `sf` and `ggmosaic` no longer used in current version
 
 ### Verify: `geom_aline()` Function
@@ -82,7 +82,7 @@ These packages are used but not declared with `library()` in the scripts that ne
 
 - [x] **05_case_studies/gene_maps_for_pub.R** - Removed localhost URLs (leftover from Jupyter)
 - [x] **03_phylogenetics/L1_based_trees_and_annotation.R** - `"wee"` label and loose code block removed in prior cleanup
-- [ ] **04_geographic_analysis/polygon_analyses.R** - Massive amount of commented-out code (lines ~420-828). Consider removing if no longer needed.
+- [x] **04_geographic_analysis/polygon_analyses.R** - Commented-out code was cleaned up in prior sessions (file is now 252 lines)
 
 ---
 
@@ -149,6 +149,6 @@ Scripts that need this update:
 
 - [x] Add README.md to each subdirectory explaining the scripts
 - [ ] Add file headers with author/date/description
-- [ ] Create a setup/initialization script that loads shared variables (`world`, `sra_metadata`, `final_tree`, `all_novels`, `all_genus_curated_thin`, etc.) used across multiple scripts
-- [ ] Standardize all file paths to use `files/` prefix consistently
-- [ ] Define `all_genus_curated_thin` - currently a mystery dependency used in multiple scripts but never explicitly created/read
+- [ ] Create a setup/initialization script that loads shared variables (`world`, `sra_metadata`, `final_tree`, `all_novels`, etc.) used across multiple scripts
+- [x] Standardize all file paths to use `files/` or `outputs/` prefix consistently — fixed 8 bare ggsave paths in gene_maps_for_pub.R, 8 bare write.table paths in pathracer_fullness_hmm.R
+- [x] `all_genus_curated_thin` — only referenced in commented-out lines in gene_maps_for_pub.R; no active code depends on it
