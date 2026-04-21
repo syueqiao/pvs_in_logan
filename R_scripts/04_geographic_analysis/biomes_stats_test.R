@@ -7,6 +7,9 @@ library(extrafont)
 #   - giant_geo_table_grid_id_geometry: grid cells with Freq (SRA sampling effort)
 #   - data_wide: grid_group, known, novel, novel_species_proportion
 
+sf_object_joined_prop_rarefy_5k_rowmeans_joined <- readRDS(
+  "outputs/geo_intermediates/sf_object_joined_prop_rarefy_5k_rowmeans_joined_s.rds"
+)
 sf_object_joined_prop_rarefy_5k_rowmeans_joined_moran <- dplyr::select(sf_object_joined_prop_rarefy_5k_rowmeans_joined, geometry, novel_species_proportion, z_score, mean, p_val, grid_group, known, novel)
 
 # Build unified grid dataframe by joining sampling effort (Freq) to the resampling results
@@ -36,7 +39,7 @@ cat("p_val NAs:", sum(is.na(grid_df$p_val)), "/", nrow(grid_df), "\n")
 
 # Filter to grid squares that actually have PVs
 grid_pv <- grid_df %>%
-  filter((known + novel) > 0)
+  dplyr::filter((known + novel) > 0)
 
 # Flag enriched squares using uncorrected p_val from permutation test
 grid_pv <- grid_pv %>%
@@ -203,7 +206,8 @@ vals_prop_all_overlay <- ggplot() +
   theme(axis.title = element_blank(),
         axis.text = element_blank(),
         axis.ticks = element_blank(),
-        panel.border = element_blank())
+        panel.border = element_blank(),
+        legend.position = 'none')
 
 plot_sample_n_log10_hulls <- vals_prop_all_overlay +
   geom_sf(data = hotspot_hulls,
@@ -214,7 +218,7 @@ plot_sample_n_log10_hulls <- vals_prop_all_overlay +
 plot_sample_n_log10_hulls
 
 ggsave("outputs/2026.02.24.plot_sample_n_log10_hulls.png", plot_sample_n_log10_hulls,
-       width = 20, height = 15, units = "cm", limitsize = FALSE, bg = "transparent")
+       width = 20, height = 20, units = "cm", limitsize = FALSE, bg = "transparent", dpi = 600)
 
 
 # Reference 100km circle around the first hotspot point for scale
